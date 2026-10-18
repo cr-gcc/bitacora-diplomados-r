@@ -1,5 +1,7 @@
+import { NavLink } from "react-router";
 import { LayoutDashboard, CalendarDays, LibraryBig, FolderUser, ChartColumn, CalendarPlus2 } from 'lucide-react';
-import { Button } from "@/components/ui/button"
+import { buttonVariants } from "@/components/ui/button"
+import { cn } from "cn"
 
 export function Sidebar() {
     return (
@@ -19,58 +21,102 @@ export function Sidebar() {
             <nav className="flex flex-1 flex-col px-4 py-4">
                 <ul className="space-y-1 text-white">
                     <li>
-                        <Button
-                            variant="ghost"
-                            className="w-full py-6 justify-start hover:bg-navyh hover:text-white cursor-pointer">
-                            <div className='flex items-center gap-2'>
-                                <LayoutDashboard /><span>Dashboard</span>
+                        <NavLink
+                            to="/"
+                            end
+                            className={({ isActive }) =>
+                                cn(
+                                    buttonVariants({ variant: "ghost" }),
+                                    "w-full py-6 justify-start hover:bg-navyh hover:text-white cursor-pointer",
+                                    isActive && "bg-gold text-white"
+                                )
+                            }
+                        >
+                            <div className="flex items-center gap-2">
+                                <LayoutDashboard />
+                                <span>Dashboard</span>
                             </div>
-                        </Button>
+                        </NavLink>
                     </li>
                     <li>
-                        <Button
-                            variant="ghost"
-                            className="w-full py-6 justify-start hover:bg-navyh hover:text-white cursor-pointer">
+                        <NavLink
+                            to="/calendario"
+                            className={({ isActive }) =>
+                                cn(
+                                    buttonVariants({ variant: "ghost" }),
+                                    "w-full py-6 justify-start hover:bg-navyh hover:text-white cursor-pointer",
+                                    isActive && "bg-gold text-white"
+                                )
+                            }
+                        >
                             <div className='flex items-center gap-2'>
                                 <CalendarDays /><span>Calendario</span>
                             </div>
-                        </Button>
+                        </NavLink>
                     </li>
                     <li>
-                        <Button
-                            variant="ghost"
-                            className="w-full py-6 justify-start hover:bg-navyh hover:text-white cursor-pointer">
+                        <NavLink
+                            to="/diplomados"
+                            className={({ isActive }) =>
+                                cn(
+                                    buttonVariants({ variant: "ghost" }),
+                                    "w-full py-6 justify-start hover:bg-navyh hover:text-white cursor-pointer",
+                                    isActive && "bg-gold text-white"
+                                )
+                            }
+                        >
                             <div className='flex items-center gap-2'>
                                 <LibraryBig /><span>Diplomados</span>
                             </div>
-                        </Button>
+                        </NavLink>
                     </li>
                     <li>
-                        <Button
-                            variant="ghost"
-                            className="w-full py-6 justify-start hover:bg-navyh hover:text-white cursor-pointer">
+                        <NavLink
+                            to="/programacion"
+                            className={({ isActive }) =>
+                                cn(
+                                    buttonVariants({ variant: "ghost" }),
+                                    "w-full py-6 justify-start hover:bg-navyh hover:text-white cursor-pointer",
+                                    isActive && "bg-gold text-white"
+                                )
+                            }
+                        >
                             <div className='flex items-center gap-2'>
                                 <CalendarPlus2 /><span>Programación</span>
                             </div>
-                        </Button>
+                        </NavLink>
                     </li>
                     <li>
-                        <Button
-                            variant="ghost"
-                            className="w-full py-6 justify-start hover:bg-navyh hover:text-white cursor-pointer">
+                        <NavLink
+                            to="/grupos"
+                            className={({ isActive }) =>
+                                cn(
+                                    buttonVariants({ variant: "ghost" }),
+                                    "w-full py-6 justify-start hover:bg-navyh hover:text-white cursor-pointer",
+                                    isActive && "bg-gold text-white"
+                                )
+                            }
+                        >
                             <div className='flex items-center gap-2'>
                                 <FolderUser /><span>Grupos</span>
                             </div>
-                        </Button>
+                        </NavLink>
                     </li>
                     <li>
-                        <Button
-                            variant="ghost"
-                            className="w-full py-6 justify-start hover:bg-navyh hover:text-white cursor-pointer">
+                        <NavLink
+                            to="/reportes"
+                            className={({ isActive }) =>
+                                cn(
+                                    buttonVariants({ variant: "ghost" }),
+                                    "w-full py-6 justify-start hover:bg-navyh hover:text-white cursor-pointer",
+                                    isActive && "bg-gold text-white"
+                                )
+                            }
+                        >
                             <div className='flex items-center gap-2'>
                                 <ChartColumn /><span>Reportes</span>
                             </div>
-                        </Button>
+                        </NavLink>
                     </li>
                 </ul>
             </nav>
