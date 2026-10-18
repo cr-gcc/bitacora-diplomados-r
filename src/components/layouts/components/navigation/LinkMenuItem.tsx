@@ -1,8 +1,7 @@
+import { cn } from "@/lib/utils";
 import { NavLink } from "react-router";
 import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-
-import type { NavigationItem } from "../types/navigation.types";
+import type { NavigationItem } from "@/components/layouts/types/navigation/navigation.types";
 
 export function LinkMenuItem({
     label,
