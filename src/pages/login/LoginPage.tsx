@@ -2,7 +2,7 @@ import banner from "@/assets/images/banners/fondo.jpg"
 import logo from "@/assets/images/logos/cedigec_w_t.png"
 import { LoginForm } from "@pages/login/components/LoginForm"
 
-export default function LoginPage() {
+export function LoginPage() {
     return (
         <div className="bg-cover bg-no-repeat bg-center h-screen w-screen relative"
             style={{ backgroundImage: `url(${banner})` }}>
