@@ -1,5 +1,5 @@
-import { LinkMenuItem } from "@/components/layouts/components/LinkMenuItem";
-import { navigationItems } from "@/components/layouts/config/navigationItems";
+import { navigationItems } from "@/components/layouts/config/navigation/navigationItems";
+import { LinkMenuItem } from "@/components/layouts/components/navigation/LinkMenuItem";
 
 export function Sidebar() {
     return (

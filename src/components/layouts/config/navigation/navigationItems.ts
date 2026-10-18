@@ -8,7 +8,7 @@ import {
     ChartNoAxesColumn,
 } from "lucide-react";
 
-import type { NavigationItem } from "../types/navigation.types";
+import type { NavigationItem } from "../../types/navigation/navigation.types";
 
 export const navigationItems = [
     {
