@@ -1,7 +1,7 @@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { SessionButton } from "@/components/layouts/components/menu/session/SessionButton"
 import { SessionOption } from "@/components/layouts/components/menu/session/SessionOption"
-import { sessionOptionItem } from "@/components/layouts/config/user/menu/sessionOptionItem.ts"
+import { sessionOptionItem } from "@/components/layouts/config/menu/session/sessionOptionItem.ts"
 
 export function SessionMenu() {
     return (
