@@ -5,8 +5,38 @@ import { cn } from "cn"
 import { Button } from "@/components/ui/button"
 import { XIcon } from "lucide-react"
 
-function Dialog({ ...props }: DialogPrimitive.Root.Props) {
-  return <DialogPrimitive.Root data-slot="dialog" {...props} />
+interface DialogProps extends DialogPrimitive.Root.Props {
+  closeOnEscape?: boolean
+  closeOnOutsideClick?: boolean
+}
+
+function Dialog({
+  closeOnEscape = false,
+  closeOnOutsideClick = false,
+  disablePointerDismissal,
+  onOpenChange,
+  ...props
+}: DialogProps) {
+  return (
+    <DialogPrimitive.Root
+      data-slot="dialog"
+      disablePointerDismissal={disablePointerDismissal ?? !closeOnOutsideClick}
+      onOpenChange={(open, eventDetails) => {
+        if (!open) {
+          if (!closeOnEscape && eventDetails.reason === "escape-key") {
+            eventDetails.cancel?.()
+            return
+          }
+          if (!closeOnOutsideClick && eventDetails.reason === "outside-press") {
+            eventDetails.cancel?.()
+            return
+          }
+        }
+        onOpenChange?.(open, eventDetails)
+      }}
+      {...props}
+    />
+  )
 }
 
 function DialogTrigger({ ...props }: DialogPrimitive.Trigger.Props) {

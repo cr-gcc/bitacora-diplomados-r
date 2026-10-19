@@ -24,7 +24,7 @@ interface Props {
     }[];
 }
 
-export function GroupAcordion({ items }: Props) {
+export function GroupAccordion({ items }: Props) {
     return (
         <Accordion className="bg-white w-full rounded-lg border">
             {items.map((item) => (

@@ -1,7 +1,18 @@
-import { GroupAcordion } from "@components/layouts/components/accordions/GroupAcordion";
+import { useState } from "react";
+import { GroupAccordion } from "@components/layouts/components/accordions/GroupAccordion";
 import { Button } from "@/components/ui/button";
+import { CreateGroupModal } from "@components/layouts/components/modals/CreateGroupModal";
+import { EditGroupModal } from "@components/layouts/components/modals/EditGroupModal";
+import { DeleteGroupModal } from "@components/layouts/components/modals/DeleteGroupModal";
+import { CheckModuleModal } from "@/components/layouts/components/modals/CheckModuleModal";
+import { EditModuleModal } from "@/components/layouts/components/modals/EditModuleModal";
 
 export function GroupsPage() {
+    const [openCreate, setOpenCreate] = useState(false);
+    const [openEdit, setOpenEdit] = useState(false);
+    const [openDelete, setOpenDelete] = useState(false);
+    const [openCheck, setOpenCheck] = useState(false);
+    const [openEditModule, setOpenEditModule] = useState(false);
     const items = [
         {
             id: 1,
@@ -110,25 +121,39 @@ export function GroupsPage() {
     ]
 
     return (
-        <div id="groups" className="flex flex-col gap-y-8 pb-12">
-            <div className="flex flex-1 justify-between">
-                <div className="flex flex-col">
-                    <h2 className="text-4xl text-pink-950 tracking-tight">
-                        Auditoría Interna
-                    </h2>
-                    <p className="text-gray-500 mt-2 text-sm">
-                        A continuación se muestra la información de los grupos.
-                    </p>
+        <>
+            <div id="groups" className="flex flex-col gap-y-8 pb-12">
+                <div className="flex flex-1 justify-between">
+                    <div className="flex flex-col">
+                        <h2 className="text-4xl text-pink-950 tracking-tight">
+                            Auditoría Interna
+                        </h2>
+                        <p className="text-gray-500 mt-2 text-sm">
+                            A continuación se muestra la información de los grupos.
+                        </p>
+                    </div>
+                    <div className="flex gap-x-4">
+                        <Button
+                            size="sm"
+                            className="bg-pink-950 text-xs text-white hover:bg-pink-950/90 hover:text-white cursor-pointer"
+                            onClick={() => setOpenCreate(true)}
+                        >
+                            Crear grupo
+                        </Button>
+                    </div>
                 </div>
-                <div className="flex gap-x-4">
-                    <Button className="bg-pink-950 text-xs text-white hover:bg-pink-950/90 hover:text-white cursor-pointer" size="sm">Crear grupo</Button>
+                <div>
+                    {items.map((item) => (
+                        <GroupAccordion key={item.id} items={[item]} />
+                    ))}
                 </div>
             </div>
-            <div>
-                {items.map((item) => (
-                    <GroupAcordion key={item.id} items={[item]} />
-                ))}
-            </div>
-        </div>
+            <CreateGroupModal open={openCreate} onOpenChange={setOpenCreate} />
+            <DeleteGroupModal open={openDelete} onOpenChange={setOpenDelete} />
+            <EditGroupModal open={openEdit} onOpenChange={setOpenEdit} />
+            <CheckModuleModal open={openCheck} onOpenChange={setOpenCheck} />
+            <EditModuleModal open={openEditModule} onOpenChange={setOpenEditModule} />
+        </>
+
     )
 }
