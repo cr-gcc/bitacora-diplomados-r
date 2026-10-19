@@ -2,13 +2,11 @@ import {
     LayoutDashboard,
     CalendarDays,
     BookText,
-    SquareLibrary,
     ClipboardClock,
     Users,
     ChartNoAxesColumn,
 } from "lucide-react";
-
-import type { NavigationItem } from "../../types/navigation/navigation.types";
+import type { NavigationItem } from "@components/layouts/types/navigation/navigation.types";
 
 export const navigationItems = [
     {
@@ -31,11 +29,6 @@ export const navigationItems = [
         label: "Programación",
         to: "/programacion",
         icon: ClipboardClock,
-    },
-    {
-        label: "Grupos",
-        to: "/grupos",
-        icon: SquareLibrary,
     },
     {
         label: "Profesores",
