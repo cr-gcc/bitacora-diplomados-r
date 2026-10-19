@@ -131,3 +131,18 @@
     @apply font-sans;
     }
 }
+
+@keyframes progress {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+.animate-progress {
+    animation-name: progress;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
