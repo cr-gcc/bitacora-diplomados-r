@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { GroupAccordion } from "@components/layouts/components/accordions/GroupAccordion";
 import { Button } from "@/components/ui/button";
-import { CreateGroupModal } from "@components/layouts/components/modals/CreateGroupModal";
-import { EditGroupModal } from "@components/layouts/components/modals/EditGroupModal";
-import { DeleteGroupModal } from "@components/layouts/components/modals/DeleteGroupModal";
-import { CheckModuleModal } from "@/components/layouts/components/modals/CheckModuleModal";
-import { EditModuleModal } from "@/components/layouts/components/modals/EditModuleModal";
+import { CreateGroupModal } from "@/components/layouts/components/modals/groups/CreateGroupModal";
+import { EditGroupModal } from "@/components/layouts/components/modals/groups/EditGroupModal";
+import { DeleteGroupModal } from "@/components/layouts/components/modals/groups/DeleteGroupModal";
+import { CheckModuleModal } from "@/components/layouts/components/modals/groups/CheckModuleModal";
+import { EditModuleModal } from "@/components/layouts/components/modals/groups/EditModuleModal";
 
 export function GroupsPage() {
     const [openCreate, setOpenCreate] = useState(false);
