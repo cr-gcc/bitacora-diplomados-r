@@ -122,7 +122,7 @@ export function GroupsPage() {
 
     return (
         <>
-            <div id="groups" className="flex flex-col gap-y-8 pb-12">
+            <div id="groups" className="flex flex-col gap-y-4 pb-12">
                 <div className="flex flex-1 justify-between">
                     <div className="flex flex-col">
                         <h2 className="text-4xl text-pink-950 tracking-tight">

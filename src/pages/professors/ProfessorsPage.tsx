@@ -27,7 +27,7 @@ export function ProfessorsPage() {
     ]
     return (
         <>
-            <div id="professors" className="flex flex-col gap-y-8 pb-12">
+            <div id="professors" className="flex flex-col gap-y-4 pb-12">
                 <div className="flex flex-1 justify-between">
                     <div className="flex flex-col">
                         <h1 className="text-5xl text-navy tracking-tight">

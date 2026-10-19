@@ -3,7 +3,7 @@ import { diplomaItems } from '@components/layouts/config/navigation/diplomaItems
 
 export function DiplomasPage() {
     return (
-        <div id="diplomas" className="flex flex-col gap-y-8 pb-12">
+        <div id="diplomas" className="flex flex-col gap-y-4 pb-12">
             <div>
                 <h1 className="text-5xl text-[#172b4d] tracking-tight">
                     Diplomados
