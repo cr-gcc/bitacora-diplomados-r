@@ -35,15 +35,20 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/diplomados',
-                element: <DiplomasPage />
+                children: [
+                    {
+                        index: true,
+                        element: <DiplomasPage />
+                    },
+                    {
+                        path: ':slug',
+                        element: <GroupsPage />
+                    }
+                ]
             },
             {
                 path: '/programacion',
                 element: <SchedulingPage />
-            },
-            {
-                path: '/grupos',
-                element: <GroupsPage />
             },
             {
                 path: '/profesores',
