@@ -44,7 +44,7 @@ export function EditProfessorModal({ open, onOpenChange }: Props) {
                                 onChange={(e) => setNombre(e.target.value)}
                             />
                         </div>
-                        <div className="flex flex-col gap-2 w-full">
+                        <div className="flex flex-col gap-1 w-full">
                             <Label htmlFor="apellidos" className="text-sm text-gray-500 font-medium">Apellidos</Label>
                             <Input
                                 id="apellidos"
@@ -54,7 +54,7 @@ export function EditProfessorModal({ open, onOpenChange }: Props) {
                                 onChange={(e) => setApellidos(e.target.value)}
                             />
                         </div>
-                        <div className="flex flex-col gap-2 w-full">
+                        <div className="flex flex-col gap-1 w-full">
                             <Label htmlFor="email" className="text-sm text-gray-500 font-medium">Email</Label>
                             <Input
                                 id="email"
@@ -64,7 +64,7 @@ export function EditProfessorModal({ open, onOpenChange }: Props) {
                                 onChange={(e) => setEmail(e.target.value)}
                             />
                         </div>
-                        <div className="flex flex-col gap-2 w-full">
+                        <div className="flex flex-col gap-1 w-full">
                             <Label htmlFor="rfc" className="text-sm text-gray-500 font-medium">RFC</Label>
                             <Input
                                 id="rfc"
@@ -74,7 +74,7 @@ export function EditProfessorModal({ open, onOpenChange }: Props) {
                                 onChange={(e) => setRfc(e.target.value)}
                             />
                         </div>
-                        <div className="flex flex-col gap-2 w-full">
+                        <div className="flex flex-col gap-1 w-full">
                             <Label htmlFor="usuario" className="text-sm text-gray-500 font-medium">Usuario</Label>
                             <Input
                                 id="usuario"
@@ -84,7 +84,7 @@ export function EditProfessorModal({ open, onOpenChange }: Props) {
                                 onChange={(e) => setUsuario(e.target.value)}
                             />
                         </div>
-                        <div className="flex flex-col gap-2 w-full">
+                        <div className="flex flex-col gap-1 w-full">
                             <Label htmlFor="password" className="text-sm text-gray-500 font-medium">Contraseña</Label>
                             <Input
                                 id="password"
@@ -94,7 +94,7 @@ export function EditProfessorModal({ open, onOpenChange }: Props) {
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                         </div>
-                        <div className="flex flex-col gap-2 w-full">
+                        <div className="flex flex-col gap-1 w-full">
                             <Label htmlFor="estatus" className="text-sm text-gray-500 font-medium">Estatus</Label>
                             <Select
                                 id="estatus"
