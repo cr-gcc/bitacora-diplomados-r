@@ -1,5 +1,5 @@
 import { Breadcrum } from "@/components/layouts/components/navigation/Breadcrum"
-import { SessionMenu } from "@/components/layouts/components/user/menu/SessionMenu"
+import { SessionMenu } from "@/components/layouts/components/menu/session/SessionMenu"
 
 export function Header() {
     return (
