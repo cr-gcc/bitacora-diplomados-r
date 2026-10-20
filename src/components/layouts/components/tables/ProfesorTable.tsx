@@ -63,7 +63,7 @@ export function ProfesorTable({ professors }: Props) {
                             <TableCell>{profesor.usuario}</TableCell>
                             <TableCell>{profesor.password}</TableCell>
                             <TableCell>
-                                <Badge variant="outline" className={`bg-lime-100 text-lime-800 text-xs border-none font-semibold ${profesor.estatus === "Inactivo" ? "bg-red-100 text-red-800" : "bg-lime-100 text-lime-800"}`}>
+                                <Badge variant="outline" className={`bg-emerald-100 text-emerald-800 text-xs border-none font-semibold ${profesor.estatus === "Inactivo" ? "bg-red-100 text-red-800" : "bg-emerald-100 text-emerald-800"}`}>
                                     {profesor.estatus}
                                 </Badge>
                             </TableCell>

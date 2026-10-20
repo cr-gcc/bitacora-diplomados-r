@@ -45,7 +45,7 @@ export function GroupTable({ modules }: Props) {
                         <TableCell>{module.termino}</TableCell>
                         <TableCell>{module.profesor}</TableCell>
                         <TableCell>
-                            <Badge variant="outline" className={`bg-lime-100 text-lime-800 text-xs border-none font-semibold ${module.estatus === "Pendiente" ? "bg-yellow-100 text-yellow-800" : "bg-lime-100 text-lime-800"}`}>
+                            <Badge variant="outline" className={`bg-emerald-100 text-emerald-800 text-xs border-none font-semibold ${module.estatus === "Pendiente" ? "bg-yellow-100 text-yellow-800" : "bg-emerald-100 text-emerald-800"}`}>
                                 {module.estatus}
                             </Badge>
                         </TableCell>
