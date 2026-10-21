@@ -1,4 +1,7 @@
 import { useState } from "react"
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
 import {
     Table,
     TableBody,
@@ -8,16 +11,14 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
 import { EditProfessorModal } from "@/components/layouts/components/modals/professors/EditProfessorModal";
 
 
 interface Props {
     professors: {
         id: number;
-        profesor: string;
+        name: string;
+        last_name: string;
         email: string;
         rfc: string;
         usuario: string;
@@ -44,7 +45,8 @@ export function ProfesorTable({ professors }: Props) {
                 <TableHeader>
                     <TableRow>
                         <TableHead className="text-xs text-gray-500 font-medium">#</TableHead>
-                        <TableHead className="text-xs text-gray-500 font-medium">Profesor</TableHead>
+                        <TableHead className="text-xs text-gray-500 font-medium">Nombre</TableHead>
+                        <TableHead className="text-xs text-gray-500 font-medium">Apellidos</TableHead>
                         <TableHead className="text-xs text-gray-500 font-medium">Email</TableHead>
                         <TableHead className="text-xs text-gray-500 font-medium">RFC</TableHead>
                         <TableHead className="text-xs text-gray-500 font-medium">Usuario</TableHead>
@@ -57,7 +59,8 @@ export function ProfesorTable({ professors }: Props) {
                     {professors.map((profesor, index) => (
                         <TableRow key={profesor.id}>
                             <TableCell className="font-medium">{index + 1}</TableCell>
-                            <TableCell>{profesor.profesor}</TableCell>
+                            <TableCell>{profesor.name}</TableCell>
+                            <TableCell>{profesor.last_name}</TableCell>
                             <TableCell>{profesor.email}</TableCell>
                             <TableCell>{profesor.rfc}</TableCell>
                             <TableCell>{profesor.usuario}</TableCell>

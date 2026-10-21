@@ -7,8 +7,7 @@ import {
     TableRow
 } from "@/components/ui/table"
 import { Button } from "@/components/ui/button";
-
-import type { Evento } from "../modals/calendar/CalendarEventsModal";
+import type { Evento } from "@/components/layouts/components/modals/calendar/CalendarEventsModal";
 
 interface Props {
     groups: Evento[];
@@ -23,7 +22,7 @@ export function GroupCalendarTable({ groups }: Props) {
                     <TableHead className="text-xs text-gray-500 font-medium">Diplomado</TableHead>
                     <TableHead className="text-xs text-gray-500 font-medium">Grupo</TableHead>
                     <TableHead className="text-xs text-gray-500 font-medium">Módulo</TableHead>
-                    <TableHead className="text-xs text-gray-500 font-medium">Titulo</TableHead>
+                    <TableHead className="text-xs text-gray-500 font-medium">Título</TableHead>
                     <TableHead className="text-xs text-gray-500 font-medium">Profesor</TableHead>
                     <TableHead className="text-xs text-gray-500 font-medium">Inicio</TableHead>
                     <TableHead className="text-xs text-gray-500 font-medium">Termino</TableHead>

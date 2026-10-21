@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
     Table,
     TableBody,
@@ -8,8 +10,6 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { LinkModal } from "@components/layouts/components/modals/scheduling/LinkModal";
 
 interface Props {

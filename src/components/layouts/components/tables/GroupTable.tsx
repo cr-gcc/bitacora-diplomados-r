@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import {
     Table,
     TableBody,
@@ -7,8 +9,7 @@ import {
     TableRow,
     TableFooter,
 } from "@/components/ui/table"
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+
 
 interface Props {
     modules: {
