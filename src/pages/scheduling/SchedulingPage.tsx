@@ -54,7 +54,7 @@ export function SchedulingPage() {
                         <Button
                             size="sm"
                             onClick={() => setOpenScheduling(true)}
-                            className="bg-navy text-xs text-white hover:bg-navyh hover:text-white cursor-pointer"
+                            className="bg-gold text-xs text-white hover:bg-gold/90 hover:text-white cursor-pointer"
                         >
                             Agregar programación
                         </Button>
@@ -64,7 +64,6 @@ export function SchedulingPage() {
                     <AlertTitle className="text-sm">Los registros sin grupo se conservan de forma provisional. La vinculación posterior no debe duplicar el módulo del grupo.</AlertTitle>
                 </Alert>
                 <section className="flex flex-col bg-white w-full rounded-lg px-2 pb-1 pt-0.5">
-
                     <SchedulingTable scheduling={scheduling} />
                 </section>
             </div>

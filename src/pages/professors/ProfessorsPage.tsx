@@ -8,8 +8,9 @@ export function ProfessorsPage() {
     const professors = [
         {
             id: 1,
-            profesor: "Profesor 1",
-            email: "[EMAIL_ADDRESS]",
+            name: "Cristiano",
+            last_name: "Guzman Contreras",
+            email: "cristianocg@gmail.com",
             rfc: "GUCC9007269B7",
             usuario: "profesor1",
             password: "password1",
@@ -17,8 +18,9 @@ export function ProfessorsPage() {
         },
         {
             id: 2,
-            profesor: "Profesor 2",
-            email: "[EMAIL_ADDRESS]",
+            name: "Juan",
+            last_name: "Perez Lopez",
+            email: "juanpl@gmail.com",
             rfc: "GUCC9007269B7",
             usuario: "profesor2",
             password: "password2",
@@ -41,7 +43,7 @@ export function ProfessorsPage() {
                         <Button
                             size="sm"
                             onClick={() => setOpenAdd(true)}
-                            className="bg-navy text-xs text-white hover:bg-navyh hover:text-white cursor-pointer"
+                            className="bg-gold text-xs text-white hover:bg-gold/90 hover:text-white cursor-pointer"
                         >
                             Agregar profesor
                         </Button>

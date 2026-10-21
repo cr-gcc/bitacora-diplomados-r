@@ -1,6 +1,7 @@
 import { Users, UserX, FolderX } from "lucide-react"
-import { startOfWeek, endOfWeek, format } from "date-fns"
+import { startOfWeek, endOfWeek } from "date-fns"
 import { GroupCalendarTable } from "@/components/layouts/components/tables/GroupCalendarTable";
+import { formatDateRange } from "@/lib/utils";
 
 type Evento = {
     id: number;
@@ -72,7 +73,6 @@ export function DashboardPage() {
         },
     ]
 
-    // Fecha inicial (Lunes 00:00:00) y final (Domingo 23:59:59.999) de la semana actual
     const currentWeekInitDate = startOfWeek(new Date(), { weekStartsOn: 1 });
     const currentWeekEndDate = endOfWeek(new Date(), { weekStartsOn: 1 });
 
@@ -118,7 +118,7 @@ export function DashboardPage() {
                 </div>
                 <div className="bg-white rounded-xl border border-gray-200 px-6 pt-3 pb-4 shadow-xs">
                     <h3 className="text-base font-semibold text-navy mb-2">
-                        Inicio cursos {format(currentWeekInitDate, "dd/MM/yyyy")} - {format(currentWeekEndDate, "dd/MM/yyyy")}
+                        Inicio de cursos del <span className="italic">{formatDateRange(currentWeekInitDate, currentWeekEndDate)}</span>
                     </h3>
                     <GroupCalendarTable groups={eventos} />
                 </div>

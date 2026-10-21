@@ -5,7 +5,7 @@ export function DiplomasPage() {
     return (
         <div id="diplomas" className="flex flex-col gap-y-4 pb-12">
             <div>
-                <h1 className="text-5xl text-[#172b4d] tracking-tight">
+                <h1 className="text-5xl text-navy tracking-tight">
                     Diplomados
                 </h1>
                 <p className="text-gray-500 mt-2 text-sm">

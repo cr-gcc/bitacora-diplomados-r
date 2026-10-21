@@ -1,19 +1,21 @@
 import { useState } from "react";
-import { GroupCalendarTable } from "@/components/layouts/components/tables/GroupCalendarTable"
+import { ReportsTable } from "@/components/layouts/components/tables/ReportsTable"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-type Evento = {
+type Course = {
     id: number;
     diploma: string;
-    groupNum: string;
+    group: string;
     module: string;
     title: string;
     professor: string;
-    fecha: Date;
-    start: string;
-    end: string;
+    startDate: string;
+    endDate: string;
+    repeaters: number;
+    regulars: number;
+    students: number;
 };
 
 export function ReportsPage() {
@@ -22,39 +24,45 @@ export function ReportsPage() {
     const [start, setStart] = useState('');
     const [end, setEnd] = useState('');
 
-    const eventos: Evento[] = [
+    const courses: Course[] = [
         {
             id: 1,
             diploma: "Finanzas",
-            groupNum: "9601",
+            group: "9601",
             module: "1",
             title: "Fundamentos",
             professor: "Profesor 1",
-            fecha: new Date(2026, 9, 24), // 24 de Octubre de 2026
-            start: "24/09/2026",
-            end: "25/10/2026",
+            startDate: "24/09/2026",
+            endDate: "25/10/2026",
+            repeaters: 2,
+            regulars: 12,
+            students: 14,
         },
         {
             id: 2,
             diploma: "Finanzas",
-            groupNum: "9602",
+            group: "9602",
             module: "1",
             title: "Fundamentos",
             professor: "Profesor 1",
-            fecha: new Date(2026, 9, 24), // 24 de Octubre de 2026
-            start: "24/09/2026",
-            end: "25/10/2026",
+            startDate: "24/09/2026",
+            endDate: "25/10/2026",
+            repeaters: 2,
+            regulars: 12,
+            students: 14,
         },
         {
             id: 3,
             diploma: "Comercio Electrónico",
-            groupNum: "9601",
+            group: "9601",
             module: "2",
             title: "Ventas Digitales",
             professor: "José Antonio Gómez Rodríguez",
-            fecha: new Date(2026, 9, 28), // 28 de Octubre de 2026
-            start: "28/09/2026",
-            end: "29/10/2026",
+            startDate: "28/09/2026",
+            endDate: "29/10/2026",
+            repeaters: 1,
+            regulars: 10,
+            students: 11,
         },
     ]
     return (
@@ -123,7 +131,7 @@ export function ReportsPage() {
                 </div>
             </section>
             <section className="flex flex-col bg-white w-full rounded-lg px-2 pb-1 pt-0.5">
-                <GroupCalendarTable groups={eventos} />
+                <ReportsTable courses={courses} />
             </section>
         </div>
     )
