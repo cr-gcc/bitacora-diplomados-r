@@ -5,7 +5,6 @@ import { cn } from "@/lib/utils";
 export function SessionOption({
     label,
     action,
-    icon: Icon,
     variant,
 }: SessionOption) {
     return (
@@ -19,7 +18,6 @@ export function SessionOption({
             variant={variant}
             onClick={action}
         >
-            <Icon />
             {label}
         </DropdownMenuItem>
     );
