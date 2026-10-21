@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Calendar } from "@/components/ui/calendar"
 import { CalendarEventsModal, type Evento } from "@/components/layouts/components/modals/calendar/CalendarEventsModal"
+import { createDate } from "@/lib/utils"
 import { isSameDay } from "date-fns"
 import { es } from "date-fns/locale"
 
@@ -17,9 +18,9 @@ export function GroupsCalendar() {
             groupNum: "9601",
             module: "1",
             title: "Fundamentos",
-            professor: "Profesor 1",
-            fecha: new Date(2026, 9, 24), // 24 de Octubre de 2026
-            start: "24/09/2026",
+            professor: "Cristian Gomez Colín",
+            fecha: createDate(2026, 10, 12), // 12 de Octubre de 2026 (mes 10 = Octubre)
+            start: "24/10/2026",
             end: "25/10/2026",
         },
         {
@@ -28,9 +29,9 @@ export function GroupsCalendar() {
             groupNum: "9602",
             module: "1",
             title: "Fundamentos",
-            professor: "Profesor 1",
-            fecha: new Date(2026, 9, 24), // 24 de Octubre de 2026
-            start: "24/09/2026",
+            professor: "Cristiano Guzman Contreras",
+            fecha: createDate(2026, 10, 19), // 19 de Octubre de 2026 (mes 10 = Octubre)
+            start: "24/10/2026",
             end: "25/10/2026",
         },
         {
@@ -40,9 +41,9 @@ export function GroupsCalendar() {
             module: "2",
             title: "Ventas Digitales",
             professor: "José Antonio Gómez Rodríguez",
-            fecha: new Date(2026, 9, 28), // 28 de Octubre de 2026
-            start: "28/09/2026",
-            end: "29/10/2026",
+            fecha: createDate(2026, 11, 26), // 26 de Noviembre de 2026 (mes 11 = Noviembre)
+            start: "28/11/2026",
+            end: "29/11/2026",
         },
     ]
 
