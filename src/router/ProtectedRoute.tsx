@@ -1,12 +1,13 @@
 import { Navigate, Outlet, useLocation } from "react-router";
 import { useAuth } from "@/auth/hooks/useAuth";
+import { LoadingScreen } from "@/components/layouts/components/loading/LoadingScreen";
 
 export function ProtectedRoute() {
     const { isAuthenticated, isLoading } = useAuth();
     const location = useLocation();
 
     if (isLoading) {
-        return <div>Verificando sesión...</div>;
+        return <LoadingScreen />;
     }
 
     if (!isAuthenticated) {
