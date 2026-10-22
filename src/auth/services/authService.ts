@@ -4,7 +4,7 @@ export const authService = {
     async login(credentials: LoginCredentials): Promise<AuthSession> {
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
-        if (credentials.email !== "admin@example.com" || credentials.password !== "123456") {
+        if (credentials.email !== "admin@example.com" || credentials.password !== "123456789") {
             throw new Error("Credenciales incorrectas");
         }
 
