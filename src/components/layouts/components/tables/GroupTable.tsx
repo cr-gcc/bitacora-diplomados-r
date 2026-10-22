@@ -21,9 +21,10 @@ interface Props {
         profesor: string;
         estatus: string;
     }[];
+    theme: DiplomaTheme;
 }
 
-export function GroupTable({ modules }: Props) {
+export function GroupTable({ modules, theme }: Props) {
     return (
         <Table>
             <TableHeader>
@@ -51,8 +52,8 @@ export function GroupTable({ modules }: Props) {
                             </Badge>
                         </TableCell>
                         <TableCell className="flex gap-x-2 justify-start items-start">
-                            <Button size="xs" variant="link" className="text-xs text-pink-950 font-semibold cursor-pointer hover:no-underline p-0">Revisar</Button>
-                            <Button size="xs" variant="link" className="text-xs text-pink-950 font-semibold cursor-pointer hover:no-underline p-0">Editar</Button>
+                            <Button size="xs" variant="link" className={`text-xs ${theme.buttonText} font-semibold cursor-pointer hover:no-underline p-0`}>Revisar</Button>
+                            <Button size="xs" variant="link" className={`text-xs ${theme.buttonText} font-semibold cursor-pointer hover:no-underline p-0`}>Editar</Button>
                         </TableCell>
                     </TableRow>
                 ))}
@@ -60,8 +61,8 @@ export function GroupTable({ modules }: Props) {
             <TableFooter>
                 <TableRow>
                     <TableCell colSpan={12} className="text-right border-none py-2">
-                        <Button className="bg-pink-950 text-xs text-white hover:bg-pink-950/90 hover:text-white cursor-pointer" size="xs">Editar grupo</Button>
-                        <Button className="bg-pink-950 text-xs text-white hover:bg-pink-950/90 hover:text-white cursor-pointer" size="xs">Eliminar grupo</Button>
+                        <Button className={`text-xs text-white hover:text-white cursor-pointer ${theme.buttonBg} ${theme.buttonHover}`} size="xs">Editar grupo</Button>
+                        <Button className={`text-xs text-white hover:text-white cursor-pointer ${theme.buttonBg} ${theme.buttonHover}`} size="xs">Eliminar grupo</Button>
                     </TableCell>
                 </TableRow>
             </TableFooter>

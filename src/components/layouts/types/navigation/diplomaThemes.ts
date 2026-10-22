@@ -21,6 +21,9 @@ export const diplomaThemes: Record<string, DiplomaTheme> = {
         glowColor: 'bg-pink-950/10',
         btnPlatform: 'bg-pink-50 text-pink-950 hover:bg-pink-100 border border-pink-200',
         btnGroups: 'bg-pink-950 text-white hover:bg-pink-900 shadow-sm shadow-pink-950/25',
+        textColor: "text-pink-950",
+        buttonBg: "bg-pink-950",
+        buttonHover: "hover:bg-pink-950/90",
     },
     "comercio-electronico": {
         icon: ShoppingCart,
@@ -31,6 +34,9 @@ export const diplomaThemes: Record<string, DiplomaTheme> = {
         glowColor: 'bg-blue-600/10',
         btnPlatform: 'bg-blue-50 text-blue-600 hover:bg-blue-100 border border-blue-200',
         btnGroups: 'bg-blue-600 text-white hover:bg-blue-700 shadow-sm shadow-blue-600/25',
+        textColor: "text-blue-600",
+        buttonBg: "bg-blue-600",
+        buttonHover: "hover:bg-blue-600/90",
     },
     "finanzas": {
         icon: CircleDollarSign,
@@ -41,6 +47,9 @@ export const diplomaThemes: Record<string, DiplomaTheme> = {
         glowColor: 'bg-yellow-900/10',
         btnPlatform: 'bg-yellow-50 text-yellow-900 hover:bg-yellow-100 border border-yellow-200',
         btnGroups: 'bg-yellow-900 text-white hover:bg-yellow-950 shadow-sm shadow-yellow-900/25',
+        textColor: "text-yellow-900",
+        buttonBg: "bg-yellow-900",
+        buttonHover: "hover:bg-yellow-900/90",
     },
     "mercadotecnia": {
         icon: Lightbulb,
@@ -51,6 +60,9 @@ export const diplomaThemes: Record<string, DiplomaTheme> = {
         glowColor: 'bg-yellow-600/10',
         btnPlatform: 'bg-yellow-50 text-yellow-700 hover:bg-yellow-100 border border-yellow-200',
         btnGroups: 'bg-yellow-600 text-white hover:bg-yellow-700 shadow-sm shadow-yellow-600/25',
+        textColor: "text-yellow-900",
+        buttonBg: "bg-yellow-600",
+        buttonHover: "hover:bg-yellow-600/90",
     },
     "talento-humano": {
         icon: UserRoundGroup,
@@ -61,6 +73,9 @@ export const diplomaThemes: Record<string, DiplomaTheme> = {
         glowColor: 'bg-lime-900/10',
         btnPlatform: 'bg-lime-50 text-lime-900 hover:bg-lime-100 border border-lime-200',
         btnGroups: 'bg-lime-900 text-white hover:bg-lime-950 shadow-sm shadow-lime-900/25',
+        textColor: "text-lime-900",
+        buttonBg: "bg-lime-900",
+        buttonHover: "hover:bg-lime-900/90",
     },
     "tics": {
         icon: Server,
@@ -71,6 +86,9 @@ export const diplomaThemes: Record<string, DiplomaTheme> = {
         glowColor: 'bg-blue-950/10',
         btnPlatform: 'bg-blue-50 text-blue-950 hover:bg-blue-100 border border-blue-200',
         btnGroups: 'bg-blue-950 text-white hover:bg-blue-900 shadow-sm shadow-blue-950/25',
+        textColor: "text-blue-950",
+        buttonBg: "bg-blue-950",
+        buttonHover: "hover:bg-blue-950/90",
     }
 };
 
@@ -83,4 +101,7 @@ export const defaultDiplomaTheme: DiplomaTheme = {
     glowColor: 'bg-gray-600/10',
     btnPlatform: 'bg-gray-50 text-gray-600 hover:bg-gray-100 border border-gray-200',
     btnGroups: 'bg-gray-600 text-white hover:bg-gray-700 shadow-sm shadow-gray-600/25',
+    textColor: "text-gray-900",
+    buttonBg: "bg-gray-600",
+    buttonHover: "hover:bg-gray-600/90",
 };

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useDiploma } from "@pages/groups/hooks/useDiploma";
 import { GroupAccordion } from "@components/layouts/components/accordions/GroupAccordion";
 import { Button } from "@/components/ui/button";
 import { CreateGroupModal } from "@/components/layouts/components/modals/groups/CreateGroupModal";
@@ -8,6 +9,7 @@ import { CheckModuleModal } from "@/components/layouts/components/modals/groups/
 import { EditModuleModal } from "@/components/layouts/components/modals/groups/EditModuleModal";
 
 export function GroupsPage() {
+    const { diploma, theme } = useDiploma();
     const [openCreate, setOpenCreate] = useState(false);
     const [openEdit, setOpenEdit] = useState(false);
     const [openDelete, setOpenDelete] = useState(false);
@@ -125,8 +127,8 @@ export function GroupsPage() {
             <div id="groups" className="flex flex-col gap-y-4 pb-12">
                 <div className="flex flex-1 justify-between">
                     <div className="flex flex-col">
-                        <h2 className="text-4xl text-pink-950 tracking-tight">
-                            Auditoría Interna
+                        <h2 className={`text-4xl tracking-tight ${theme.textColor}`}>
+                            {diploma?.title ?? "Diplomado"}
                         </h2>
                         <p className="text-gray-500 mt-2 text-sm">
                             A continuación se muestra la información de los grupos.
@@ -135,7 +137,7 @@ export function GroupsPage() {
                     <div className="flex gap-x-4">
                         <Button
                             size="sm"
-                            className="bg-pink-950 text-xs text-white hover:bg-pink-950/90 hover:text-white cursor-pointer"
+                            className={`text-xs text-white hover:text-white cursor-pointer ${theme.buttonBg} ${theme.buttonHover}`}
                             onClick={() => setOpenCreate(true)}
                         >
                             Crear grupo
@@ -144,7 +146,7 @@ export function GroupsPage() {
                 </div>
                 <div>
                     {items.map((item) => (
-                        <GroupAccordion key={item.id} items={[item]} />
+                        <GroupAccordion key={item.id} items={[item]} theme={theme} />
                     ))}
                 </div>
             </div>

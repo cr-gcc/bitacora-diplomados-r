@@ -1,11 +1,6 @@
-
 import { Link, matchPath, useLocation } from "react-router";
-
-import { navigationItems } from
-    "@components/layouts/config/navigation/navigationItems";
-
-import { diplomaItems } from
-    "@components/layouts/config/navigation/diplomaItems";
+import { navigationItems } from "@components/layouts/config/navigation/navigationItems";
+import { mockDiplomas } from "@components/layouts/config/navigation/mockDiplomas";
 
 import {
     Breadcrumb,
@@ -29,8 +24,8 @@ export function Breadcrum() {
     );
 
     const diploma = diplomaMatch
-        ? diplomaItems.find(
-            (item) => item.slug === diplomaMatch.params.slug
+        ? mockDiplomas.find(
+            (diploma) => diploma.slug === diplomaMatch.params.slug
         )
         : undefined;
 

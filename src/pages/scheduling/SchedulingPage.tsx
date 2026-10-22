@@ -4,7 +4,6 @@ import { AddSchedulingModal } from "@/components/layouts/components/modals/sched
 import { SchedulingTable } from "@/components/layouts/components/tables/SchedulingTable";
 import {
     Alert,
-    AlertDescription,
     AlertTitle,
 } from "@/components/ui/alert"
 

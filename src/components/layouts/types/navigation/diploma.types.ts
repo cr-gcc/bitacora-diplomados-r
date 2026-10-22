@@ -15,4 +15,8 @@ export interface DiplomaTheme {
     glowColor: string
     btnPlatform: string
     btnGroups: string
+    /*Style to page and modals*/
+    textColor: string;
+    buttonBg: string;
+    buttonHover: string;
 }
