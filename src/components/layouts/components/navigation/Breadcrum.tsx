@@ -1,35 +1,72 @@
-import { Link, useLocation } from "react-router";
-import { navigationItems } from "@components/layouts/config/navigation/navigationItems";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator, BreadcrumbPage } from "@/components/ui/breadcrumb"
-import { Home } from "lucide-react";
+
+import { Link, matchPath, useLocation } from "react-router";
+
+import { navigationItems } from
+    "@components/layouts/config/navigation/navigationItems";
+
+import { diplomaItems } from
+    "@components/layouts/config/navigation/diplomaItems";
+
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbSeparator,
+    BreadcrumbPage,
+} from "@/components/ui/breadcrumb";
 
 export function Breadcrum() {
     const { pathname } = useLocation();
+
     const currentItem = navigationItems.find(
         (item) => item.to === pathname
     );
+
+    const diplomaMatch = matchPath(
+        "/diplomados/:slug",
+        pathname
+    );
+
+    const diploma = diplomaMatch
+        ? diplomaItems.find(
+            (item) => item.slug === diplomaMatch.params.slug
+        )
+        : undefined;
+
     const currentLabel = currentItem?.label ?? "Página";
 
     return (
         <Breadcrumb>
             <BreadcrumbList>
-                {pathname !== "/" && (
+                <BreadcrumbItem>
+                    <span className="text-muted-foreground">
+                        Bitácora
+                    </span>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                {diplomaMatch ? (
                     <>
                         <BreadcrumbItem>
-                            <BreadcrumbLink render={<Link to="/" />}>
-                                <Home className="size-4" />
-                                <span className="sr-only">Inicio</span>
+                            <BreadcrumbLink render={<Link to="/diplomados" />}>
+                                Diplomados
                             </BreadcrumbLink>
                         </BreadcrumbItem>
                         <BreadcrumbSeparator />
+                        <BreadcrumbItem>
+                            <BreadcrumbPage className="font-semibold">
+                                {diploma?.title ?? "Diplomado no encontrado"}
+                            </BreadcrumbPage>
+                        </BreadcrumbItem>
                     </>
+                ) : (
+                    <BreadcrumbItem>
+                        <BreadcrumbPage className="font-semibold">
+                            {currentLabel}
+                        </BreadcrumbPage>
+                    </BreadcrumbItem>
                 )}
-                <BreadcrumbItem>
-                    <BreadcrumbPage>
-                        {currentLabel}
-                    </BreadcrumbPage>
-                </BreadcrumbItem>
             </BreadcrumbList>
         </Breadcrumb>
-    )
+    );
 }
