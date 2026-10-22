@@ -12,52 +12,65 @@ import { ProfessorsPage } from '@pages/professors/ProfessorsPage'
 import { ReportsPage } from '@pages/reports/ReportsPage'
 import { SchedulingPage } from '@pages/scheduling/SchedulingPage'
 
+import { ProtectedRoute } from "@router/ProtectedRoute";
+import { GuestRoute } from "@router/GuestRoute";
+
 export const router = createBrowserRouter([
     {
-        element: <BlankLayout />,
+        element: <GuestRoute />,
         children: [
             {
-                path: '/login',
-                element: <LoginPage />
+                element: <BlankLayout />,
+                children: [
+                    {
+                        path: '/login',
+                        element: <LoginPage />
+                    }
+                ]
             }
         ]
     },
     {
-        element: <MainLayout />,
+        element: <ProtectedRoute />,
         children: [
             {
-                path: '/',
-                element: <DashboardPage />
-            },
-            {
-                path: '/calendario',
-                element: <CalendarPage />
-            },
-            {
-                path: '/diplomados',
+                element: <MainLayout />,
                 children: [
                     {
-                        index: true,
-                        element: <DiplomasPage />
+                        path: '/',
+                        element: <DashboardPage />
                     },
                     {
-                        path: ':slug',
-                        element: <GroupsPage />
-                    }
+                        path: '/calendario',
+                        element: <CalendarPage />
+                    },
+                    {
+                        path: '/diplomados',
+                        children: [
+                            {
+                                index: true,
+                                element: <DiplomasPage />
+                            },
+                            {
+                                path: ':slug',
+                                element: <GroupsPage />
+                            }
+                        ]
+                    },
+                    {
+                        path: '/programacion',
+                        element: <SchedulingPage />
+                    },
+                    {
+                        path: '/profesores',
+                        element: <ProfessorsPage />
+                    },
+                    {
+                        path: '/reportes',
+                        element: <ReportsPage />
+                    },
                 ]
-            },
-            {
-                path: '/programacion',
-                element: <SchedulingPage />
-            },
-            {
-                path: '/profesores',
-                element: <ProfessorsPage />
-            },
-            {
-                path: '/reportes',
-                element: <ReportsPage />
-            },
+            }
         ]
     }
 ])

@@ -1,23 +1,22 @@
-import { LogOutIcon, SettingsIcon, UserIcon } from "lucide-react";
 import type { SessionOption } from "@/components/layouts/types/user/menu/option.type";
 
 export const sessionOptionItem: SessionOption[] = [
     {
         label: "Perfil",
+        type: 'profile',
         action: () => { alert("Perfil") },
-        icon: UserIcon,
         variant: 'default',
     },
     {
         label: "Ajustes",
+        type: 'settings',
         action: () => { alert("Ajustes") },
-        icon: SettingsIcon,
         variant: 'default',
     },
     {
         label: "Cerrar sesión",
-        action: () => { alert("Cerrar sesión") },
-        icon: LogOutIcon,
+        type: 'logout',
+        action: () => { },
         variant: 'destructive',
     },
 ];

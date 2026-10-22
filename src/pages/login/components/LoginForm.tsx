@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { LogIn } from 'lucide-react';
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -10,33 +11,51 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
+import { ProgressBar } from '@components/layouts/components/loading/ProgressBar';
 
 export function LoginForm() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [generalError, setGeneralError] = useState('');
+
+    const handleLogin = (e: React.FormEvent) => {
+        e.preventDefault();
+        console.log(email, password);
+    }
+
     return (
         <Card className="w-full max-w-sm">
             <CardHeader>
                 <CardDescription className='text-sm'>
                     <span className='text-gold font-bold uppercase'>Bienvenido</span>
                 </CardDescription>
-                <CardTitle className='text-sky-900 text-3xl font-bold'>Inicia sesión</CardTitle>
+                <CardTitle className='text-sky-900 text-3xl font-bold'>
+                    Inicia sesión
+                </CardTitle>
                 <CardDescription className='text-xs'>
-                    <span className='text-slate-500'>Accede al control académico interno</span>
+                    <span className='text-slate-500'>
+                        Accede al control académico interno
+                    </span>
                 </CardDescription>
             </CardHeader>
             <CardContent>
-                <form>
+                <form onSubmit={handleLogin} >
                     <div className="flex flex-col gap-6">
-                        <div className="grid gap-2">
+                        <div className="grid gap-x-2 gap-y-1">
                             <Label htmlFor="email" className='text-xs'>Email</Label>
                             <Input
                                 id="email"
                                 type="email"
                                 className='text-xs focus-visible:border-gold focus-visible:ring-gold/50'
                                 placeholder="Email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                                 required
                             />
+                            {/*error && <p className="text-red-500 text-xs font-semibold">{error}</p>*/}
                         </div>
-                        <div className="grid gap-2">
+                        <div className="grid gap-x-2 gap-y-1">
                             <div className="flex items-center">
                                 <Label htmlFor="password" className='text-xs'>Contraseña</Label>
                             </div>
@@ -45,8 +64,11 @@ export function LoginForm() {
                                 type="password"
                                 className='text-xs focus-visible:border-gold focus-visible:ring-gold/50'
                                 placeholder="Contraseña"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
                                 required
                             />
+                            {/*error && <p className="text-red-500 text-xs font-semibold">{error}</p>*/}
                         </div>
                     </div>
                 </form>
@@ -55,6 +77,10 @@ export function LoginForm() {
                 <Button type="submit" className="w-full bg-gold cursor-pointer flex items-center gap-2 hover:bg-gold/80 transition-colors duration-200">
                     <span>Entrar</span><LogIn />
                 </Button>
+                {loading && <ProgressBar />}
+                {
+                    generalError && <p className="text-red-500 text-xs font-semibold">{generalError}</p>
+                }
             </CardFooter>
         </Card>
     )
