@@ -1,5 +1,5 @@
-import { DiplomaCard } from '@components/layouts/components/cards/DiplomaCard'
-import { diplomaItems } from '@components/layouts/config/navigation/diplomaItems'
+import { DiplomaCard } from "@components/layouts/components/cards/DiplomaCard"
+import { mockDiplomas } from "@components/layouts/config/navigation/mockDiplomas";
 
 export function DiplomasPage() {
     return (
@@ -14,7 +14,7 @@ export function DiplomasPage() {
             </div>
             <section className="flex flex-col gap-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {diplomaItems.map((diploma) => (
+                    {mockDiplomas.map((diploma) => (
                         <DiplomaCard key={diploma.id} diploma={diploma} />
                     ))}
                 </div>
