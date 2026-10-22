@@ -9,7 +9,7 @@ import {
     TableRow,
     TableFooter,
 } from "@/components/ui/table"
-
+import type { DiplomaTheme } from "@/components/layouts/types/navigation/diploma.types";
 
 interface Props {
     modules: {
@@ -52,8 +52,8 @@ export function GroupTable({ modules, theme }: Props) {
                             </Badge>
                         </TableCell>
                         <TableCell className="flex gap-x-2 justify-start items-start">
-                            <Button size="xs" variant="link" className={`text-xs ${theme.buttonText} font-semibold cursor-pointer hover:no-underline p-0`}>Revisar</Button>
-                            <Button size="xs" variant="link" className={`text-xs ${theme.buttonText} font-semibold cursor-pointer hover:no-underline p-0`}>Editar</Button>
+                            <Button size="xs" variant="link" className={`text-xs ${theme.textColor} font-semibold cursor-pointer hover:no-underline p-0`}>Revisar</Button>
+                            <Button size="xs" variant="link" className={`text-xs ${theme.textColor} font-semibold cursor-pointer hover:no-underline p-0`}>Editar</Button>
                         </TableCell>
                     </TableRow>
                 ))}
