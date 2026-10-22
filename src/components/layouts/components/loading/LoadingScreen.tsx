@@ -1,12 +1,19 @@
-export function LoadingScreen() {
+interface LoadingScreenProps {
+    message?: string;
+}
+
+export function LoadingScreen({ message = "Cargando..." }: LoadingScreenProps) {
     return (
         <div
-            className="fixed inset-0 flex items-center justify-center bg-black/60 z-9999 transition-all duration-300"
+            role="status"
+            aria-live="polite"
+            aria-label={message}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/60"
         >
-            <div className="p-6 rounded-lg max-w-sm w-full text-center">
-                <div className="border-4 border-t-4 border-gray-200 border-t-gray-500 rounded-full h-16 w-16 animate-spin mx-auto"></div>
-                <p className="mt-4 text-lg text-gray-200 tracking-wide">Cargando...</p>
+            <div className="flex flex-col items-center gap-4 p-6">
+                <div aria-hidden="true" className="size-14 rounded-full border-4 border-gray-200 border-t-gray-500 animate-spin motion-reduce:animate-none" />
+                <p className="text-lg font-medium text-white">{message}</p>
             </div>
         </div>
-    )
+    );
 }
