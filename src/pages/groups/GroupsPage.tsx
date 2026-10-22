@@ -150,11 +150,31 @@ export function GroupsPage() {
                     ))}
                 </div>
             </div>
-            <CreateGroupModal open={openCreate} onOpenChange={setOpenCreate} />
-            <DeleteGroupModal open={openDelete} onOpenChange={setOpenDelete} />
-            <EditGroupModal open={openEdit} onOpenChange={setOpenEdit} />
-            <CheckModuleModal open={openCheck} onOpenChange={setOpenCheck} />
-            <EditModuleModal open={openEditModule} onOpenChange={setOpenEditModule} />
+            <CreateGroupModal
+                open={openCreate}
+                onOpenChange={setOpenCreate}
+                theme={theme}
+            />
+            <DeleteGroupModal
+                open={openDelete}
+                onOpenChange={setOpenDelete}
+                theme={theme}
+            />
+            <EditGroupModal
+                open={openEdit}
+                onOpenChange={setOpenEdit}
+                theme={theme}
+            />
+            <CheckModuleModal
+                open={openCheck}
+                onOpenChange={setOpenCheck}
+                theme={theme}
+            />
+            <EditModuleModal
+                open={openEditModule}
+                onOpenChange={setOpenEditModule}
+                theme={theme}
+            />
         </>
 
     )
