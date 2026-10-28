@@ -145,9 +145,7 @@ export function GroupsPage() {
                     </div>
                 </div>
                 <div>
-                    {items.map((item) => (
-                        <GroupAccordion key={item.id} items={[item]} theme={theme} />
-                    ))}
+                    <GroupAccordion items={items} theme={theme} />
                 </div>
             </div>
             <CreateGroupModal

@@ -28,7 +28,7 @@ interface Props {
 
 export function GroupAccordion({ items, theme }: Props) {
     return (
-        <Accordion className="bg-white w-full rounded-lg border">
+        <Accordion multiple={false} className="bg-white w-full rounded-lg border">
             {items.map((item) => (
                 <AccordionItem
                     key={item.id}
