@@ -1,43 +1,64 @@
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
+import axios from "axios";
 import { AuthContext } from "@/auth/context/AuthContext";
 import { authService } from "@/auth/services/authService";
-import type { AuthSession, LoginCredentials } from "@/auth/types/auth.types";
+import type { User, LoginCredentials } from "@/auth/types/auth.types";
 
 interface Props {
     children: ReactNode;
 }
 
-const STORAGE_KEY = "bdv2_session";
-
 export function AuthProvider({ children }: Props) {
-    const [session, setSession] = useState<AuthSession | null>(() => {
-        try {
-            const stored = localStorage.getItem(STORAGE_KEY);
-            return stored ? JSON.parse(stored) as AuthSession : null;
-        } catch {
-            return null;
-        }
-    });
+    const [user, setUser] = useState<User | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
+
+    // Recuperar la sesión al cargar la aplicación
+    useEffect(() => {
+        let active = true;
+        const restoreSession = async () => {
+            try {
+                const authenticatedUser = await authService.me();
+                if (active) {
+                    setUser(authenticatedUser);
+                }
+            } catch (error) {
+                if (!active) return;
+
+                if (axios.isAxiosError(error) && error.response?.status === 401) {
+                    setUser(null);
+                } else {
+                    console.error("No se pudo recuperar la sesión:", error);
+                }
+            } finally {
+                if (active) {
+                    setIsLoading(false);
+                }
+            }
+        };
+
+        restoreSession();
+
+        return () => {
+            active = false;
+        };
+    }, []);
 
     const login = async (credentials: LoginCredentials): Promise<void> => {
-        const newSession = await authService.login(credentials);
-
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(newSession));
-        setSession(newSession);
+        const authenticatedUser = await authService.login(credentials);
+        setUser(authenticatedUser);
     };
 
-    const logout = (): void => {
-        localStorage.removeItem(STORAGE_KEY);
-        setSession(null);
+    const logout = async (): Promise<void> => {
+        await authService.logout();
+        setUser(null);
     };
 
     return (
         <AuthContext.Provider
             value={{
-                session,
-                user: session?.user ?? null,
-                isAuthenticated: session !== null,
-                isLoading: false,
+                user,
+                isAuthenticated: user !== null,
+                isLoading,
                 login,
                 logout,
             }}

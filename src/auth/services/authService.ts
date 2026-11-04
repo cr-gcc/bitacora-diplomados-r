@@ -1,27 +1,31 @@
-import type { AuthSession, LoginCredentials } from "@/auth/types/auth.types";
+import { api } from "@/services/api/axios";
+import type { User, LoginCredentials } from "@/auth/types/auth.types";
+
+interface ApiResponse<T> {
+    data: T
+}
 
 export const authService = {
-    async login(credentials: LoginCredentials): Promise<AuthSession> {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+    async login(credentials: LoginCredentials): Promise<User> {
+        await api.get("/sanctum/csrf-cookie");
 
-        if (credentials.email !== "admin@example.com" || credentials.password !== "123456789") {
-            throw new Error("Credenciales incorrectas");
-        }
+        const response = await api.post<ApiResponse<User>>(
+            "/api/v1/auth/login",
+            credentials
+        );
 
-        return {
-            user: {
-                id: 1,
-                name: "Administrador",
-                email: credentials.email,
-                role: "admin",
-                permissions: [
-                    "groups.view",
-                    "groups.create",
-                    "groups.edit",
-                    "groups.delete",
-                ],
-            },
-            token: "mock-token-bdv2",
-        };
+        return response.data.data;
+    },
+
+    async me(): Promise<User> {
+        const response = await api.get<ApiResponse<User>>(
+            "/api/v1/auth/me"
+        );
+
+        return response.data.data;
+    },
+
+    async logout(): Promise<void> {
+        await api.post("/api/v1/auth/logout");
     },
 };

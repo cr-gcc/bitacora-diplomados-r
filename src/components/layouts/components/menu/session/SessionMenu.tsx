@@ -9,13 +9,22 @@ import { ProfileModal } from "@components/layouts/components/modals/user/Profile
 
 export function SessionMenu() {
     const [openProfile, setOpenProfile] = useState(false);
+    const [isLoggingOut, setIsLoggingOut] = useState(false);
     const navigate = useNavigate();
     const { logout } = useAuth();
 
-    const handleLogout = () => {
-        logout();
-        navigate("/login", { replace: true });
-    }
+    const handleLogout = async () => {
+        if (isLoggingOut) return;
+        setIsLoggingOut(true);
+
+        try {
+            await logout();
+        } catch (error) {
+            console.error("Error al cerrar sesión:", error);
+        } finally {
+            navigate("/login", { replace: true });
+        }
+    };
 
     const handleSettings = () => {
         console.log('ajustes')
