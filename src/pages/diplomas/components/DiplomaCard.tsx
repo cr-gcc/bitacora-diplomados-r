@@ -1,10 +1,9 @@
 import { Link } from "react-router";
 import { ExternalLink, ArrowRight, ClipboardPen } from "lucide-react";
-import type { Diploma } from "@components/layouts/types/navigation/diploma.types";
-import { diplomaThemes, defaultDiplomaTheme } from "@components/layouts/types/navigation/diplomaThemes";
+import type { Diploma } from "@/config/diplomas/diploma.types";
+import { diplomaThemes, defaultDiplomaTheme } from "@/config/diplomas/diplomaThemes";
 
 interface DiplomaCardProps { diploma: Diploma; }
-
 
 export function DiplomaCard({ diploma }: DiplomaCardProps) {
     const theme = diplomaThemes[diploma.slug] ?? defaultDiplomaTheme;

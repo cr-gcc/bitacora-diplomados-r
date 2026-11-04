@@ -1,5 +1,5 @@
 import type { Diploma } from
-    "@components/layouts/types/navigation/diploma.types";
+    "@/config/diplomas/diploma.types";
 
 export const mockDiplomas: Diploma[] = [
     {

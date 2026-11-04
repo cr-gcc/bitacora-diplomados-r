@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { ProgressBar } from "@components/layouts/components/loading/ProgressBar";
-import type { DiplomaTheme } from "@components/layouts/types/navigation/diploma.types";
+import type { DiplomaTheme } from "@/config/diplomas/diploma.types";
 
 interface Props {
     open: boolean;

@@ -1,6 +1,6 @@
 import { useParams } from "react-router";
 import { mockDiplomas } from "@components/layouts/config/navigation/mockDiplomas";
-import { diplomaThemes, defaultDiplomaTheme } from "@components/layouts/types/navigation/diplomaThemes";
+import { diplomaThemes, defaultDiplomaTheme } from "@/config/diplomas/diplomaThemes";
 
 export function useDiploma() {
     const { slug } = useParams<{ slug: string }>();

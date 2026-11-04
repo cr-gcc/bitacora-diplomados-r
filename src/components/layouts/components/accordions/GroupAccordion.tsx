@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/accordion"
 import { Badge } from "@/components/ui/badge";
 import { GroupTable } from "@components/layouts/components/tables/GroupTable";
-import type { DiplomaTheme } from "@components/layouts/types/navigation/diploma.types";
+import type { DiplomaTheme } from "@/config/diplomas/diploma.types";
 
 interface Props {
     items: {

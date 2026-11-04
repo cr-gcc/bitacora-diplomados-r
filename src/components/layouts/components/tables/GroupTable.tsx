@@ -9,7 +9,7 @@ import {
     TableRow,
     TableFooter,
 } from "@/components/ui/table"
-import type { DiplomaTheme } from "@/components/layouts/types/navigation/diploma.types";
+import type { DiplomaTheme } from "@/config/diplomas/diploma.types";
 
 interface Props {
     modules: {
