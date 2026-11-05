@@ -80,15 +80,19 @@ export function ProfesorTable({ professors, onUpdate, saving }: Props) {
                                 <Badge
                                     variant="outline"
                                     className={`text-xs border-none font-semibold ${professor.active
-                                            ? "bg-emerald-100 text-emerald-800"
-                                            : "bg-red-100 text-red-800"
+                                        ? "bg-emerald-100 text-emerald-800"
+                                        : "bg-red-100 text-red-800"
                                         }`}
                                 >
                                     {professor.active ? "Activo" : "Inactivo"}
                                 </Badge>
                             </TableCell>
                             <TableCell className="flex gap-x-2 justify-start items-start">
-                                <Button size="xs" variant="link" className="text-xs text-navy font-semibold cursor-pointer hover:no-underline p-0" onClick={() => setSelectedProfessor(professor)}>
+                                <Button
+                                    size="xs"
+                                    variant="link"
+                                    className="text-xs text-navy font-semibold cursor-pointer hover:no-underline p-0" onClick={() => setSelectedProfessor(professor)}
+                                >
                                     Editar
                                 </Button>
                             </TableCell>

@@ -2,11 +2,11 @@ import { useState } from "react";
 import { useDiploma } from "@pages/groups/hooks/useDiploma";
 import { GroupAccordion } from "@components/layouts/components/accordions/GroupAccordion";
 import { Button } from "@/components/ui/button";
-import { CreateGroupModal } from "@/components/layouts/components/modals/groups/CreateGroupModal";
-import { EditGroupModal } from "@/components/layouts/components/modals/groups/EditGroupModal";
-import { DeleteGroupModal } from "@/components/layouts/components/modals/groups/DeleteGroupModal";
-import { CheckModuleModal } from "@/components/layouts/components/modals/groups/CheckModuleModal";
-import { EditModuleModal } from "@/components/layouts/components/modals/groups/EditModuleModal";
+import { CreateGroupModal } from "@/pages/groups/components/CreateGroupModal";
+import { EditGroupModal } from "@/pages/groups/components/EditGroupModal";
+import { DeleteGroupModal } from "@/pages/groups/components/DeleteGroupModal";
+import { CheckModuleModal } from "@/pages/groups/components/CheckModuleModal";
+import { EditModuleModal } from "@/pages/groups/components/EditModuleModal";
 
 export function GroupsPage() {
     const { diploma, theme } = useDiploma();
