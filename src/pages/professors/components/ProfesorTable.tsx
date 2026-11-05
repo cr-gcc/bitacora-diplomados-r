@@ -36,7 +36,9 @@ export function ProfesorTable({ professors, onUpdate, saving }: Props) {
             professor.email,
             professor.user,
             professor.rfc,
-        ].some((value) => value.toLowerCase().includes(query));
+        ].some((value) =>
+            (value ?? "").toLowerCase().includes(query)
+        );
     });
 
     return (
@@ -78,8 +80,8 @@ export function ProfesorTable({ professors, onUpdate, saving }: Props) {
                                 <Badge
                                     variant="outline"
                                     className={`text-xs border-none font-semibold ${professor.active
-                                        ? "bg-emerald-100 text-emerald-800"
-                                        : "bg-red-100 text-red-800"
+                                            ? "bg-emerald-100 text-emerald-800"
+                                            : "bg-red-100 text-red-800"
                                         }`}
                                 >
                                     {professor.active ? "Activo" : "Inactivo"}
