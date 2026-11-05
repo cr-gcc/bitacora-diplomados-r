@@ -19,7 +19,6 @@ interface Props {
 }
 
 export function ProfesorTable({ professors }: Props) {
-    const [open, setOpen] = useState(false);
     const [search, setSearch] = useState("");
     const [selectedProfessor, setSelectedProfessor] =
         useState<Professor | null>(null);
@@ -31,7 +30,7 @@ export function ProfesorTable({ professors }: Props) {
             professor.lastName,
             professor.email ?? "",
             professor.user,
-            professor.rfc,
+            professor.rfc ?? "",
         ].some((value) => value.toLowerCase().includes(query));
     });
 

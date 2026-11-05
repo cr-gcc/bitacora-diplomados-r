@@ -1,5 +1,6 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
     Dialog,
     DialogClose,
@@ -8,8 +9,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { useAddProfessorForm } from "../hooks/useAddProfessorForm";
 
 interface Props {
     open: boolean;
@@ -17,12 +17,13 @@ interface Props {
 }
 
 export function AddProfessorModal({ open, onOpenChange }: Props) {
-    const [nombre, setNombre] = useState('');
-    const [apellidos, setApellidos] = useState('');
-    const [email, setEmail] = useState('');
-    const [rfc, setRfc] = useState('');
-    const [usuario, setUsuario] = useState('');
-    const [password, setPassword] = useState('');
+    const {
+        form,
+        errors,
+        updateFile,
+        validateForm,
+        resetForm
+    } = useAddProfessorForm();
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
@@ -38,9 +39,10 @@ export function AddProfessorModal({ open, onOpenChange }: Props) {
                                 id="nombre"
                                 type="text"
                                 className="text-xs h-7 border-gray-300"
-                                value={nombre}
-                                onChange={(e) => setNombre(e.target.value)}
+                                value={form.name}
+                                onChange={(e) => updateFile('name', e.target.value)}
                             />
+                            {errors.name && <span className="text-red-500 text-xs">{errors.name}</span>}
                         </div>
                         <div className="flex flex-col gap-1 w-full">
                             <Label htmlFor="apellidos" className="text-sm text-gray-500 font-medium">Apellidos</Label>
@@ -48,9 +50,10 @@ export function AddProfessorModal({ open, onOpenChange }: Props) {
                                 id="apellidos"
                                 type="text"
                                 className="text-xs h-7 border-gray-300"
-                                value={apellidos}
-                                onChange={(e) => setApellidos(e.target.value)}
+                                value={form.lastName}
+                                onChange={(e) => updateFile('lastName', e.target.value)}
                             />
+                            {errors.lastName && <span className="text-red-500 text-xs">{errors.lastName}</span>}
                         </div>
                         <div className="flex flex-col gap-1 w-full">
                             <Label htmlFor="email" className="text-sm text-gray-500 font-medium">Email</Label>
@@ -58,9 +61,10 @@ export function AddProfessorModal({ open, onOpenChange }: Props) {
                                 id="email"
                                 type="text"
                                 className="text-xs h-7 border-gray-300"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                value={form.email}
+                                onChange={(e) => updateFile('email', e.target.value)}
                             />
+                            {errors.email && <span className="text-red-500 text-xs">{errors.email}</span>}
                         </div>
                         <div className="flex flex-col gap-1 w-full">
                             <Label htmlFor="rfc" className="text-sm text-gray-500 font-medium">RFC</Label>
@@ -68,9 +72,10 @@ export function AddProfessorModal({ open, onOpenChange }: Props) {
                                 id="rfc"
                                 type="text"
                                 className="text-xs h-7 border-gray-300"
-                                value={rfc}
-                                onChange={(e) => setRfc(e.target.value)}
+                                value={form.rfc}
+                                onChange={(e) => updateFile('rfc', e.target.value)}
                             />
+                            {errors.rfc && <span className="text-red-500 text-xs">{errors.rfc}</span>}
                         </div>
                         <div className="flex flex-col gap-1 w-full">
                             <Label htmlFor="usuario" className="text-sm text-gray-500 font-medium">Usuario</Label>
@@ -78,25 +83,30 @@ export function AddProfessorModal({ open, onOpenChange }: Props) {
                                 id="usuario"
                                 type="text"
                                 className="text-xs h-7 border-gray-300"
-                                value={usuario}
-                                onChange={(e) => setUsuario(e.target.value)}
+                                value={form.user}
+                                onChange={(e) => updateFile('user', e.target.value)}
                             />
-                        </div>
-                        <div className="flex flex-col gap-1 w-full">
-                            <Label htmlFor="password" className="text-sm text-gray-500 font-medium">Contraseña</Label>
-                            <Input
-                                id="password"
-                                type="password"
-                                className="text-xs h-7 border-gray-300"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                            />
+                            {errors.user && <span className="text-red-500 text-xs">{errors.user}</span>}
                         </div>
                     </div>
                 </div>
                 <DialogFooter className="w-full gap-x-1">
-                    <Button className="bg-navy text-xs text-white hover:bg-navyh hover:text-white cursor-pointer" size="xs">Guardar</Button>
-                    <DialogClose render={<Button variant="outline" className="bg-navy text-xs text-white hover:bg-navyh hover:text-white cursor-pointer" size="xs">Salir</Button>} />
+                    <Button
+                        size="xs"
+                        className="bg-navy text-xs text-white hover:bg-navyh hover:text-white cursor-pointer"
+                        onClick={() => validateForm()}
+                    >
+                        Guardar
+                    </Button>
+                    <DialogClose render={
+                        <Button
+                            size="xs"
+                            variant="outline"
+                            className="bg-navy text-xs text-white hover:bg-navyh hover:text-white cursor-pointer"
+                            onClick={() => resetForm()}
+                        >
+                            Salir
+                        </Button>} />
                 </DialogFooter>
             </DialogContent>
         </Dialog>

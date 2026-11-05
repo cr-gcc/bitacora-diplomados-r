@@ -50,6 +50,6 @@ export function useEditProfessorForm(professor: Professor) {
         form,
         errors,
         updateField,
-        validateForm,
+        validateForm
     };
 }
