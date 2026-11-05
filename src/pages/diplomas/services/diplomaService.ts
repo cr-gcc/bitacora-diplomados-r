@@ -1,5 +1,4 @@
 import { api } from "@/services/api/axios";
-
 import type { Diploma, DiplomaResponse } from "../types/diploma.types";
 
 export const diplomaService = {
@@ -8,7 +7,6 @@ export const diplomaService = {
             "/api/v1/diplomas",
             { signal }
         );
-
         return response.data.data;
     },
 };

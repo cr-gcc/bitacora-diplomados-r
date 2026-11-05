@@ -7,8 +7,7 @@ import {
     Server,
     Diamond
 } from "lucide-react";
-import type { DiplomaTheme } from
-    "@/config/diplomas/diploma.types";
+import type { DiplomaTheme } from "@/config/diplomas/diploma.types";
 
 export const diplomaThemes: Record<string, DiplomaTheme> = {
     "auditoria-interna": {

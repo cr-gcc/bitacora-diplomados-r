@@ -1,32 +1,12 @@
 import { useState } from "react";
-import { ProfesorTable } from "@/components/layouts/components/tables/ProfesorTable"
-import { AddProfessorModal } from "@/components/layouts/components/modals/professors/AddProfessorModal"
+import { useProfessors } from "./hooks/useProfessors";
+import { ProfesorTable } from "@/pages/professors/components/ProfesorTable"
+import { AddProfessorModal } from "@/pages/professors/components/AddProfessorModal"
 import { Button } from "@/components/ui/button"
 
 export function ProfessorsPage() {
     const [openAdd, setOpenAdd] = useState(false);
-    const professors = [
-        {
-            id: 1,
-            name: "Cristiano",
-            last_name: "Guzman Contreras",
-            email: "cristianocg@gmail.com",
-            rfc: "GUCC9007269B7",
-            usuario: "profesor1",
-            password: "password1",
-            estatus: "Activo",
-        },
-        {
-            id: 2,
-            name: "Juan",
-            last_name: "Perez Lopez",
-            email: "juanpl@gmail.com",
-            rfc: "GUCC9007269B7",
-            usuario: "profesor2",
-            password: "password2",
-            estatus: "Inactivo",
-        },
-    ]
+    const { professors, loading, error } = useProfessors();
     return (
         <>
             <div id="professors" className="flex flex-col gap-y-4 pb-12">
@@ -50,7 +30,15 @@ export function ProfessorsPage() {
                     </div>
                 </div>
                 <section className="flex flex-col bg-white w-full rounded-lg px-2 pb-1 pt-0.5">
-                    <ProfesorTable professors={professors} />
+                    {
+                        loading ? (
+                            <p>Cargando profesores...</p>
+                        ) : error ? (
+                            <p className="text-red-600">{error}</p>
+                        ) : (
+                            <ProfesorTable professors={professors} />
+                        )
+                    }
                 </section>
             </div>
             <AddProfessorModal open={openAdd} onOpenChange={setOpenAdd} />
