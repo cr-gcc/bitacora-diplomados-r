@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,13 +11,17 @@ import {
     DialogTitle,
 } from "@/components/ui/dialog"
 import { useAddProfessorForm } from "../hooks/useAddProfessorForm";
+import type { Professor, CreateProfessorPayload } from "../types/professor.types";
+import axios from "axios";
 
 interface Props {
     open: boolean;
     onOpenChange: (open: boolean) => void;
+    onCreate: (data: CreateProfessorPayload) => Promise<Professor>;
+    saving: boolean;
 }
 
-export function AddProfessorModal({ open, onOpenChange }: Props) {
+export function AddProfessorModal({ open, onOpenChange, onCreate, saving }: Props) {
     const {
         form,
         errors,
@@ -25,11 +30,45 @@ export function AddProfessorModal({ open, onOpenChange }: Props) {
         resetForm
     } = useAddProfessorForm();
 
+    const [serverError, setServerError] = useState<string | null>(null);
+
+    const handleClose = (nextOpen: boolean) => {
+        if (!nextOpen && saving) return;
+        if (!nextOpen) {
+            resetForm();
+            setServerError(null);
+        }
+        onOpenChange(nextOpen);
+    };
+
+    const handleSave = async () => {
+        if (saving) return;
+        const validatedData = validateForm();
+        if (!validatedData) return;
+        setServerError(null);
+        try {
+            await onCreate(validatedData);
+            handleClose(false);
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                if (error.response?.status === 422) {
+                    setServerError(
+                        "Verifica los datos. Algún campo es inválido o ya está registrado."
+                    );
+                    return;
+                }
+            }
+            setServerError("No fue posible registrar al profesor.");
+        }
+    };
+
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="w-full sm:w-1/2 px-4 py-3 gap-y-1" showCloseButton={false} >
                 <DialogHeader>
-                    <DialogTitle className="text-xl px-1 text-navy">Agregar Profesor</DialogTitle>
+                    <DialogTitle className="text-xl px-1 text-navy">
+                        Agregar Profesor
+                    </DialogTitle>
                 </DialogHeader>
                 <div className="no-scrollbar max-h-[90vh] overflow-y-auto px-1 mb-2">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
@@ -90,23 +129,30 @@ export function AddProfessorModal({ open, onOpenChange }: Props) {
                         </div>
                     </div>
                 </div>
+                {serverError && (
+                    <div className="mb-2">
+                        <span className="text-red-500 text-xs">{serverError}</span>
+                    </div>
+                )}
                 <DialogFooter className="w-full gap-x-1">
                     <Button
                         size="xs"
+                        disabled={saving}
                         className="bg-navy text-xs text-white hover:bg-navyh hover:text-white cursor-pointer"
-                        onClick={() => validateForm()}
+                        onClick={handleSave}
                     >
-                        Guardar
+                        {saving ? "Guardando..." : "Guardar"}
                     </Button>
                     <DialogClose render={
                         <Button
                             size="xs"
                             variant="outline"
+                            disabled={saving}
                             className="bg-navy text-xs text-white hover:bg-navyh hover:text-white cursor-pointer"
-                            onClick={() => resetForm()}
                         >
                             Salir
-                        </Button>} />
+                        </Button>
+                    } />
                 </DialogFooter>
             </DialogContent>
         </Dialog>

@@ -6,7 +6,14 @@ import { Button } from "@/components/ui/button"
 
 export function ProfessorsPage() {
     const [openAdd, setOpenAdd] = useState(false);
-    const { professors, loading, error } = useProfessors();
+    const {
+        professors,
+        loading,
+        saving,
+        error,
+        createProfessor
+    } = useProfessors();
+
     return (
         <>
             <div id="professors" className="flex flex-col gap-y-4 pb-12">
@@ -41,7 +48,12 @@ export function ProfessorsPage() {
                     }
                 </section>
             </div>
-            <AddProfessorModal open={openAdd} onOpenChange={setOpenAdd} />
+            <AddProfessorModal
+                open={openAdd}
+                onOpenChange={setOpenAdd}
+                onCreate={createProfessor}
+                saving={saving}
+            />
         </>
     )
 }
