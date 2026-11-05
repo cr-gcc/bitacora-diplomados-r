@@ -17,7 +17,7 @@ export const professorService = {
     ): Promise<ProfessorTypes.Professor> {
         const response = await api.post<{ data: ProfessorTypes.Professor }>(
             "/api/v1/professors",
-            { active: true, ...data },
+            data,
             { signal }
         );
         return response.data.data;
