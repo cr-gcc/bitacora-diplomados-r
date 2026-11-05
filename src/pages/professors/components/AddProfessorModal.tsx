@@ -47,23 +47,25 @@ export function AddProfessorModal({ open, onOpenChange, onCreate, saving }: Prop
         if (!validatedData) return;
         setServerError(null);
         try {
-            await onCreate(validatedData);
-            handleClose(false);
+            await onCreate({
+                ...validatedData,
+                active: true
+            });
+            resetForm();
+            onOpenChange(false);
         } catch (error) {
-            if (axios.isAxiosError(error)) {
-                if (error.response?.status === 422) {
-                    setServerError(
-                        "Verifica los datos. Algún campo es inválido o ya está registrado."
-                    );
-                    return;
-                }
+            if (axios.isAxiosError(error) && error.response?.status === 422) {
+                setServerError(
+                    "Verifica los datos. Algún campo es inválido o ya está registrado."
+                );
+                return;
             }
             setServerError("No fue posible registrar al profesor.");
         }
     };
 
     return (
-        <Dialog open={open} onOpenChange={onOpenChange}>
+        <Dialog open={open} onOpenChange={handleClose}>
             <DialogContent className="w-full sm:w-1/2 px-4 py-3 gap-y-1" showCloseButton={false} >
                 <DialogHeader>
                     <DialogTitle className="text-xl px-1 text-navy">
