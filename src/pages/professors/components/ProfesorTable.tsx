@@ -28,9 +28,9 @@ export function ProfesorTable({ professors }: Props) {
         return [
             professor.name,
             professor.lastName,
-            professor.email ?? "",
+            professor.email,
             professor.user,
-            professor.rfc ?? "",
+            professor.rfc,
         ].some((value) => value.toLowerCase().includes(query));
     });
 
