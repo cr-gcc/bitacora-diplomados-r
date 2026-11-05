@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,16 +11,22 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
-import type { Professor } from "../types/professor.types";
+import type { Professor, UpdateProfessorPayload } from "../types/professor.types";
 import { useEditProfessorForm } from "../hooks/useEditProfessorForm";
+import axios from "axios";
 
 interface Props {
     professor: Professor;
     open: boolean;
     onOpenChange: (open: boolean) => void;
+    onUpdate: (
+        id: number,
+        data: UpdateProfessorPayload
+    ) => Promise<Professor>;
+    saving: boolean;
 }
 
-export function EditProfessorModal({ professor, open, onOpenChange }: Props) {
+export function EditProfessorModal({ professor, open, onOpenChange, onUpdate, saving }: Props) {
     const {
         form,
         errors,
@@ -27,8 +34,42 @@ export function EditProfessorModal({ professor, open, onOpenChange }: Props) {
         validateForm,
     } = useEditProfessorForm(professor);
 
+    const [serverError, setServerError] = useState<string | null>(null);
+
+    const handleSave = async () => {
+        if (saving) return;
+        const validatedData = validateForm();
+        if (!validatedData) return;
+        setServerError(null);
+        try {
+            await onUpdate(professor.id, validatedData);
+            onOpenChange(false);
+        } catch (error) {
+            if (
+                axios.isAxiosError(error) &&
+                error.response?.status === 422
+            ) {
+                setServerError(
+                    "Verifica los datos. Algún campo es inválido o ya está registrado."
+                );
+                return;
+            }
+            setServerError(
+                "No fue posible actualizar al profesor."
+            );
+        }
+    };
+
+    const handleClose = (nextOpen: boolean) => {
+        if (!nextOpen && saving) return;
+        if (!nextOpen) {
+            setServerError(null);
+        }
+        onOpenChange(nextOpen);
+    };
+
     return (
-        <Dialog open={open} onOpenChange={onOpenChange}>
+        <Dialog open={open} onOpenChange={handleClose}>
             <DialogContent className="w-full sm:w-1/2 px-4 py-3 gap-y-1" showCloseButton={false} >
                 <DialogHeader>
                     <DialogTitle className="text-xl px-1 text-navy">Editar Profesor</DialogTitle>
@@ -126,18 +167,29 @@ export function EditProfessorModal({ professor, open, onOpenChange }: Props) {
                         </div>
                     </div>
                 </div>
+                {serverError && (
+                    <div className="mb-2">
+                        <span className="text-red-500 text-xs">{serverError}</span>
+                    </div>
+                )}
                 <DialogFooter className="w-full gap-x-1">
                     <Button
                         size="xs"
+                        disabled={saving}
                         className="bg-navy text-xs text-white hover:bg-navyh hover:text-white cursor-pointer"
-                        onClick={() => {
-                            const validatedData = validateForm();
-                            if (!validatedData) return;
-                            console.log("Formulario válido:", validatedData);
-                        }}>
-                        Guardar
+                        onClick={handleSave}
+                    >
+                        {saving ? "Guardando..." : "Guardar"}
                     </Button>
-                    <DialogClose render={<Button variant="outline" className="bg-navy text-xs text-white hover:bg-navyh hover:text-white cursor-pointer" size="xs">Salir</Button>} />
+                    <DialogClose render={
+                        <Button
+                            size="xs"
+                            disabled={saving}
+                            variant="outline"
+                            className="bg-navy text-xs text-white hover:bg-navyh hover:text-white cursor-pointer"
+                        >
+                            Salir
+                        </Button>} />
                 </DialogFooter>
             </DialogContent>
         </Dialog>

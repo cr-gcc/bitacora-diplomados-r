@@ -66,9 +66,13 @@ export function useProfessors() {
     ): Promise<Professor> => {
         setSaving(true);
         try {
-            const professor = await professorService.update(id, data);
-            await loadProfessors();
-            return professor;
+            const updatedProfessor = await professorService.update(id, data);
+            setProfessors((prev) =>
+                prev.map((professor) =>
+                    professor.id === id ? updatedProfessor : professor
+                )
+            );
+            return updatedProfessor;
         } finally {
             setSaving(false);
         }

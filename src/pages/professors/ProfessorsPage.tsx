@@ -11,7 +11,8 @@ export function ProfessorsPage() {
         loading,
         saving,
         error,
-        createProfessor
+        createProfessor,
+        updateProfessor,
     } = useProfessors();
 
     return (
@@ -43,7 +44,11 @@ export function ProfessorsPage() {
                         ) : error ? (
                             <p className="text-red-600">{error}</p>
                         ) : (
-                            <ProfesorTable professors={professors} />
+                            <ProfesorTable
+                                professors={professors}
+                                onUpdate={updateProfessor}
+                                saving={saving}
+                            />
                         )
                     }
                 </section>

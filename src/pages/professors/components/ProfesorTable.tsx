@@ -12,13 +12,18 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { EditProfessorModal } from "@/pages/professors/components/EditProfessorModal";
-import type { Professor } from "../types/professor.types";
+import type { Professor, UpdateProfessorPayload } from "../types/professor.types";
 
 interface Props {
     professors: Professor[];
+    onUpdate: (
+        id: number,
+        data: UpdateProfessorPayload
+    ) => Promise<Professor>;
+    saving: boolean;
 }
 
-export function ProfesorTable({ professors }: Props) {
+export function ProfesorTable({ professors, onUpdate, saving }: Props) {
     const [search, setSearch] = useState("");
     const [selectedProfessor, setSelectedProfessor] =
         useState<Professor | null>(null);
@@ -70,8 +75,14 @@ export function ProfesorTable({ professors }: Props) {
                             <TableCell>{professor.rfc}</TableCell>
                             <TableCell>{professor.user}</TableCell>
                             <TableCell>
-                                <Badge variant="outline" className={`bg-emerald-100 text-emerald-800 text-xs border-none font-semibold ${professor.active === true ? "bg-emerald-100 text-emerald-800" : "bg-red-100 text-red-800"}`}>
-                                    {professor.active === true ? "Activo" : "Inactivo"}
+                                <Badge
+                                    variant="outline"
+                                    className={`text-xs border-none font-semibold ${professor.active
+                                        ? "bg-emerald-100 text-emerald-800"
+                                        : "bg-red-100 text-red-800"
+                                        }`}
+                                >
+                                    {professor.active ? "Activo" : "Inactivo"}
                                 </Badge>
                             </TableCell>
                             <TableCell className="flex gap-x-2 justify-start items-start">
@@ -98,7 +109,11 @@ export function ProfesorTable({ professors }: Props) {
                     key={selectedProfessor.id}
                     professor={selectedProfessor}
                     open={true}
-                    onOpenChange={(open) => { if (!open) setSelectedProfessor(null) }}
+                    onOpenChange={(open) => {
+                        if (!open) setSelectedProfessor(null);
+                    }}
+                    onUpdate={onUpdate}
+                    saving={saving}
                 />
             )}
         </>
