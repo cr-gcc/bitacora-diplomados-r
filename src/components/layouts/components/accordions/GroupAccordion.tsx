@@ -9,44 +9,52 @@ import { GroupTable } from "@components/layouts/components/tables/GroupTable";
 import type { DiplomaTheme } from "@/config/diplomas/diploma.types";
 
 interface Props {
-    items: {
+    groups: {
         id: number;
-        group: string;
+        diploma_id: number;
+        code: string;
         status: string;
         modules: {
             id: number;
-            numero: number;
-            module: string;
-            inicio: string;
-            termino: string;
-            profesor: string;
-            estatus: string;
+            module_id: number;
+            number: number;
+            name: string;
+            start_date: string;
+            end_date: string;
+            regular_students: number;
+            repeating_students: number;
+            total_students: number;
+            professor: {
+                id: number;
+                name: string;
+                last_name: string;
+            };
         }[];
     }[];
     theme: DiplomaTheme;
 }
 
-export function GroupAccordion({ items, theme }: Props) {
+export function GroupAccordion({ groups, theme }: Props) {
     return (
         <Accordion multiple={false} className="bg-white w-full rounded-lg border">
-            {items.map((item) => (
+            {groups?.map((group) => (
                 <AccordionItem
-                    key={item.id}
-                    value={item.id.toString()}
+                    key={group.id}
+                    value={group.id.toString()}
                     className="border-b px-4 last:border-b-0"
                 >
                     <AccordionTrigger
                         className="flex justify-between gap-x-4 items-center w-full font-medium text-lg hover:no-underline cursor-pointer"
                     >
                         <span className={`flex gap-x-2 items-center ${theme.textColor}`}>
-                            <span>Grupo:</span>{item.group}
+                            <span>Grupo:</span>{group.code}
                         </span>
-                        <Badge variant="outline" className={item.status === "Activo" ? "text-xs text-lime-700 border-lime-700" : item.status === "Finalizado" ? "text-xs text-red-800 border-red-800" : "text-xs text-yellow-800 border-yellow-800"}>
-                            {item.status}
+                        <Badge variant="outline" className={group.status === "active" ? "text-xs text-lime-700 border-lime-700" : group.status === "finished" ? "text-xs text-red-800 border-red-800" : "text-xs text-yellow-800 border-yellow-800"}>
+                            {group.status === "active" ? "Activo" : group.status === "finished" ? "Finalizado" : "Pendiente"}
                         </Badge>
                     </AccordionTrigger>
                     <AccordionContent>
-                        <GroupTable modules={item.modules} theme={theme} />
+                        <GroupTable modules={group.modules} theme={theme} />
                     </AccordionContent>
                 </AccordionItem>
             ))}

@@ -1,35 +1,44 @@
-type Status = "Active" | "Finished";
-
+export type GroupStatus = "Active" | "Finished";
+//Group
 export interface Group {
     id: number;
     diplomaId: number;
     code: number;
-    status: Status;
+    status: GroupStatus;
 }
-
-export interface GroupsResponse {
-    data: Group[];
-}
-
+//Modules
 export interface Module {
     id: number;
     diplomaId: number;
     number: number;
     name: string;
 }
-
-export interface GroupModules {
+//Module beloning to a group
+export interface GroupModule {
     id: number;
-    group: Group;
-    modules: Module[];
-    professorId: number;
-    startDate: string;
-    endDate: string;
+    groupId: number;
+    moduleId: number;
+    professorId: number | null;
+    startDate: string | null;
+    endDate: string | null;
     regularStudentsCount: number;
     repeatingStudentsCount: number;
     totalStudentsCount: number;
 }
-
-export interface GroupModulesResponse {
-    data: GroupModules[];
+//Group with all its modules
+export interface GroupWithModules extends Group {
+    groupModules: GroupModule[];
+}
+//Payload for creating a group
+export interface CreateGroupPayload {
+    diplomaId: number;
+    code: number;
+}
+//Response for API GET
+export interface GroupsResponse {
+    data: GroupWithModules[];
+}
+//Response for API GET single group
+export interface GroupResponse {
+    data: GroupWithModules;
 }

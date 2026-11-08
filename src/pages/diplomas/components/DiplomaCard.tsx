@@ -26,7 +26,6 @@ export function DiplomaCard({ diploma }: DiplomaCardProps) {
                         >
                             <IconComponent className="size-7 transition-transform duration-300 group-hover:scale-110" />
                         </div>
-
                         <h3
                             className={`text-2xl font-bold text-gray-900 tracking-tight transition-colors duration-200 ${theme.hoverTitle}`}
                         >
@@ -48,7 +47,6 @@ export function DiplomaCard({ diploma }: DiplomaCardProps) {
                         <span>Plataforma</span>
                         <ExternalLink className="size-3.5 opacity-80" />
                     </a>
-
                     <Link
                         to={`/diplomados/${diploma.slug}`}
                         className={`flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl text-xs font-semibold transition-all duration-200 cursor-pointer active:scale-95 text-center ${theme.btnGroups}`}

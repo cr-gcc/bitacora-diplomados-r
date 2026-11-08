@@ -15,112 +15,6 @@ export function GroupsPage() {
     const [openDelete, setOpenDelete] = useState(false);
     const [openCheck, setOpenCheck] = useState(false);
     const [openEditModule, setOpenEditModule] = useState(false);
-    const items = [
-        {
-            id: 1,
-            group: "9603",
-            status: "Activo",
-            modules: [
-                {
-                    id: 1,
-                    numero: 1,
-                    module: "Fundamentos del comercio electrónico",
-                    inicio: "24/11/2023",
-                    termino: "30/11/2023",
-                    profesor: "José Antonio Gómez Rodríguez",
-                    estatus: "Programado",
-                },
-                {
-                    id: 2,
-                    numero: 2,
-                    module: "Aspectos legales y fiscales del comercio electrónico",
-                    inicio: "24/11/2023",
-                    termino: "30/11/2023",
-                    profesor: "Sin asignar",
-                    estatus: "Programado",
-                },
-                {
-                    id: 3,
-                    numero: 3,
-                    module: "Estrategias de mercadotecnia en internet",
-                    inicio: "24/11/2023",
-                    termino: "30/11/2023",
-                    profesor: "José Antonio Gómez Rodríguez",
-                    estatus: "Programado",
-                },
-                {
-                    id: 4,
-                    numero: 4,
-                    module: "Desarrollo de un plan de negocios",
-                    inicio: "24/11/2023",
-                    termino: "30/11/2023",
-                    profesor: "Sin asignar",
-                    estatus: "Pendiente",
-                },
-                {
-                    id: 5,
-                    numero: 5,
-                    module: "Desarrollo de aplicaciones de comercio electrónico",
-                    inicio: "24/11/2023",
-                    termino: "30/11/2023",
-                    profesor: "José Antonio Gómez Rodríguez",
-                    estatus: "Pendiente",
-                }
-            ]
-        },
-        {
-            id: 2,
-            group: "9602",
-            status: "Finalizado",
-            modules: [
-                {
-                    id: 1,
-                    numero: 1,
-                    module: "Fundamentos del comercio electrónico",
-                    inicio: "24/11/2023",
-                    termino: "30/11/2023",
-                    profesor: "José Antonio Gómez Rodríguez",
-                    estatus: "Programado",
-                },
-                {
-                    id: 2,
-                    numero: 2,
-                    module: "Aspectos legales y fiscales del comercio electrónico",
-                    inicio: "24/11/2023",
-                    termino: "30/11/2023",
-                    profesor: "Sin asignar",
-                    estatus: "Programado",
-                },
-                {
-                    id: 3,
-                    numero: 3,
-                    module: "Estrategias de mercadotecnia en internet",
-                    inicio: "24/11/2023",
-                    termino: "30/11/2023",
-                    profesor: "José Antonio Gómez Rodríguez",
-                    estatus: "Programado",
-                },
-                {
-                    id: 4,
-                    numero: 4,
-                    module: "Desarrollo de un plan de negocios",
-                    inicio: "24/11/2023",
-                    termino: "30/11/2023",
-                    profesor: "Sin asignar",
-                    estatus: "Pendiente",
-                },
-                {
-                    id: 5,
-                    numero: 5,
-                    module: "Desarrollo de aplicaciones de comercio electrónico",
-                    inicio: "24/11/2023",
-                    termino: "30/11/2023",
-                    profesor: "José Antonio Gómez Rodríguez",
-                    estatus: "Pendiente",
-                }
-            ]
-        }
-    ]
 
     return (
         <>
@@ -144,9 +38,7 @@ export function GroupsPage() {
                         </Button>
                     </div>
                 </div>
-                <div>
-                    <GroupAccordion items={items} theme={theme} />
-                </div>
+                <GroupAccordion groups={diploma?.groups} theme={theme} />
             </div>
             <CreateGroupModal
                 open={openCreate}

@@ -1,11 +1,22 @@
+import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { mockDiplomas } from "@components/layouts/config/navigation/mockDiplomas";
+import { groupServices } from "../services/groupService";
 import { diplomaThemes, defaultDiplomaTheme } from "@/config/diplomas/diplomaThemes";
+import type { GroupWithModules } from "../types/group-modules.types";
 
 export function useDiploma() {
+    const [diploma, setDiploma] = useState<GroupWithModules[]>([]);
     const { slug } = useParams<{ slug: string }>();
-    const diploma = mockDiplomas.find((item) => item.slug === slug);
     const theme = diplomaThemes[slug ?? ""] ?? defaultDiplomaTheme;
+
+    useEffect(() => {
+        if (!slug) return;
+        const loadGroups = async () => {
+            const response = await groupServices.getGroupsByDiploma(slug);
+            setDiploma(response.data);
+        };
+        void loadGroups();
+    }, [slug]);
 
     return { diploma, theme };
 }
