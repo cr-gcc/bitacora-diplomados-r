@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 import { ExternalLink, ArrowRight, ClipboardPen } from "lucide-react";
-import type { Diploma } from "@/config/diplomas/diploma.types";
+import type { Diploma } from "@/pages/diplomas/types/diploma.types";
 import { diplomaThemes, defaultDiplomaTheme } from "@/config/diplomas/diplomaThemes";
 
 interface DiplomaCardProps { diploma: Diploma; }
@@ -8,7 +8,6 @@ interface DiplomaCardProps { diploma: Diploma; }
 export function DiplomaCard({ diploma }: DiplomaCardProps) {
     const theme = diplomaThemes[diploma.slug] ?? defaultDiplomaTheme;
     const IconComponent = theme.icon;
-
     return (
         <div
             key={diploma.id}
@@ -38,7 +37,7 @@ export function DiplomaCard({ diploma }: DiplomaCardProps) {
                 </div>
                 <div className="pt-4 mt-4 grid grid-cols-2 gap-2.5">
                     <a
-                        href={diploma.platformUrl}
+                        href={diploma.public_url ?? undefined}
                         target="_blank"
                         rel="noopener noreferrer"
                         className={`flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl text-xs font-semibold transition-all duration-200 cursor-pointer active:scale-95 text-center ${theme.btnPlatform}`}

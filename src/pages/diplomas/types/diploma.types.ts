@@ -3,7 +3,7 @@ export interface Diploma {
     title: string;
     slug: string;
     description: string | null;
-    platformUrl: string | null;
+    public_url: string | null;
 }
 
 export interface DiplomaResponse {

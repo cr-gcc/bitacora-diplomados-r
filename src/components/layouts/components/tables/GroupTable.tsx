@@ -10,24 +10,10 @@ import {
     TableFooter,
 } from "@/components/ui/table"
 import type { DiplomaTheme } from "@/config/diplomas/diploma.types";
+import type { GroupModule } from "@/pages/groups/types/group-modules.types";
 
 interface Props {
-    modules: {
-        id: number;
-        module_id: number;
-        number: number;
-        name: string;
-        start_date: string;
-        end_date: string;
-        regular_students: number;
-        repeating_students: number;
-        total_students: number;
-        professor: {
-            id: number;
-            name: string;
-            last_name: string;
-        };
-    }[];
+    modules: GroupModule[];
     theme: DiplomaTheme;
 }
 

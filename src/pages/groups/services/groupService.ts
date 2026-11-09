@@ -14,7 +14,7 @@ export const groupServices = {
     },
     // Groups by diploma
     getGroupsByDiploma: async (slug: string) => {
-        const response = await api.get<GroupTypes.GroupsResponse>(`/api/v1/diplomas/${slug}`);
+        const response = await api.get<GroupTypes.DiplomaGroupsResponse>(`/api/v1/diplomas/${slug}`);
         return response.data;
     },
 

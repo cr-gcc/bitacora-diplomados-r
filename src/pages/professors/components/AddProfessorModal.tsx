@@ -91,10 +91,10 @@ export function AddProfessorModal({ open, onOpenChange, onCreate, saving }: Prop
                                 id="apellidos"
                                 type="text"
                                 className="text-xs h-7 border-gray-300"
-                                value={form.lastName}
-                                onChange={(e) => updateFile('lastName', e.target.value)}
+                                value={form.last_name}
+                                onChange={(e) => updateFile('last_name', e.target.value)}
                             />
-                            {errors.lastName && <span className="text-red-500 text-xs">{errors.lastName}</span>}
+                            {errors.last_name && <span className="text-red-500 text-xs">{errors.last_name}</span>}
                         </div>
                         <div className="flex flex-col gap-1 w-full">
                             <Label htmlFor="email" className="text-sm text-gray-500 font-medium">Email</Label>

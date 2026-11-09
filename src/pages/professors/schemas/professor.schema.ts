@@ -5,7 +5,7 @@ const professorFields = {
         .min(1, "El nombre es obligatorio")
         .max(100),
 
-    lastName: z.string().trim()
+    last_name: z.string().trim()
         .min(1, "Los apellidos son obligatorios")
         .max(100),
 

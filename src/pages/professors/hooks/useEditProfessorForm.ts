@@ -7,7 +7,7 @@ type FormErrors = Partial<Record<keyof EditProfessorForm, string>>;
 export function useEditProfessorForm(professor: Professor) {
     const [form, setForm] = useState<EditProfessorForm>({
         name: professor.name,
-        lastName: professor.lastName,
+        last_name: professor.last_name,
         email: professor.email ?? "",
         rfc: professor.rfc ?? "",
         user: professor.user,

@@ -32,7 +32,7 @@ export function ProfesorTable({ professors, onUpdate, saving }: Props) {
         const query = search.toLowerCase().trim();
         return [
             professor.name,
-            professor.lastName,
+            professor.last_name,
             professor.email,
             professor.user,
             professor.rfc,
@@ -72,7 +72,7 @@ export function ProfesorTable({ professors, onUpdate, saving }: Props) {
                         <TableRow key={professor.id}>
                             <TableCell className="font-medium">{index + 1}</TableCell>
                             <TableCell>{professor.name}</TableCell>
-                            <TableCell>{professor.lastName}</TableCell>
+                            <TableCell>{professor.last_name}</TableCell>
                             <TableCell>{professor.email}</TableCell>
                             <TableCell>{professor.rfc}</TableCell>
                             <TableCell>{professor.user}</TableCell>

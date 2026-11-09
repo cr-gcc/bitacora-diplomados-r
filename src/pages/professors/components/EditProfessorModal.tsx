@@ -90,16 +90,16 @@ export function EditProfessorModal({ professor, open, onOpenChange, onUpdate, sa
                             )}
                         </div>
                         <div className="flex flex-col gap-1 w-full">
-                            <Label htmlFor="lastName" className="text-sm text-gray-500 font-medium">Apellidos</Label>
+                            <Label htmlFor="last_name" className="text-sm text-gray-500 font-medium">Apellidos</Label>
                             <Input
-                                id="lastName"
+                                id="last_name"
                                 type="text"
                                 className="text-xs h-7 border-gray-300"
-                                value={form.lastName}
-                                onChange={(e) => updateField("lastName", e.target.value)}
+                                value={form.last_name}
+                                onChange={(e) => updateField("last_name", e.target.value)}
                             />
-                            {errors.lastName && (
-                                <p className="text-red-500 text-xs">{errors.lastName}</p>
+                            {errors.last_name && (
+                                <p className="text-red-500 text-xs">{errors.last_name}</p>
                             )}
                         </div>
                         <div className="flex flex-col gap-1 w-full">
