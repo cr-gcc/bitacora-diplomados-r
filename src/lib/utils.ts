@@ -1,5 +1,5 @@
 export { cn } from "cn"
-import { format } from "date-fns"
+import { format, isValid, parseISO } from "date-fns"
 import { es } from "date-fns/locale"
 
 /**
@@ -37,4 +37,25 @@ export function formatDateRange(start: Date, end: Date): string {
 }
 
 export const formatWeekRange = formatDateRange
+
+/**
+ * Formatea una fecha (string ISO o Date) al formato "23-Nov-2026".
+ * Si es nula o inválida, retorna el fallback ("-" por defecto).
+ */
+export function formatShortDate(
+    dateInput: string | Date | null | undefined,
+    fallback = "-"
+): string {
+    if (!dateInput) return fallback
+    const date = typeof dateInput === "string" ? parseISO(dateInput) : dateInput
+    if (!isValid(date)) return fallback
+
+    const day = format(date, "dd")
+    const month = format(date, "MMM", { locale: es }).replace(".", "")
+    const capitalizedMonth = month.charAt(0).toUpperCase() + month.slice(1)
+    const year = format(date, "yyyy")
+
+    return `${day}-${capitalizedMonth}-${year}`
+}
+
 
