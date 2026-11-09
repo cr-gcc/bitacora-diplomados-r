@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useDiploma } from "@pages/groups/hooks/useDiploma";
-import { GroupAccordion } from "@components/layouts/components/accordions/GroupAccordion";
+import { GroupAccordion } from "@/pages/groups/components/GroupAccordion";
 import { Button } from "@/components/ui/button";
+import type { GroupModalState } from "./types/group-modal.types";
 import { CreateGroupModal } from "@/pages/groups/components/CreateGroupModal";
 import { EditGroupModal } from "@/pages/groups/components/EditGroupModal";
 import { DeleteGroupModal } from "@/pages/groups/components/DeleteGroupModal";
@@ -10,11 +11,14 @@ import { EditModuleModal } from "@/pages/groups/components/EditModuleModal";
 
 export function GroupsPage() {
     const { diploma, theme } = useDiploma();
-    const [openCreate, setOpenCreate] = useState(false);
-    const [openEdit, setOpenEdit] = useState(false);
-    const [openDelete, setOpenDelete] = useState(false);
-    const [openCheck, setOpenCheck] = useState(false);
-    const [openEditModule, setOpenEditModule] = useState(false);
+    const [activeModal, setActiveModal] = useState<GroupModalState>(null);
+
+    const handleOpenModal = (modal: Exclude<GroupModalState, null>) => {
+        setActiveModal(modal);
+    };
+    const handleCloseModal = () => {
+        setActiveModal(null);
+    };
 
     return (
         <>
@@ -32,39 +36,57 @@ export function GroupsPage() {
                         <Button
                             size="sm"
                             className={`text-xs text-white hover:text-white cursor-pointer ${theme.buttonBg} ${theme.buttonHover}`}
-                            onClick={() => setOpenCreate(true)}
+                            onClick={() => setActiveModal({ type: "create-group" })}
                         >
                             Crear grupo
                         </Button>
                     </div>
                 </div>
-                <GroupAccordion groups={diploma?.groups} theme={theme} />
+                <GroupAccordion
+                    theme={theme}
+                    groups={diploma?.groups}
+                    onOpenModal={handleOpenModal}
+                />
             </div>
-            <CreateGroupModal
-                open={openCreate}
-                onOpenChange={setOpenCreate}
-                theme={theme}
-            />
-            <DeleteGroupModal
-                open={openDelete}
-                onOpenChange={setOpenDelete}
-                theme={theme}
-            />
-            <EditGroupModal
-                open={openEdit}
-                onOpenChange={setOpenEdit}
-                theme={theme}
-            />
-            <CheckModuleModal
-                open={openCheck}
-                onOpenChange={setOpenCheck}
-                theme={theme}
-            />
-            <EditModuleModal
-                open={openEditModule}
-                onOpenChange={setOpenEditModule}
-                theme={theme}
-            />
+            {activeModal?.type === "create-group" && (
+                <CreateGroupModal
+                    open={true}
+                    theme={theme}
+                    onOpenChange={(open) => !open && handleCloseModal()}
+                />
+            )}
+            {activeModal?.type === "edit-group" && (
+                <EditGroupModal
+                    open={true}
+                    theme={theme}
+                    group={activeModal.group}
+                    onOpenChange={(open) => !open && handleCloseModal()}
+                />
+            )}
+            {activeModal?.type === "delete-group" && (
+                <DeleteGroupModal
+                    open={true}
+                    theme={theme}
+                    group={activeModal.group}
+                    onOpenChange={(open) => !open && handleCloseModal()}
+                />
+            )}
+            {activeModal?.type === "check-module" && (
+                <CheckModuleModal
+                    open={true}
+                    theme={theme}
+                    module={activeModal.module}
+                    onOpenChange={(open) => !open && handleCloseModal()}
+                />
+            )}
+            {activeModal?.type === "edit-module" && (
+                <EditModuleModal
+                    open={true}
+                    theme={theme}
+                    module={activeModal.module}
+                    onOpenChange={(open) => !open && handleCloseModal()}
+                />
+            )}
         </>
 
     )

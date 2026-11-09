@@ -9,19 +9,24 @@ import {
 } from "@/components/ui/dialog"
 import { ProgressBar } from "@components/layouts/components/loading/ProgressBar";
 import type { DiplomaTheme } from "@/config/diplomas/diploma.types";
+import type { GroupModule } from "../types/group-modules.types";
 
 interface Props {
+    theme: DiplomaTheme;
     open: boolean;
     onOpenChange: (open: boolean) => void;
-    theme: DiplomaTheme;
+    module: GroupModule;
 }
 
-export function EditModuleModal({ open, onOpenChange, theme }: Props) {
+export function EditModuleModal({ open, onOpenChange, theme, module }: Props) {
+    console.log(module);
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="w-full sm:w-1/4 px-4 py-3 gap-y-1" showCloseButton={false} >
                 <DialogHeader>
-                    <DialogTitle className={`text-xl ${theme.textColor}`}>Editar Módulo</DialogTitle>
+                    <DialogTitle className={`text-xl ${theme.textColor}`}>
+                        Editar módulo {module.number}
+                    </DialogTitle>
                 </DialogHeader>
                 <div className="no-scrollbar max-h-[50vh] overflow-y-auto mb-2">
                     <p className="text-center">¿Desea editar este módulo de forma permanente?</p>

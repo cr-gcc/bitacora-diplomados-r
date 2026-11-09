@@ -9,19 +9,23 @@ import {
 } from "@/components/ui/dialog"
 import { ProgressBar } from "@components/layouts/components/loading/ProgressBar";
 import type { DiplomaTheme } from "@/config/diplomas/diploma.types";
+import type { Group } from "@/pages/groups/types/group-modules.types";
 
 interface Props {
+    theme: DiplomaTheme;
     open: boolean;
     onOpenChange: (open: boolean) => void;
-    theme: DiplomaTheme;
+    group: Group;
 }
 
-export function DeleteGroupModal({ open, onOpenChange, theme }: Props) {
+export function DeleteGroupModal({ open, onOpenChange, theme, group }: Props) {
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="w-full sm:w-1/4 px-4 py-3 gap-y-1" showCloseButton={false} >
                 <DialogHeader>
-                    <DialogTitle className={`text-xl ${theme.textColor}`}>Eliminar Grupo</DialogTitle>
+                    <DialogTitle className={`text-xl ${theme.textColor}`}>
+                        Eliminar grupo {group.code}
+                    </DialogTitle>
                 </DialogHeader>
                 <div className="no-scrollbar max-h-[50vh] overflow-y-auto mb-2">
                     <p className="text-center">¿Desea eliminar este grupo de forma permanente?</p>

@@ -5,16 +5,18 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion"
-import { GroupTable } from "@components/layouts/components/tables/GroupTable";
+import { GroupTable } from "@/pages/groups/components/GroupTable";
 import type { DiplomaTheme } from "@/config/diplomas/diploma.types";
 import type { GroupWithModules } from "@/pages/groups/types/group-modules.types";
+import type { GroupModalState } from "../types/group-modal.types";
 
 interface Props {
     groups?: GroupWithModules[];
     theme: DiplomaTheme;
+    onOpenModal: (modal: Exclude<GroupModalState, null>) => void;
 }
 
-export function GroupAccordion({ groups, theme }: Props) {
+export function GroupAccordion({ groups, theme, onOpenModal }: Props) {
     return (
         <Accordion multiple={false} className="bg-white w-full rounded-lg border">
             {groups?.map((group) => (
@@ -34,7 +36,12 @@ export function GroupAccordion({ groups, theme }: Props) {
                         </Badge>
                     </AccordionTrigger>
                     <AccordionContent>
-                        <GroupTable modules={group.modules} theme={theme} />
+                        <GroupTable
+                            theme={theme}
+                            group={group}
+                            modules={group.modules}
+                            onOpenModal={onOpenModal}
+                        />
                     </AccordionContent>
                 </AccordionItem>
             ))}

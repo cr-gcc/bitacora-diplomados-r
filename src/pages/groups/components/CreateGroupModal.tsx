@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 import {
     Dialog,
     DialogClose,
@@ -7,8 +8,6 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { ProgressBar } from "@components/layouts/components/loading/ProgressBar";
 import type { DiplomaTheme } from "@/config/diplomas/diploma.types";
 
 interface Props {
@@ -27,12 +26,22 @@ export function CreateGroupModal({ open, onOpenChange, theme }: Props) {
                 <div className="no-scrollbar max-h-[50vh] overflow-y-auto mb-2">
                     <Input className="h-7" placeholder="Ejemplo 9401" />
                 </div>
-                <div>
-                    <ProgressBar />
-                </div>
                 <DialogFooter className="w-full gap-x-1">
-                    <Button className={`text-xs text-white hover:text-white cursor-pointer ${theme.buttonBg} ${theme.buttonHover}`} size="xs">Guardar</Button>
-                    <DialogClose render={<Button variant="outline" className={`text-xs text-white hover:text-white cursor-pointer ${theme.buttonBg} ${theme.buttonHover}`} size="xs">Salir</Button>} />
+                    <Button
+                        size="xs"
+                        className={`text-xs text-white hover:text-white cursor-pointer ${theme.buttonBg} ${theme.buttonHover}`}
+                    >
+                        Guardar
+                    </Button>
+                    <DialogClose render={
+                        <Button
+                            size="xs"
+                            variant="outline"
+                            className={`text-xs text-white hover:text-white cursor-pointer ${theme.buttonBg} ${theme.buttonHover}`}
+                        >
+                            Salir
+                        </Button>
+                    } />
                 </DialogFooter>
             </DialogContent>
         </Dialog>
