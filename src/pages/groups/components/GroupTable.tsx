@@ -92,7 +92,7 @@ export function GroupTable({ theme, group, modules, onOpenModal }: Props) {
                             className={`text-xs text-white hover:text-white cursor-pointer ${theme.buttonBg} ${theme.buttonHover}`}
                             onClick={() => onOpenModal({ type: "edit-group", group })}
                         >
-                            Editar grupo
+                            Actualizar grupo
                         </Button>
                         <Button
                             size="xs"

@@ -12,7 +12,6 @@ export function useProfessors() {
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState<string | null>(null);
-
     const controllerRef = useRef<AbortController | null>(null);
 
     const loadProfessors = useCallback(async () => {

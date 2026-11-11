@@ -9,6 +9,7 @@ import { GroupTable } from "@/pages/groups/components/GroupTable";
 import type { DiplomaTheme } from "@/config/diplomas/diploma.types";
 import type { GroupWithModules } from "@/pages/groups/types/group-modules.types";
 import type { GroupModalState } from "../types/group-modal.types";
+import { getGroupStatusLabel } from "../config/groupStatus";
 
 interface Props {
     groups?: GroupWithModules[];
@@ -32,7 +33,7 @@ export function GroupAccordion({ groups, theme, onOpenModal }: Props) {
                             <span>Grupo:</span>{group.code}
                         </span>
                         <Badge variant="outline" className={group.status === "active" ? "text-xs text-lime-700 border-lime-700" : group.status === "finished" ? "text-xs text-red-800 border-red-800" : "text-xs text-yellow-800 border-yellow-800"}>
-                            {group.status === "active" ? "Activo" : group.status === "finished" ? "Finalizado" : "Pendiente"}
+                            {getGroupStatusLabel(group.status)}
                         </Badge>
                     </AccordionTrigger>
                     <AccordionContent>

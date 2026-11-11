@@ -1,17 +1,28 @@
 import { useState } from "react";
 import { useDiploma } from "@pages/groups/hooks/useDiploma";
+import { useGroups } from "@pages/groups/hooks/useGroups";
 import { GroupAccordion } from "@/pages/groups/components/GroupAccordion";
 import { Button } from "@/components/ui/button";
-import type { GroupModalState } from "./types/group-modal.types";
 import { CreateGroupModal } from "@/pages/groups/components/CreateGroupModal";
-import { EditGroupModal } from "@/pages/groups/components/EditGroupModal";
+import { UpdateGroupModal } from "@/pages/groups/components/UpdateGroupModal";
 import { DeleteGroupModal } from "@/pages/groups/components/DeleteGroupModal";
 import { CheckModuleModal } from "@/pages/groups/components/CheckModuleModal";
 import { EditModuleModal } from "@/pages/groups/components/EditModuleModal";
+import type { GroupModalState } from "./types/group-modal.types";
 
 export function GroupsPage() {
-    const { diploma, theme } = useDiploma();
     const [activeModal, setActiveModal] = useState<GroupModalState>(null);
+    const { slug, theme } = useDiploma();
+    const {
+        diploma,
+        groups,
+        loading,
+        error,
+        saving,
+        createGroup,
+        updateGroupStatus,
+        deleteGroup
+    } = useGroups(slug);
 
     const handleOpenModal = (modal: Exclude<GroupModalState, null>) => {
         setActiveModal(modal);
@@ -42,24 +53,37 @@ export function GroupsPage() {
                         </Button>
                     </div>
                 </div>
-                <GroupAccordion
-                    theme={theme}
-                    groups={diploma?.groups}
-                    onOpenModal={handleOpenModal}
-                />
+                {loading ? (
+                    <p className="text-sm text-gray-500">Cargando grupos...</p>
+                ) : error ? (
+                    <p role="alert" className="text-sm text-red-600">{error}</p>
+                ) : (
+                    <GroupAccordion
+                        theme={theme}
+                        groups={groups}
+                        onOpenModal={handleOpenModal}
+                    />
+                )}
             </div>
-            {activeModal?.type === "create-group" && (
+            {activeModal?.type === "create-group" && diploma && (
                 <CreateGroupModal
                     open={true}
                     theme={theme}
+                    diploma_id={diploma.id}
+                    saving={saving}
+                    onCreate={createGroup}
                     onOpenChange={(open) => !open && handleCloseModal()}
                 />
             )}
             {activeModal?.type === "edit-group" && (
-                <EditGroupModal
+                <UpdateGroupModal
                     open={true}
                     theme={theme}
-                    group={activeModal.group}
+                    code={activeModal.group.code}
+                    group_id={activeModal.group.id}
+                    status={activeModal.group.status}
+                    saving={saving}
+                    onUpdateStatus={updateGroupStatus}
                     onOpenChange={(open) => !open && handleCloseModal()}
                 />
             )}
@@ -67,7 +91,10 @@ export function GroupsPage() {
                 <DeleteGroupModal
                     open={true}
                     theme={theme}
-                    group={activeModal.group}
+                    code={activeModal.group.code}
+                    group_id={activeModal.group.id}
+                    saving={saving}
+                    onDelete={deleteGroup}
                     onOpenChange={(open) => !open && handleCloseModal()}
                 />
             )}

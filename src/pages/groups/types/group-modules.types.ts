@@ -57,6 +57,12 @@ export interface CreateGroupPayload {
     code: number;
 }
 
+// Payload for updating a group
+export interface UpdateGroupStatusPayload {
+    id: number;
+    status: GroupStatus;
+}
+
 // Response for API GET groups
 export interface GroupsResponse {
     data: GroupWithModules[];
