@@ -1,5 +1,7 @@
+import { useState } from "react"
 import { Users, UserX, FolderX } from "lucide-react"
 import { startOfWeek, endOfWeek } from "date-fns"
+import { ProgressBar } from "@/components/layouts/components/loading/ProgressBar";
 import { GroupCalendarTable } from "@/components/layouts/components/tables/GroupCalendarTable";
 import { formatDateRange } from "@/lib/utils";
 
@@ -16,6 +18,8 @@ type Evento = {
 };
 
 export function DashboardPage() {
+    const [loading, setLoading] = useState<boolean>(false)
+    const [error, setError] = useState<string | null>(null)
 
     const eventos: Evento[] = [
         {
@@ -87,41 +91,52 @@ export function DashboardPage() {
                 </p>
             </div>
             <section className="flex flex-col gap-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {stats.map((stat) => {
-                        const Icon = stat.icon
-                        return (
-                            <div
-                                key={stat.title}
-                                className="bg-white rounded-xl border border-gray-200 px-6 pt-3 pb-4 shadow-xs flex flex-col justify-between gap-y-4 hover:border-gray-300 hover:shadow-sm transition-all"
-                            >
-                                <div className="flex items-center justify-between">
-                                    <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                                        {stat.title}
-                                    </span>
-                                    <div className="size-10 rounded-lg bg-gray-100 border border-gray-200 flex items-center justify-center text-navy">
-                                        <Icon className="size-5" />
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <div className="text-4xl font-bold text-navy tracking-tight">
-                                        {stat.value}
-                                    </div>
-                                    <p className="mt-1.5 text-xs text-gray-500">
-                                        {stat.description}
-                                    </p>
-                                </div>
+                {
+                    loading ? (
+                        <ProgressBar />
+                    ) : error ? (
+                        <p role="alert" className="text-sm text-red-600">
+                            {error}
+                        </p>
+                    ) : (
+                        <>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                {stats.map((stat) => {
+                                    const Icon = stat.icon
+                                    return (
+                                        <div
+                                            key={stat.title}
+                                            className="bg-white rounded-xl border border-gray-200 px-6 pt-3 pb-4 shadow-xs flex flex-col justify-between gap-y-4 hover:border-gray-300 hover:shadow-sm transition-all"
+                                        >
+                                            <div className="flex items-center justify-between">
+                                                <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                                                    {stat.title}
+                                                </span>
+                                                <div className="size-10 rounded-lg bg-gray-100 border border-gray-200 flex items-center justify-center text-navy">
+                                                    <Icon className="size-5" />
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div className="text-4xl font-bold text-navy tracking-tight">
+                                                    {stat.value}
+                                                </div>
+                                                <p className="mt-1.5 text-xs text-gray-500">
+                                                    {stat.description}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    )
+                                })}
                             </div>
-                        )
-                    })}
-                </div>
-                <div className="bg-white rounded-xl border border-gray-200 px-6 pt-3 pb-4 shadow-xs">
-                    <h3 className="text-base font-semibold text-navy mb-2">
-                        Inicio de cursos del <span className="italic">{formatDateRange(currentWeekInitDate, currentWeekEndDate)}</span>
-                    </h3>
-                    <GroupCalendarTable groups={eventos} />
-                </div>
+                            <div className="bg-white rounded-xl border border-gray-200 px-6 pt-3 pb-4 shadow-xs">
+                                <h3 className="text-base font-semibold text-navy mb-2">
+                                    Inicio de cursos del <span className="italic">{formatDateRange(currentWeekInitDate, currentWeekEndDate)}</span>
+                                </h3>
+                                <GroupCalendarTable groups={eventos} />
+                            </div>
+                        </>
+                    )
+                }
             </section>
         </div>
     )
