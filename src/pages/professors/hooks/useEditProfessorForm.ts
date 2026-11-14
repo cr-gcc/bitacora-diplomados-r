@@ -29,7 +29,7 @@ export function useEditProfessorForm(professor: Professor) {
         }));
     };
 
-    const validateForm = () => {
+    const validateForm = (): EditProfessorForm | null => {
         const result = editProfessorSchema.safeParse(form);
         if (!result.success) {
             const fieldErrors: FormErrors = {};

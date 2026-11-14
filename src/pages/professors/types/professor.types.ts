@@ -5,14 +5,14 @@ export interface Professor {
     email: string;
     user: string;
     rfc: string;
-    active: boolean
+    active: boolean;
 }
 
 export interface ProfessorsResponse {
     data: Professor[];
 }
 
-export type CreateProfessorPayload = Omit<Professor, "id">;
+export type CreateProfessorPayload = Omit<Professor, "id" | "active">;
 
-export type UpdateProfessorPayload = Partial<CreateProfessorPayload>;
+export type UpdateProfessorPayload = Partial<Omit<Professor, "id">>;
 

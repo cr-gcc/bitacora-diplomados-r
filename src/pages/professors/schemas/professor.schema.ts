@@ -11,7 +11,7 @@ const professorFields = {
 
     email: z.string().trim()
         .min(1, "El correo es obligatorio")
-        .pipe(z.email("Introduce un correo válido")),
+        .email("Introduce un correo válido"),
 
     rfc: z.string().trim()
         .min(10, "El RFC debe tener al menos 10 caracteres")

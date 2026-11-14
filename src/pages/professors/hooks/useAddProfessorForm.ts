@@ -27,7 +27,7 @@ export function useAddProfessorForm() {
         }));
     }
 
-    const validateForm = () => {
+    const validateForm = (): AddProfessorForm | null => {
         const result = addProfessorSchema.safeParse(form);
         if (!result.success) {
             const fieldErrors: FormErrors = {};

@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { useProfessors } from "./hooks/useProfessors";
+import { useProfessors } from "@/pages/professors/hooks/useProfessors";
+import { Button } from "@/components/ui/button"
+import { ProgressBar } from "@/components/layouts/components/loading/ProgressBar";
 import { ProfesorTable } from "@/pages/professors/components/ProfesorTable"
 import { AddProfessorModal } from "@/pages/professors/components/AddProfessorModal"
-import { Button } from "@/components/ui/button"
 
 export function ProfessorsPage() {
     const [openAdd, setOpenAdd] = useState(false);
@@ -37,18 +38,26 @@ export function ProfessorsPage() {
                         </Button>
                     </div>
                 </div>
-                <section className="flex flex-col bg-white w-full rounded-lg px-2 pb-1 pt-0.5">
+                <section className="flex flex-col w-full rounded-lg px-2 pb-1 pt-0.5">
                     {
                         loading ? (
-                            <p>Cargando profesores...</p>
+                            <ProgressBar />
                         ) : error ? (
-                            <p className="text-red-600">{error}</p>
+                            <p role="alert" className="text-sm text-red-600">
+                                {error}
+                            </p>
+                        ) : professors.length === 0 ? (
+                            <p role="alert" className="text-center py-3 text-sm text-gray-500">
+                                No hay profesores registrados.
+                            </p>
                         ) : (
-                            <ProfesorTable
-                                professors={professors}
-                                onUpdate={updateProfessor}
-                                saving={saving}
-                            />
+                            <div className="bg-white">
+                                <ProfesorTable
+                                    professors={professors}
+                                    onUpdate={updateProfessor}
+                                    saving={saving}
+                                />
+                            </div>
                         )
                     }
                 </section>

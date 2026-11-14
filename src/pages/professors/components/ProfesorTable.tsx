@@ -98,7 +98,7 @@ export function ProfesorTable({ professors, onUpdate, saving }: Props) {
                             </TableCell>
                         </TableRow>
                     ))}
-                    {filteredProfessors.length === 0 && (
+                    {/*filteredProfessors.length === 0 && (
                         <TableRow>
                             <TableCell
                                 colSpan={12}
@@ -107,7 +107,7 @@ export function ProfesorTable({ professors, onUpdate, saving }: Props) {
                                 No se encontraron profesores con estos parámetros.
                             </TableCell>
                         </TableRow>
-                    )}
+                    )*/}
                 </TableBody>
             </Table>
             {selectedProfessor && (

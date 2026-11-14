@@ -16,9 +16,9 @@ import axios from "axios";
 
 interface Props {
     open: boolean;
+    saving: boolean;
     onOpenChange: (open: boolean) => void;
     onCreate: (data: CreateProfessorPayload) => Promise<Professor>;
-    saving: boolean;
 }
 
 export function AddProfessorModal({ open, onOpenChange, onCreate, saving }: Props) {
@@ -47,10 +47,7 @@ export function AddProfessorModal({ open, onOpenChange, onCreate, saving }: Prop
         if (!validatedData) return;
         setServerError(null);
         try {
-            await onCreate({
-                ...validatedData,
-                active: true
-            });
+            await onCreate(validatedData);
             resetForm();
             onOpenChange(false);
         } catch (error) {
@@ -81,7 +78,7 @@ export function AddProfessorModal({ open, onOpenChange, onCreate, saving }: Prop
                                 type="text"
                                 className="text-xs h-7 border-gray-300"
                                 value={form.name}
-                                onChange={(e) => updateFile('name', e.target.value)}
+                                onChange={(e) => updateFile('name', e.target.value.toUpperCase())}
                             />
                             {errors.name && <span className="text-red-500 text-xs">{errors.name}</span>}
                         </div>
@@ -92,7 +89,7 @@ export function AddProfessorModal({ open, onOpenChange, onCreate, saving }: Prop
                                 type="text"
                                 className="text-xs h-7 border-gray-300"
                                 value={form.last_name}
-                                onChange={(e) => updateFile('last_name', e.target.value)}
+                                onChange={(e) => updateFile('last_name', e.target.value.toUpperCase())}
                             />
                             {errors.last_name && <span className="text-red-500 text-xs">{errors.last_name}</span>}
                         </div>
@@ -114,7 +111,7 @@ export function AddProfessorModal({ open, onOpenChange, onCreate, saving }: Prop
                                 type="text"
                                 className="text-xs h-7 border-gray-300"
                                 value={form.rfc}
-                                onChange={(e) => updateFile('rfc', e.target.value)}
+                                onChange={(e) => updateFile('rfc', e.target.value.toUpperCase())}
                             />
                             {errors.rfc && <span className="text-red-500 text-xs">{errors.rfc}</span>}
                         </div>
