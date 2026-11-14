@@ -40,6 +40,9 @@ export function GroupTable({ theme, group, modules, onOpenModal }: Props) {
                     const isScheduled = Boolean(
                         module.professor && module.start_date && module.end_date
                     );
+                    const isReviewed = Boolean(
+                        module.review?.dates_reviewed && module.review?.exam_uploaded && module.review?.group_with_students
+                    );
                     return (
                         <TableRow key={module.id}>
                             <TableCell className="font-medium">{module.number}</TableCell>
@@ -52,33 +55,46 @@ export function GroupTable({ theme, group, modules, onOpenModal }: Props) {
                                     : "Sin asignar"}
                             </TableCell>
                             <TableCell>
-                                <Badge
-                                    variant="outline"
-                                    className={`text-xs border-none font-semibold ${isScheduled
-                                        ? "bg-emerald-100 text-emerald-800"
-                                        : "bg-yellow-100 text-yellow-800"
-                                        }`}
-                                >
-                                    {isScheduled ? "Programado" : "Pendiente"}
-                                </Badge>
+                                <div className="flex flex-col gap-y-2">
+                                    <Badge
+                                        variant="outline"
+                                        className={`text-xs border-none ${isScheduled
+                                            ? "bg-sky-100 text-sky-800"
+                                            : "bg-amber-100 text-amber-800"
+                                            }`}
+                                    >
+                                        <span className="font-semibold">Grupo:</span> {isScheduled ? "Programado" : "Pendiente"}
+                                    </Badge>
+                                    <Badge
+                                        variant="outline"
+                                        className={`text-xs border-none ${isReviewed
+                                            ? "bg-sky-100 text-sky-800"
+                                            : "bg-amber-100 text-amber-800"
+                                            }`}
+                                    >
+                                        <span className="font-semibold">Revisión:</span> {isReviewed ? "Programado" : "Pendiente"}
+                                    </Badge>
+                                </div>
                             </TableCell>
-                            <TableCell className="flex gap-x-2 justify-start items-start">
-                                <Button
-                                    size="xs"
-                                    variant="link"
-                                    className={`text-xs ${theme.textColor} font-semibold cursor-pointer hover:no-underline p-0`}
-                                    onClick={() => onOpenModal({ type: "check-module", module })}
-                                >
-                                    Revisar
-                                </Button>
-                                <Button
-                                    size="xs"
-                                    variant="link"
-                                    className={`text-xs ${theme.textColor} font-semibold cursor-pointer hover:no-underline p-0`}
-                                    onClick={() => onOpenModal({ type: "edit-module", module })}
-                                >
-                                    Editar
-                                </Button>
+                            <TableCell>
+                                <div className="flex flex-col gap-y-1">
+                                    <Button
+                                        size="xs"
+                                        variant="link"
+                                        className={`text-xs ${theme.textColor} font-semibold cursor-pointer hover:no-underline p-0`}
+                                        onClick={() => onOpenModal({ type: "edit-module", module })}
+                                    >
+                                        Editar
+                                    </Button>
+                                    <Button
+                                        size="xs"
+                                        variant="link"
+                                        className={`text-xs ${theme.textColor} font-semibold cursor-pointer hover:no-underline p-0`}
+                                        onClick={() => onOpenModal({ type: "check-module", module_number: module.number, review: module.review })}
+                                    >
+                                        Revisar
+                                    </Button>
+                                </div>
                             </TableCell>
                         </TableRow>
                     );
@@ -90,7 +106,7 @@ export function GroupTable({ theme, group, modules, onOpenModal }: Props) {
                         <Button
                             size="xs"
                             className={`text-xs text-white hover:text-white cursor-pointer ${theme.buttonBg} ${theme.buttonHover}`}
-                            onClick={() => onOpenModal({ type: "edit-group", group })}
+                            onClick={() => onOpenModal({ type: "update-group", group })}
                         >
                             Actualizar grupo
                         </Button>

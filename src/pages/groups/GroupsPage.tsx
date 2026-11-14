@@ -1,17 +1,22 @@
 import { useState } from "react";
 import { useDiploma } from "@pages/groups/hooks/useDiploma";
 import { useGroups } from "@pages/groups/hooks/useGroups";
+import { useModules } from "@pages/groups/hooks/useModules";
 import { GroupAccordion } from "@/pages/groups/components/GroupAccordion";
 import { Button } from "@/components/ui/button";
+import { ProgressBar } from "@/components/layouts/components/loading/ProgressBar";
 import { CreateGroupModal } from "@/pages/groups/components/CreateGroupModal";
 import { UpdateGroupModal } from "@/pages/groups/components/UpdateGroupModal";
 import { DeleteGroupModal } from "@/pages/groups/components/DeleteGroupModal";
-import { CheckModuleModal } from "@/pages/groups/components/CheckModuleModal";
 import { EditModuleModal } from "@/pages/groups/components/EditModuleModal";
+import { CheckModuleModal } from "@/pages/groups/components/CheckModuleModal";
+import { useProfessors } from "@/pages/professors/hooks/useProfessors";
 import type { GroupModalState } from "./types/group-modal.types";
 
 export function GroupsPage() {
     const [activeModal, setActiveModal] = useState<GroupModalState>(null);
+
+    const { professors } = useProfessors();
     const { slug, theme } = useDiploma();
     const {
         diploma,
@@ -21,8 +26,10 @@ export function GroupsPage() {
         saving,
         createGroup,
         updateGroupStatus,
-        deleteGroup
+        deleteGroup,
+        refetch
     } = useGroups(slug);
+    const { editModule, checkModule, saving: savingModule } = useModules(refetch);
 
     const handleOpenModal = (modal: Exclude<GroupModalState, null>) => {
         setActiveModal(modal);
@@ -53,17 +60,25 @@ export function GroupsPage() {
                         </Button>
                     </div>
                 </div>
-                {loading ? (
-                    <p className="text-sm text-gray-500">Cargando grupos...</p>
-                ) : error ? (
-                    <p role="alert" className="text-sm text-red-600">{error}</p>
-                ) : (
-                    <GroupAccordion
-                        theme={theme}
-                        groups={groups}
-                        onOpenModal={handleOpenModal}
-                    />
-                )}
+                {
+                    loading ? (
+                        <ProgressBar />
+                    ) : error ? (
+                        <p role="alert" className="text-sm text-red-600">
+                            {error}
+                        </p>
+                    ) : groups.length === 0 ? (
+                        <p role="alert" className="text-center py-3 text-sm text-gray-500">
+                            No hay grupos registrados.
+                        </p>
+                    ) : (
+                        <GroupAccordion
+                            theme={theme}
+                            groups={groups}
+                            onOpenModal={handleOpenModal}
+                        />
+                    )
+                }
             </div>
             {activeModal?.type === "create-group" && diploma && (
                 <CreateGroupModal
@@ -75,7 +90,7 @@ export function GroupsPage() {
                     onOpenChange={(open) => !open && handleCloseModal()}
                 />
             )}
-            {activeModal?.type === "edit-group" && (
+            {activeModal?.type === "update-group" && (
                 <UpdateGroupModal
                     open={true}
                     theme={theme}
@@ -98,22 +113,29 @@ export function GroupsPage() {
                     onOpenChange={(open) => !open && handleCloseModal()}
                 />
             )}
-            {activeModal?.type === "check-module" && (
-                <CheckModuleModal
-                    open={true}
-                    theme={theme}
-                    module={activeModal.module}
-                    onOpenChange={(open) => !open && handleCloseModal()}
-                />
-            )}
             {activeModal?.type === "edit-module" && (
                 <EditModuleModal
                     open={true}
                     theme={theme}
                     module={activeModal.module}
+                    professors={professors}
+                    saving={savingModule}
+                    onEditModule={editModule}
                     onOpenChange={(open) => !open && handleCloseModal()}
                 />
             )}
+            {activeModal?.type === "check-module" && (
+                <CheckModuleModal
+                    open={true}
+                    theme={theme}
+                    module_number={activeModal.module_number}
+                    review={activeModal.review}
+                    saving={savingModule}
+                    onCheckModule={checkModule}
+                    onOpenChange={(open) => !open && handleCloseModal()}
+                />
+            )}
+
         </>
 
     )

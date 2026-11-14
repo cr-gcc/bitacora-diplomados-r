@@ -104,7 +104,8 @@ export function UpdateGroupModal({ open, onOpenChange, theme, group_id, code, on
                             className={`text-xs text-white hover:text-white cursor-pointer ${theme.buttonBg} ${theme.buttonHover}`}
                         >
                             Salir
-                        </Button>} />
+                        </Button>}
+                    />
                 </DialogFooter>
             </DialogContent>
         </Dialog>

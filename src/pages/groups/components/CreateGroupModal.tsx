@@ -1,5 +1,4 @@
 import { useState } from "react"
-import axios from "axios";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
@@ -12,6 +11,7 @@ import {
 } from "@/components/ui/dialog"
 import type { DiplomaTheme } from "@/config/diplomas/diploma.types";
 import type { CreateGroupPayload } from "../types/group-modules.types";
+import axios from "axios";
 
 interface Props {
     theme: DiplomaTheme;
@@ -25,11 +25,6 @@ interface Props {
 export function CreateGroupModal({ open, onOpenChange, theme, diploma_id, onCreate, saving }: Props) {
     const [code, setCode] = useState("");
     const [serverError, setServerError] = useState<string | null>(null);
-
-    const handleClose = (nextOpen: boolean) => {
-        if (!nextOpen && saving) return;
-        onOpenChange(nextOpen);
-    };
 
     const handleSubmit = async () => {
         if (saving) return;
@@ -52,7 +47,7 @@ export function CreateGroupModal({ open, onOpenChange, theme, diploma_id, onCrea
     }
 
     return (
-        <Dialog open={open} onOpenChange={handleClose}>
+        <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="w-full sm:w-1/4 px-4 py-3 gap-y-1" showCloseButton={false} >
                 <DialogHeader>
                     <DialogTitle className={`text-xl ${theme.textColor}`}>Crear Grupo</DialogTitle>

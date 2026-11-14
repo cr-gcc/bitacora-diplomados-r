@@ -1,5 +1,5 @@
 export type GroupStatus = "active" | "finished";
-
+export type ReviewStatus = "pending" | "approved";
 // Group
 export interface Group {
     id: number;
@@ -14,6 +14,17 @@ export interface Module {
     diploma_id: number;
     number: number;
     name: string;
+}
+
+export interface Review {
+    id: number;
+    dates_reviewed: boolean;
+    exam_uploaded: boolean;
+    group_with_students: boolean;
+    regular_students: number;
+    repeating_students: number;
+    observations?: string | null;
+    status: ReviewStatus;
 }
 
 // Module belonging to a group
@@ -34,6 +45,7 @@ export interface GroupModule {
         name: string;
         last_name: string;
     } | null;
+    review: Review;
 }
 
 // Group with all its modules
@@ -62,6 +74,24 @@ export interface UpdateGroupStatusPayload {
     id: number;
     status: GroupStatus;
 }
+
+// Payload for updating basic information of a module
+export interface EditBasicModulePayload {
+    id: number;
+    professor_id: number | null;
+    start_date: string | null;
+    end_date: string | null;
+}
+
+// Payload for updating module plan (students and schedule)
+export interface UpdateModulePlanPayload {
+    id: number;
+    regular_students: number;
+    repeating_students: number;
+}
+
+// Payload for checking a module
+export type CheckModulePayload = Omit<Review, "status">;
 
 // Response for API GET groups
 export interface GroupsResponse {
