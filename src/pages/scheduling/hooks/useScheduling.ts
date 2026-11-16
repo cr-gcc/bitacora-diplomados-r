@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { schedulingService } from "../services/schedulingService";
 import axios from "axios";
 import type { Scheduling, CreateSchedulingPayload } from "../types/scheduling.types";
@@ -46,6 +46,13 @@ export function useScheduling() {
             setSaving(false);
         }
     }
+
+    useEffect(() => {
+        void loadSchedulings();
+        return () => {
+            controllerRef.current?.abort();
+        }
+    }, [loadSchedulings]);
 
     return {
         schedulings,

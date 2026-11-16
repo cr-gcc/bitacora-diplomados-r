@@ -59,10 +59,10 @@ export function SchedulingPage() {
                     ) : (
                         <>
                             <Alert className="w-full border-none bg-amber-50 text-amber-900 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-50">
-                                <AlertTitle className="text-sm">Los registros sin grupo se conservan de forma provisional. La vinculación posterior no debe duplicar el módulo del grupo.</AlertTitle>
+                                <AlertTitle className="text-sm">Los registros sin grupo se conservan de forma provisional. Cuando se vincule con un grupo, el registro aparecerá en la bitácora del grupo.</AlertTitle>
                             </Alert>
                             <section className="flex flex-col bg-white w-full rounded-lg px-2 pb-1 pt-0.5">
-                                {/*<SchedulingTable schedulings={schedulings} />*/}
+                                <SchedulingTable schedulings={schedulings} />
                             </section>
                         </>
                     )

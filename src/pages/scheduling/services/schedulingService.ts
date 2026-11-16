@@ -5,7 +5,7 @@ export const schedulingService = {
     // All schedulings
     async getAll(signal?: AbortSignal): Promise<SchedulingTypes.Scheduling[]> {
         const response = await api.get<SchedulingTypes.SchedulingResponse>(
-            "/schedule-modules", { signal }
+            "/api/v1/schedule-modules", { signal }
         );
         return response.data.data;
     },
