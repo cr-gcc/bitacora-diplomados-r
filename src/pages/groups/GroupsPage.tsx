@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useDiploma } from "@pages/groups/hooks/useDiploma";
+import { useDiplomaTheme } from "@pages/groups/hooks/useDiplomaTheme";
 import { useGroups } from "@pages/groups/hooks/useGroups";
-import { useModules } from "@pages/groups/hooks/useModules";
+import { useGroupModuleMutations } from "@pages/groups/hooks/useGroupModuleMutations";
 import { GroupAccordion } from "@/pages/groups/components/GroupAccordion";
 import { Button } from "@/components/ui/button";
 import { ProgressBar } from "@/components/layouts/components/loading/ProgressBar";
@@ -17,7 +17,7 @@ export function GroupsPage() {
     const [activeModal, setActiveModal] = useState<GroupModalState>(null);
 
     const { professors } = useProfessors();
-    const { slug, theme } = useDiploma();
+    const { slug, theme } = useDiplomaTheme();
     const {
         diploma,
         groups,
@@ -29,7 +29,7 @@ export function GroupsPage() {
         deleteGroup,
         refetch
     } = useGroups(slug);
-    const { editModule, checkModule, saving: savingModule } = useModules(refetch);
+    const { editModule, checkModule, saving: savingModule } = useGroupModuleMutations(refetch);
 
     const handleOpenModal = (modal: Exclude<GroupModalState, null>) => {
         setActiveModal(modal);

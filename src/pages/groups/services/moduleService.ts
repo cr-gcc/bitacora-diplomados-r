@@ -2,6 +2,15 @@ import { api } from "@/services/api/axios";
 import type * as GroupModulesTypes from "../types/group-modules.types";
 
 export const moduleService = {
+    //Get Modules
+    getModules: async (signal?: AbortSignal): Promise<GroupModulesTypes.Module[]> => {
+        const response = await api.get<{ data: GroupModulesTypes.Module[] }>(
+            `/api/v1/modules`,
+            { signal }
+        );
+        return response.data.data;
+    },
+
     //Update Basic Module
     editBasicModule: async (
         data: GroupModulesTypes.EditBasicModulePayload,

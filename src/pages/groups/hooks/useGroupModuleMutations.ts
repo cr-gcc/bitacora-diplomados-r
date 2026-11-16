@@ -2,7 +2,7 @@ import { useState } from "react";
 import { moduleService } from "@pages/groups/services/moduleService";
 import type { EditBasicModulePayload, CheckModulePayload } from "../types/group-modules.types";
 
-export function useModules(onSuccess?: () => Promise<void>) {
+export function useGroupModuleMutations(onSuccess?: () => Promise<void>) {
     const [saving, setSaving] = useState(false);
 
     const editModule = async (data: EditBasicModulePayload): Promise<void> => {
@@ -28,6 +28,6 @@ export function useModules(onSuccess?: () => Promise<void>) {
     return {
         editModule,
         checkModule,
-        saving
+        saving,
     };
 }

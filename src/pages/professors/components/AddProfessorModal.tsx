@@ -22,15 +22,14 @@ interface Props {
 }
 
 export function AddProfessorModal({ open, onOpenChange, onCreate, saving }: Props) {
+    const [serverError, setServerError] = useState<string | null>(null);
     const {
         form,
         errors,
-        updateFile,
+        updateField,
         validateForm,
         resetForm
     } = useAddProfessorForm();
-
-    const [serverError, setServerError] = useState<string | null>(null);
 
     const handleClose = (nextOpen: boolean) => {
         if (!nextOpen && saving) return;
@@ -78,7 +77,7 @@ export function AddProfessorModal({ open, onOpenChange, onCreate, saving }: Prop
                                 type="text"
                                 className="text-xs h-7 border-gray-300"
                                 value={form.name}
-                                onChange={(e) => updateFile('name', e.target.value.toUpperCase())}
+                                onChange={(e) => updateField('name', e.target.value.toUpperCase())}
                             />
                             {errors.name && <span className="text-red-500 text-xs">{errors.name}</span>}
                         </div>
@@ -89,7 +88,7 @@ export function AddProfessorModal({ open, onOpenChange, onCreate, saving }: Prop
                                 type="text"
                                 className="text-xs h-7 border-gray-300"
                                 value={form.last_name}
-                                onChange={(e) => updateFile('last_name', e.target.value.toUpperCase())}
+                                onChange={(e) => updateField('last_name', e.target.value.toUpperCase())}
                             />
                             {errors.last_name && <span className="text-red-500 text-xs">{errors.last_name}</span>}
                         </div>
@@ -100,7 +99,7 @@ export function AddProfessorModal({ open, onOpenChange, onCreate, saving }: Prop
                                 type="text"
                                 className="text-xs h-7 border-gray-300"
                                 value={form.email}
-                                onChange={(e) => updateFile('email', e.target.value)}
+                                onChange={(e) => updateField('email', e.target.value)}
                             />
                             {errors.email && <span className="text-red-500 text-xs">{errors.email}</span>}
                         </div>
@@ -111,7 +110,7 @@ export function AddProfessorModal({ open, onOpenChange, onCreate, saving }: Prop
                                 type="text"
                                 className="text-xs h-7 border-gray-300"
                                 value={form.rfc}
-                                onChange={(e) => updateFile('rfc', e.target.value.toUpperCase())}
+                                onChange={(e) => updateField('rfc', e.target.value.toUpperCase())}
                             />
                             {errors.rfc && <span className="text-red-500 text-xs">{errors.rfc}</span>}
                         </div>
@@ -122,7 +121,7 @@ export function AddProfessorModal({ open, onOpenChange, onCreate, saving }: Prop
                                 type="text"
                                 className="text-xs h-7 border-gray-300"
                                 value={form.user}
-                                onChange={(e) => updateFile('user', e.target.value)}
+                                onChange={(e) => updateField('user', e.target.value)}
                             />
                             {errors.user && <span className="text-red-500 text-xs">{errors.user}</span>}
                         </div>

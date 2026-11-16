@@ -13,7 +13,7 @@ export function useAddProfessorForm() {
     });
     const [errors, setErrors] = useState<FormErrors>({});
 
-    const updateFile = <K extends keyof AddProfessorForm>(
+    const updateField = <K extends keyof AddProfessorForm>(
         field: K,
         value: AddProfessorForm[K]
     ) => {
@@ -58,7 +58,7 @@ export function useAddProfessorForm() {
     return {
         form,
         errors,
-        updateFile,
+        updateField,
         validateForm,
         resetForm
     };

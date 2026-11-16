@@ -10,7 +10,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import { LinkModal } from "@components/layouts/components/modals/scheduling/LinkModal";
+import { LinkModal } from "@/pages/scheduling/components/LinkModal";
 
 interface Props {
     scheduling: {
