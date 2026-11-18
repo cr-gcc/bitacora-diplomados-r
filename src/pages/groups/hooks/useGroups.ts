@@ -6,8 +6,10 @@ import type { DiplomaWithGroups, CreateGroupPayload, UpdateGroupStatusPayload } 
 export function useGroups(slug: string | undefined) {
     const [diploma, setDiploma] = useState<DiplomaWithGroups | null>(null);
     const [loading, setLoading] = useState(true);
+    const [refreshing, setRefreshing] = useState(false);
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [refreshError, setRefreshError] = useState<string | null>(null);
     const controllerRef = useRef<AbortController | null>(null);
 
     const loadGroups = useCallback(async (silent = false) => {
@@ -19,7 +21,10 @@ export function useGroups(slug: string | undefined) {
             if (!silent) {
                 setLoading(true);
                 setError(null);
+            } else {
+                setRefreshing(true);
             }
+            setRefreshError(null);
             const response = await groupServices.getGroupsByDiploma(slug, controller.signal);
             if (!controller.signal.aborted) {
                 setDiploma(response.data);
@@ -31,21 +36,21 @@ export function useGroups(slug: string | undefined) {
             if (!silent) {
                 setError("No fue posible cargar los grupos.");
             } else {
-                console.error("No fue posible actualizar los grupos:", err);
+                setRefreshError("Los cambios se guardaron, pero no fue posible actualizar los grupos.");
             }
         } finally {
-            if (!silent && !controller.signal.aborted) {
-                setLoading(false);
+            if (!controller.signal.aborted) {
+                if (!silent) {
+                    setLoading(false);
+                } else {
+                    setRefreshing(false);
+                }
             }
         }
     }, [slug]);
 
     const refreshSilent = useCallback(async () => {
-        try {
-            await loadGroups(true);
-        } catch (err) {
-            console.error("No fue posible actualizar los grupos:", err);
-        }
+        await loadGroups(true);
     }, [loadGroups]);
 
     const createGroup = async (data: CreateGroupPayload): Promise<void> => {
@@ -55,7 +60,7 @@ export function useGroups(slug: string | undefined) {
         } finally {
             setSaving(false);
         }
-        await refreshSilent();
+        void refreshSilent();
     };
 
     const updateGroupStatus = async (data: UpdateGroupStatusPayload): Promise<void> => {
@@ -65,7 +70,7 @@ export function useGroups(slug: string | undefined) {
         } finally {
             setSaving(false);
         }
-        await refreshSilent();
+        void refreshSilent();
     };
 
     const deleteGroup = async (id: number): Promise<void> => {
@@ -75,7 +80,7 @@ export function useGroups(slug: string | undefined) {
         } finally {
             setSaving(false);
         }
-        await refreshSilent();
+        void refreshSilent();
     };
 
     useEffect(() => {
@@ -90,8 +95,10 @@ export function useGroups(slug: string | undefined) {
         refetch: refreshSilent,
         diploma,
         loading,
+        refreshing,
         saving,
         error,
+        refreshError,
         createGroup,
         updateGroupStatus,
         deleteGroup,

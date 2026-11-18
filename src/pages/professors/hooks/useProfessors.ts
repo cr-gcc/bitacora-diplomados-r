@@ -10,8 +10,10 @@ import type {
 export function useProfessors() {
     const [professors, setProfessors] = useState<Professor[]>([]);
     const [loading, setLoading] = useState(true);
+    const [refreshing, setRefreshing] = useState(false);
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [refreshError, setRefreshError] = useState<string | null>(null);
     const controllerRef = useRef<AbortController | null>(null);
 
     const loadProfessors = useCallback(async (silent = false) => {
@@ -22,28 +24,39 @@ export function useProfessors() {
             if (!silent) {
                 setLoading(true);
                 setError(null);
+            } else {
+                setRefreshing(true);
             }
+            setRefreshError(null);
             const data = await professorService.getAll(
                 controller.signal
             );
             if (!controller.signal.aborted) {
                 setProfessors(data);
             }
-        } catch (error) {
-            if (axios.isCancel(error) || controller.signal.aborted) {
+        } catch (err) {
+            if (axios.isCancel(err) || controller.signal.aborted) {
                 return;
             }
             if (!silent) {
                 setError("No fue posible cargar los profesores.");
             } else {
-                console.error("No fue posible actualizar los profesores:", error);
+                setRefreshError("El profesor se guardó, pero no fue posible actualizar la lista.");
             }
         } finally {
-            if (!silent && !controller.signal.aborted) {
-                setLoading(false);
+            if (!controller.signal.aborted) {
+                if (!silent) {
+                    setLoading(false);
+                } else {
+                    setRefreshing(false);
+                }
             }
         }
     }, []);
+
+    const refreshSilent = useCallback(async () => {
+        await loadProfessors(true);
+    }, [loadProfessors]);
 
     useEffect(() => {
         void loadProfessors();
@@ -62,11 +75,7 @@ export function useProfessors() {
         } finally {
             setSaving(false);
         }
-        try {
-            await loadProfessors(true);
-        } catch (err) {
-            console.error("No fue posible actualizar los profesores:", err);
-        }
+        void refreshSilent();
         return professor;
     };
 
@@ -91,9 +100,11 @@ export function useProfessors() {
     return {
         professors,
         loading,
+        refreshing,
         saving,
         error,
-        refetch: loadProfessors,
+        refreshError,
+        refetch: refreshSilent,
         createProfessor,
         updateProfessor,
     };

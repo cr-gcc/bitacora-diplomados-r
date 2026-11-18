@@ -42,7 +42,7 @@ export interface GroupModule {
     regular_students: number;
     repeating_students: number;
     total_students: number;
-    professor: ProfessorBasic;
+    professor: ProfessorBasic | null;
     review: Review;
 }
 

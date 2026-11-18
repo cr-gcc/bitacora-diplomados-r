@@ -38,8 +38,8 @@ export function GroupTable({ theme, group, modules, onOpenModal }: Props) {
             <TableBody className="text-xs text-gray-800">
                 {modules?.map((module) => {
                     const isScheduled = Boolean(module.professor && module.start_date && module.end_date);
-                    const statusMsg = String(module.review.status === "approved" ? "Aprobada" : "Pendiente");
-                    const statusFlag = Boolean(module.review.status === "approved" ? true : false)
+                    const isApproved = module.review.status === "approved";
+                    const statusMsg = isApproved ? "Aprobada" : "Pendiente";
 
                     return (
                         <TableRow key={module.id}>
@@ -65,7 +65,7 @@ export function GroupTable({ theme, group, modules, onOpenModal }: Props) {
                                     </Badge>
                                     <Badge
                                         variant="outline"
-                                        className={`text-xs border-none ${statusFlag
+                                        className={`text-xs border-none ${isApproved
                                             ? "bg-sky-100 text-sky-800"
                                             : "bg-amber-100 text-amber-800"
                                             }`}

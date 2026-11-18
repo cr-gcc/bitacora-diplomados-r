@@ -20,7 +20,7 @@ export function useGroupModuleMutations(onSuccess?: () => Promise<void>) {
         } finally {
             setSaving(false);
         }
-        await runOnSuccess();
+        void runOnSuccess();
     };
 
     const checkModule = async (data: CheckModulePayload): Promise<void> => {
@@ -30,7 +30,7 @@ export function useGroupModuleMutations(onSuccess?: () => Promise<void>) {
         } finally {
             setSaving(false);
         }
-        await runOnSuccess();
+        void runOnSuccess();
     };
 
     return {

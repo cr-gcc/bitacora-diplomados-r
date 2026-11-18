@@ -6,8 +6,10 @@ import type { Scheduling, CreateSchedulingPayload, LinkSchedulingPayload } from 
 export function useScheduling() {
     const [schedulings, setSchedulings] = useState<Scheduling[]>([]);
     const [loading, setLoading] = useState(false);
+    const [refreshing, setRefreshing] = useState(false);
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [refreshError, setRefreshError] = useState<string | null>(null);
     const controllerRef = useRef<AbortController | null>(null);
 
     const loadSchedulings = useCallback(async (silent = false) => {
@@ -18,7 +20,10 @@ export function useScheduling() {
             if (!silent) {
                 setLoading(true);
                 setError(null);
+            } else {
+                setRefreshing(true);
             }
+            setRefreshError(null);
             const data = await schedulingService.getAll(controller.signal);
             if (!controller.signal.aborted) {
                 setSchedulings(data);
@@ -30,21 +35,21 @@ export function useScheduling() {
             if (!silent) {
                 setError("No fue posible cargar los registros");
             } else {
-                console.error("No fue posible actualizar los registros:", err);
+                setRefreshError("Los cambios se guardaron, pero no fue posible actualizar la programación.");
             }
         } finally {
-            if (!silent && !controller.signal.aborted) {
-                setLoading(false);
+            if (!controller.signal.aborted) {
+                if (!silent) {
+                    setLoading(false);
+                } else {
+                    setRefreshing(false);
+                }
             }
         }
     }, []);
 
     const refreshSilent = useCallback(async () => {
-        try {
-            await loadSchedulings(true);
-        } catch (err) {
-            console.error("No fue posible actualizar los registros:", err);
-        }
+        await loadSchedulings(true);
     }, [loadSchedulings]);
 
     const createScheduling = async (
@@ -58,7 +63,7 @@ export function useScheduling() {
         } finally {
             setSaving(false);
         }
-        await refreshSilent();
+        void refreshSilent();
         return scheduling;
     };
 
@@ -72,7 +77,7 @@ export function useScheduling() {
         } finally {
             setSaving(false);
         }
-        await refreshSilent();
+        void refreshSilent();
     };
 
     const linkScheduling = async (
@@ -85,7 +90,7 @@ export function useScheduling() {
         } finally {
             setSaving(false);
         }
-        await refreshSilent();
+        void refreshSilent();
     };
 
     useEffect(() => {
@@ -98,8 +103,10 @@ export function useScheduling() {
     return {
         schedulings,
         loading,
+        refreshing,
         saving,
         error,
+        refreshError,
         refetch: refreshSilent,
         createScheduling,
         linkScheduling,

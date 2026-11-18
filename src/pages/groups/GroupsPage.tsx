@@ -5,6 +5,7 @@ import { useGroups } from "@pages/groups/hooks/useGroups";
 import { useGroupModuleMutations } from "@pages/groups/hooks/useGroupModuleMutations";
 import { GroupAccordion } from "@/pages/groups/components/GroupAccordion";
 import { Button } from "@/components/ui/button";
+import { Alert, AlertTitle } from "@/components/ui/alert";
 import { ProgressBar } from "@/components/layouts/components/loading/ProgressBar";
 import { CreateGroupModal } from "@/pages/groups/components/CreateGroupModal";
 import { UpdateGroupModal } from "@/pages/groups/components/UpdateGroupModal";
@@ -25,7 +26,9 @@ export function GroupsPage() {
         diploma,
         groups,
         loading,
+        refreshing,
         error,
+        refreshError,
         saving,
         createGroup,
         updateGroupStatus,
@@ -63,6 +66,20 @@ export function GroupsPage() {
                         </Button>
                     </div>
                 </div>
+                {refreshError && (
+                    <Alert className="w-full border-none bg-amber-50 text-amber-900 flex items-center justify-between gap-2">
+                        <AlertTitle className="text-sm">{refreshError}</AlertTitle>
+                        <Button
+                            size="xs"
+                            variant="outline"
+                            disabled={refreshing}
+                            onClick={() => void refetch()}
+                            className="text-xs border-amber-300 text-amber-900 hover:bg-amber-100 cursor-pointer"
+                        >
+                            {refreshing ? "Actualizando..." : "Reintentar"}
+                        </Button>
+                    </Alert>
+                )}
                 {
                     loading ? (
                         <ProgressBar />

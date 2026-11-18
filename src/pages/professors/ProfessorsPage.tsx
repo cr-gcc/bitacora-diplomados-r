@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useProfessors } from "@/pages/professors/hooks/useProfessors";
 import { Button } from "@/components/ui/button"
+import { Alert, AlertTitle } from "@/components/ui/alert"
 import { ProgressBar } from "@/components/layouts/components/loading/ProgressBar";
 import { ProfesorTable } from "@/pages/professors/components/ProfesorTable"
 import { AddProfessorModal } from "@/pages/professors/components/AddProfessorModal"
@@ -10,8 +11,11 @@ export function ProfessorsPage() {
     const {
         professors,
         loading,
+        refreshing,
         saving,
         error,
+        refreshError,
+        refetch,
         createProfessor,
         updateProfessor,
     } = useProfessors();
@@ -38,6 +42,20 @@ export function ProfessorsPage() {
                         </Button>
                     </div>
                 </div>
+                {refreshError && (
+                    <Alert className="w-full border-none bg-amber-50 text-amber-900 flex items-center justify-between gap-2">
+                        <AlertTitle className="text-sm">{refreshError}</AlertTitle>
+                        <Button
+                            size="xs"
+                            variant="outline"
+                            disabled={refreshing}
+                            onClick={() => void refetch()}
+                            className="text-xs border-amber-300 text-amber-900 hover:bg-amber-100 cursor-pointer"
+                        >
+                            {refreshing ? "Actualizando..." : "Reintentar"}
+                        </Button>
+                    </Alert>
+                )}
                 <section className="flex flex-col bg-white w-full rounded-lg px-2 pb-1 pt-0.5">
                     {
                         loading ? (

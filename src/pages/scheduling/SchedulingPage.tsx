@@ -17,8 +17,11 @@ export function SchedulingPage() {
     const {
         schedulings,
         loading,
+        refreshing,
         saving,
         error,
+        refreshError,
+        refetch,
         createScheduling,
         linkScheduling,
         deleteScheduling
@@ -46,6 +49,20 @@ export function SchedulingPage() {
                         </Button>
                     </div>
                 </div>
+                {refreshError && (
+                    <Alert className="w-full border-none bg-amber-50 text-amber-900 flex items-center justify-between gap-2">
+                        <AlertTitle className="text-sm">{refreshError}</AlertTitle>
+                        <Button
+                            size="xs"
+                            variant="outline"
+                            disabled={refreshing}
+                            onClick={() => void refetch()}
+                            className="text-xs border-amber-300 text-amber-900 hover:bg-amber-100 cursor-pointer"
+                        >
+                            {refreshing ? "Actualizando..." : "Reintentar"}
+                        </Button>
+                    </Alert>
+                )}
                 {
                     loading ? (
                         <ProgressBar />
