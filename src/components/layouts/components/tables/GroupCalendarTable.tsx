@@ -7,13 +7,15 @@ import {
     TableRow
 } from "@/components/ui/table"
 import { Button } from "@/components/ui/button";
-import type { Evento } from "@/components/layouts/components/modals/calendar/CalendarEventsModal";
+import { diplomaThemes, defaultDiplomaTheme } from "@/config/diplomas/diplomaThemes";
+import type { GroupsDates } from "@/pages/dashboard/types/dashboard.types";
+import { formatShortDate } from "@/lib/utils";
 
 interface Props {
-    groups: Evento[];
+    groupsDates: GroupsDates[];
 }
 
-export function GroupCalendarTable({ groups }: Props) {
+export function GroupCalendarTable({ groupsDates }: Props) {
     return (
         <Table>
             <TableHeader>
@@ -30,21 +32,24 @@ export function GroupCalendarTable({ groups }: Props) {
                 </TableRow>
             </TableHeader>
             <TableBody className="text-xs text-gray-800">
-                {groups.map((group, index) => (
-                    <TableRow key={index}>
-                        <TableCell className="font-medium">{index + 1}</TableCell>
-                        <TableCell>{group.diploma}</TableCell>
-                        <TableCell>{group.groupNum}</TableCell>
-                        <TableCell>{group.module}</TableCell>
-                        <TableCell>{group.title}</TableCell>
-                        <TableCell>{group.professor}</TableCell>
-                        <TableCell>{group.start}</TableCell>
-                        <TableCell>{group.end}</TableCell>
-                        <TableCell className="flex gap-x-2 justify-start items-start">
-                            <Button size="xs" variant="link" className="text-xs text-navy font-semibold cursor-pointer hover:no-underline p-0">Ver</Button>
-                        </TableCell>
-                    </TableRow>
-                ))}
+                {groupsDates.map((group, index) => {
+                    const theme = diplomaThemes[group.slug ?? ""] ?? defaultDiplomaTheme;
+                    return (
+                        <TableRow key={index} className={theme.textColor}>
+                            <TableCell className="font-medium">{index + 1}</TableCell>
+                            <TableCell>{group.diploma}</TableCell>
+                            <TableCell>{group.code}</TableCell>
+                            <TableCell>{group.number}</TableCell>
+                            <TableCell>{group.name}</TableCell>
+                            <TableCell>{group.professor}</TableCell>
+                            <TableCell>{formatShortDate(group.start_date)}</TableCell>
+                            <TableCell>{formatShortDate(group.end_date)}</TableCell>
+                            <TableCell className="flex gap-x-2 justify-start items-start">
+                                <Button size="xs" variant="link" className="text-xs text-navy font-semibold cursor-pointer hover:no-underline p-0">Ver</Button>
+                            </TableCell>
+                        </TableRow>
+                    );
+                })}
             </TableBody>
         </Table>
     )
