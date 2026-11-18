@@ -36,7 +36,7 @@ export function useGroups(slug: string | undefined) {
             if (!silent) {
                 setError("No fue posible cargar los grupos.");
             } else {
-                setRefreshError("Los cambios se guardaron, pero no fue posible actualizar los grupos.");
+                setRefreshError("No fue posible actualizar la información. Intenta nuevamente.");
             }
         } finally {
             if (!controller.signal.aborted) {

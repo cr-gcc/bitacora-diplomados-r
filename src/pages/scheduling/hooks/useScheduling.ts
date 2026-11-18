@@ -35,7 +35,7 @@ export function useScheduling() {
             if (!silent) {
                 setError("No fue posible cargar los registros");
             } else {
-                setRefreshError("Los cambios se guardaron, pero no fue posible actualizar la programación.");
+                setRefreshError("No fue posible actualizar la información. Intenta nuevamente.");
             }
         } finally {
             if (!controller.signal.aborted) {
