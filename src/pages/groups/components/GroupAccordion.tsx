@@ -14,12 +14,17 @@ import { getGroupStatusLabel } from "../config/groupStatus";
 interface Props {
     groups?: GroupWithModules[];
     theme: DiplomaTheme;
+    defaultGroupId?: number;
     onOpenModal: (modal: Exclude<GroupModalState, null>) => void;
 }
 
-export function GroupAccordion({ groups, theme, onOpenModal }: Props) {
+export function GroupAccordion({ groups, theme, defaultGroupId, onOpenModal }: Props) {
     return (
-        <Accordion multiple={false} className="bg-white w-full rounded-lg border">
+        <Accordion
+            multiple={false}
+            defaultValue={defaultGroupId ? [defaultGroupId.toString()] : undefined}
+            className="bg-white w-full rounded-lg border"
+        >
             {groups?.map((group) => (
                 <AccordionItem
                     key={group.id}

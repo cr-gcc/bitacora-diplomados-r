@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router";
 import {
     Table,
     TableBody,
@@ -16,6 +17,8 @@ interface Props {
 }
 
 export function GroupCalendarTable({ groupsDates }: Props) {
+    const navigate = useNavigate();
+
     return (
         <Table>
             <TableHeader>
@@ -45,7 +48,14 @@ export function GroupCalendarTable({ groupsDates }: Props) {
                             <TableCell>{formatShortDate(group.start_date)}</TableCell>
                             <TableCell>{formatShortDate(group.end_date)}</TableCell>
                             <TableCell className="flex gap-x-2 justify-start items-start">
-                                <Button size="xs" variant="link" className="text-xs text-navy font-semibold cursor-pointer hover:no-underline p-0">Ver</Button>
+                                <Button
+                                    size="xs"
+                                    variant="link"
+                                    className="text-xs text-navy font-semibold cursor-pointer hover:no-underline p-0"
+                                    onClick={() => navigate(`/diplomados/${group.slug}?grupo=${group.code}`)}
+                                >
+                                    Ver
+                                </Button>
                             </TableCell>
                         </TableRow>
                     );

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSearchParams } from "react-router";
 import { useDiplomaTheme } from "@pages/groups/hooks/useDiplomaTheme";
 import { useGroups } from "@pages/groups/hooks/useGroups";
 import { useGroupModuleMutations } from "@pages/groups/hooks/useGroupModuleMutations";
@@ -15,6 +16,8 @@ import type { GroupModalState } from "./types/group-modal.types";
 
 export function GroupsPage() {
     const [activeModal, setActiveModal] = useState<GroupModalState>(null);
+    const [searchParams] = useSearchParams();
+    const targetGroupCode = searchParams.get("grupo");
 
     const { professors } = useProfessors();
     const { slug, theme } = useDiplomaTheme();
@@ -75,6 +78,7 @@ export function GroupsPage() {
                         <GroupAccordion
                             theme={theme}
                             groups={groups}
+                            defaultGroupId={groups.find((g) => g.code === targetGroupCode)?.id}
                             onOpenModal={handleOpenModal}
                         />
                     )
