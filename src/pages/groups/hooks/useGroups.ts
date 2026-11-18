@@ -10,14 +10,16 @@ export function useGroups(slug: string | undefined) {
     const [error, setError] = useState<string | null>(null);
     const controllerRef = useRef<AbortController | null>(null);
 
-    const loadGroups = useCallback(async () => {
+    const loadGroups = useCallback(async (silent = false) => {
         if (!slug) return;
         controllerRef.current?.abort();
         const controller = new AbortController();
         controllerRef.current = controller;
         try {
-            setLoading(true);
-            setError(null);
+            if (!silent) {
+                setLoading(true);
+                setError(null);
+            }
             const response = await groupServices.getGroupsByDiploma(slug, controller.signal);
             if (!controller.signal.aborted) {
                 setDiploma(response.data);
@@ -26,42 +28,54 @@ export function useGroups(slug: string | undefined) {
             if (axios.isCancel(err) || controller.signal.aborted) {
                 return;
             }
-            setError("No fue posible cargar los grupos.");
+            if (!silent) {
+                setError("No fue posible cargar los grupos.");
+            } else {
+                console.error("No fue posible actualizar los grupos:", err);
+            }
         } finally {
-            if (!controller.signal.aborted) {
+            if (!silent && !controller.signal.aborted) {
                 setLoading(false);
             }
         }
     }, [slug]);
 
+    const refreshSilent = useCallback(async () => {
+        try {
+            await loadGroups(true);
+        } catch (err) {
+            console.error("No fue posible actualizar los grupos:", err);
+        }
+    }, [loadGroups]);
+
     const createGroup = async (data: CreateGroupPayload): Promise<void> => {
         setSaving(true);
         try {
             await groupServices.createGroup(data);
-            await loadGroups();
         } finally {
             setSaving(false);
         }
+        await refreshSilent();
     };
 
-    const updateGroupStatus = async (data: UpdateGroupStatusPayload) => {
+    const updateGroupStatus = async (data: UpdateGroupStatusPayload): Promise<void> => {
         setSaving(true);
         try {
             await groupServices.updateGroupStatus(data);
-            await loadGroups();
         } finally {
             setSaving(false);
         }
+        await refreshSilent();
     };
 
-    const deleteGroup = async (id: number) => {
+    const deleteGroup = async (id: number): Promise<void> => {
         setSaving(true);
         try {
             await groupServices.deleteGroup(id);
-            await loadGroups();
         } finally {
             setSaving(false);
         }
+        await refreshSilent();
     };
 
     useEffect(() => {
@@ -73,7 +87,7 @@ export function useGroups(slug: string | undefined) {
 
     return {
         groups: diploma?.groups ?? [],
-        refetch: loadGroups,
+        refetch: refreshSilent,
         diploma,
         loading,
         saving,

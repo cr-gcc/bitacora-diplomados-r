@@ -10,42 +10,57 @@ export function useScheduling() {
     const [error, setError] = useState<string | null>(null);
     const controllerRef = useRef<AbortController | null>(null);
 
-    const loadSchedulings = useCallback(async () => {
+    const loadSchedulings = useCallback(async (silent = false) => {
         controllerRef.current?.abort();
         const controller = new AbortController();
         controllerRef.current = controller;
         try {
-            setLoading(true);
-            setError(null);
+            if (!silent) {
+                setLoading(true);
+                setError(null);
+            }
             const data = await schedulingService.getAll(controller.signal);
             if (!controller.signal.aborted) {
                 setSchedulings(data);
             }
-        } catch (error) {
-            if (axios.isCancel(error) || controller.signal.aborted) {
+        } catch (err) {
+            if (axios.isCancel(err) || controller.signal.aborted) {
                 return;
             }
-            setError("No fue posible cargar los registros");
+            if (!silent) {
+                setError("No fue posible cargar los registros");
+            } else {
+                console.error("No fue posible actualizar los registros:", err);
+            }
         } finally {
-            if (!controller.signal.aborted) {
+            if (!silent && !controller.signal.aborted) {
                 setLoading(false);
             }
         }
-    }, [])
+    }, []);
+
+    const refreshSilent = useCallback(async () => {
+        try {
+            await loadSchedulings(true);
+        } catch (err) {
+            console.error("No fue posible actualizar los registros:", err);
+        }
+    }, [loadSchedulings]);
 
     const createScheduling = async (
         data: CreateSchedulingPayload,
         signal?: AbortSignal
     ): Promise<Scheduling> => {
         setSaving(true);
+        let scheduling: Scheduling;
         try {
-            const scheduling = await schedulingService.create(data, signal);
-            await loadSchedulings();
-            return scheduling;
+            scheduling = await schedulingService.create(data, signal);
         } finally {
             setSaving(false);
         }
-    }
+        await refreshSilent();
+        return scheduling;
+    };
 
     const deleteScheduling = async (
         id: number,
@@ -54,11 +69,11 @@ export function useScheduling() {
         setSaving(true);
         try {
             await schedulingService.delete(id, signal);
-            await loadSchedulings();
         } finally {
             setSaving(false);
         }
-    }
+        await refreshSilent();
+    };
 
     const linkScheduling = async (
         data: LinkSchedulingPayload,
@@ -67,17 +82,17 @@ export function useScheduling() {
         setSaving(true);
         try {
             await schedulingService.linkScheduling(data, signal);
-            await loadSchedulings();
         } finally {
             setSaving(false);
         }
-    }
+        await refreshSilent();
+    };
 
     useEffect(() => {
         void loadSchedulings();
         return () => {
             controllerRef.current?.abort();
-        }
+        };
     }, [loadSchedulings]);
 
     return {
@@ -85,9 +100,9 @@ export function useScheduling() {
         loading,
         saving,
         error,
-        refetch: loadSchedulings,
+        refetch: refreshSilent,
         createScheduling,
         linkScheduling,
-        deleteScheduling
-    }
+        deleteScheduling,
+    };
 }

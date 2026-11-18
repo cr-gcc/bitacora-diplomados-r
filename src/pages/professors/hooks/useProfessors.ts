@@ -14,13 +14,15 @@ export function useProfessors() {
     const [error, setError] = useState<string | null>(null);
     const controllerRef = useRef<AbortController | null>(null);
 
-    const loadProfessors = useCallback(async () => {
+    const loadProfessors = useCallback(async (silent = false) => {
         controllerRef.current?.abort();
         const controller = new AbortController();
         controllerRef.current = controller;
         try {
-            setLoading(true);
-            setError(null);
+            if (!silent) {
+                setLoading(true);
+                setError(null);
+            }
             const data = await professorService.getAll(
                 controller.signal
             );
@@ -31,9 +33,13 @@ export function useProfessors() {
             if (axios.isCancel(error) || controller.signal.aborted) {
                 return;
             }
-            setError("No fue posible cargar los profesores.");
+            if (!silent) {
+                setError("No fue posible cargar los profesores.");
+            } else {
+                console.error("No fue posible actualizar los profesores:", error);
+            }
         } finally {
-            if (!controller.signal.aborted) {
+            if (!silent && !controller.signal.aborted) {
                 setLoading(false);
             }
         }
@@ -50,13 +56,18 @@ export function useProfessors() {
         data: CreateProfessorPayload
     ): Promise<Professor> => {
         setSaving(true);
+        let professor: Professor;
         try {
-            const professor = await professorService.create(data);
-            await loadProfessors();
-            return professor;
+            professor = await professorService.create(data);
         } finally {
             setSaving(false);
         }
+        try {
+            await loadProfessors(true);
+        } catch (err) {
+            console.error("No fue posible actualizar los profesores:", err);
+        }
+        return professor;
     };
 
     const updateProfessor = async (

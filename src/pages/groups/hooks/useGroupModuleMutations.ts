@@ -5,24 +5,32 @@ import type { EditBasicModulePayload, CheckModulePayload } from "../types/group-
 export function useGroupModuleMutations(onSuccess?: () => Promise<void>) {
     const [saving, setSaving] = useState(false);
 
+    const runOnSuccess = async () => {
+        try {
+            await onSuccess?.();
+        } catch (err) {
+            console.error("El cambio se guardó, pero falló la recarga:", err);
+        }
+    };
+
     const editModule = async (data: EditBasicModulePayload): Promise<void> => {
         setSaving(true);
         try {
             await moduleService.editBasicModule(data);
-            await onSuccess?.();
         } finally {
             setSaving(false);
         }
+        await runOnSuccess();
     };
 
     const checkModule = async (data: CheckModulePayload): Promise<void> => {
         setSaving(true);
         try {
             await moduleService.checkModule(data);
-            await onSuccess?.();
         } finally {
             setSaving(false);
         }
+        await runOnSuccess();
     };
 
     return {
