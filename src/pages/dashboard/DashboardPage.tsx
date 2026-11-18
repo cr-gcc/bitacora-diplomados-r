@@ -1,7 +1,7 @@
 import { startOfWeek, endOfWeek } from "date-fns"
 import { ProgressBar } from "@/components/layouts/components/loading/ProgressBar";
 import { InfoStatCard } from "@pages/dashboard/components/InfoStatCard";
-import { GroupCalendarTable } from "@/components/layouts/components/tables/GroupCalendarTable";
+import { GroupCalendarTable } from "@/pages/calendar/components/GroupCalendarTable";
 import { useDashboard } from "@pages/dashboard/hooks/useDashboard";
 import { formatDateRange } from "@/lib/utils";
 

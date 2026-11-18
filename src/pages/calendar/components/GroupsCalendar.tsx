@@ -1,58 +1,25 @@
 import { useState } from "react"
 import { Calendar } from "@/components/ui/calendar"
-import { CalendarEventsModal, type Evento } from "@/components/layouts/components/modals/calendar/CalendarEventsModal"
-import { createDate } from "@/lib/utils"
+import { CalendarEventsModal } from "@pages/calendar/components/CalendarEventsModal"
+import type { CalendarEvent } from "../types/calendar.types"
 import { isSameDay } from "date-fns"
 import { es } from "date-fns/locale"
 
-export function GroupsCalendar() {
-    const [selectedDate, setSelectedDate] = useState<Date | undefined>()
-    const [selectedEvents, setSelectedEvents] = useState<Evento[]>([])
-    const [openModal, setOpenModal] = useState(false)
+interface Props {
+    events: CalendarEvent[];
+}
 
-    // Lista de cursos / módulos programados (puedes traerlos de tu backend o estado)
-    const eventos: Evento[] = [
-        {
-            id: 1,
-            diploma: "Finanzas",
-            groupNum: "9601",
-            module: "1",
-            title: "Fundamentos",
-            professor: "Cristian Gomez Colín",
-            fecha: createDate(2026, 10, 12), // 12 de Octubre de 2026 (mes 10 = Octubre)
-            start: "24/10/2026",
-            end: "25/10/2026",
-        },
-        {
-            id: 2,
-            diploma: "Finanzas",
-            groupNum: "9602",
-            module: "1",
-            title: "Fundamentos",
-            professor: "Cristiano Guzman Contreras",
-            fecha: createDate(2026, 10, 19), // 19 de Octubre de 2026 (mes 10 = Octubre)
-            start: "24/10/2026",
-            end: "25/10/2026",
-        },
-        {
-            id: 3,
-            diploma: "Comercio Electrónico",
-            groupNum: "9601",
-            module: "2",
-            title: "Ventas Digitales",
-            professor: "José Antonio Gómez Rodríguez",
-            fecha: createDate(2026, 11, 26), // 26 de Noviembre de 2026 (mes 11 = Noviembre)
-            start: "28/11/2026",
-            end: "29/11/2026",
-        },
-    ]
+export function GroupsCalendar({ events }: Props) {
+    const [selectedDate, setSelectedDate] = useState<Date | undefined>()
+    const [selectedEvents, setSelectedEvents] = useState<CalendarEvent[]>([])
+    const [openModal, setOpenModal] = useState(false)
 
     // Manejador al hacer clic en un día del calendario
     const handleSelect = (date: Date | undefined) => {
         if (!date) return
 
         // 1. Filtrar los eventos programados que coincidan con la fecha seleccionada
-        const eventosEncontrados = eventos.filter((evento) => isSameDay(evento.fecha, date))
+        const eventosEncontrados = events.filter((evento) => isSameDay(evento.calendar_date, date))
 
         // 2. Si hay eventos, guardamos los datos y abrimos el modal
         if (eventosEncontrados.length > 0) {
@@ -85,7 +52,7 @@ export function GroupsCalendar() {
                 selected={selectedDate}
                 onSelect={handleSelect}
                 // 1. Deshabilitar los días que no tengan eventos (no clickeables)
-                disabled={(date) => !eventos.some((e) => isSameDay(e.fecha, date))}
+                disabled={(date) => !events.some((e) => isSameDay(e.calendar_date, date))}
                 className="w-full bg-white p-6 rounded-lg border border-gray-200"
                 classNames={{
                     root: "w-full",
@@ -109,7 +76,7 @@ export function GroupsCalendar() {
                 }}
                 // 4. Modifiers: destacar los días con curso
                 modifiers={{
-                    tieneCurso: (date) => eventos.some((e) => isSameDay(e.fecha, date)),
+                    tieneCurso: (date) => events.some((e) => isSameDay(e.calendar_date, date)),
                 }}
                 // 5. ModifiersClassNames: navy constante sin gris en hover y cursor pointer sólo en los días con curso
                 modifiersClassNames={{
