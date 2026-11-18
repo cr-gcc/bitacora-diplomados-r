@@ -9,7 +9,6 @@ import { useModuleCatalog } from "@/pages/groups/hooks/useModuleCatalog";
 import { useProfessors } from "@/pages/professors/hooks/useProfessors";
 import { useScheduling } from "@/pages/scheduling/hooks/useScheduling";
 
-
 export function SchedulingPage() {
     const [openAdd, setOpenAdd] = useState(false);
     const { diplomas } = useDiplomas();

@@ -3,7 +3,7 @@ import { diplomaService } from "../services/diplomaService";
 import type { Diploma } from "../types/diploma.types";
 import axios from "axios";
 
-export function useDiplomas() {
+export function useDiplomas(includeGroups = true) {
     const [diplomas, setDiplomas] = useState<Diploma[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -15,6 +15,7 @@ export function useDiplomas() {
                 setLoading(true);
                 setError(null);
                 const data = await diplomaService.getAll(
+                    includeGroups,
                     controller.signal
                 );
                 setDiplomas(data);
@@ -29,7 +30,7 @@ export function useDiplomas() {
         };
         loadDiplomas();
         return () => controller.abort();
-    }, []);
+    }, [includeGroups]);
 
     return { diplomas, loading, error };
 }

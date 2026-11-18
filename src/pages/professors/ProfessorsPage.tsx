@@ -38,7 +38,7 @@ export function ProfessorsPage() {
                         </Button>
                     </div>
                 </div>
-                <section className="flex flex-col w-full rounded-lg px-2 pb-1 pt-0.5">
+                <section className="flex flex-col bg-white w-full rounded-lg px-2 pb-1 pt-0.5">
                     {
                         loading ? (
                             <ProgressBar />
@@ -51,13 +51,11 @@ export function ProfessorsPage() {
                                 No hay profesores registrados.
                             </p>
                         ) : (
-                            <div className="bg-white">
-                                <ProfesorTable
-                                    professors={professors}
-                                    onUpdate={updateProfessor}
-                                    saving={saving}
-                                />
-                            </div>
+                            <ProfesorTable
+                                professors={professors}
+                                onUpdate={updateProfessor}
+                                saving={saving}
+                            />
                         )
                     }
                 </section>
