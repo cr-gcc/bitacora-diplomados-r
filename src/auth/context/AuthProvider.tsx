@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import axios from "axios";
 import { AuthContext } from "@/auth/context/AuthContext";
 import { authService } from "@/auth/services/authService";
@@ -11,46 +11,55 @@ interface Props {
 export function AuthProvider({ children }: Props) {
     const [user, setUser] = useState<User | null>(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [sessionError, setSessionError] = useState<string | null>(null);
+    const requestIdRef = useRef(0);
 
-    // Recuperar la sesión al cargar la aplicación
-    useEffect(() => {
-        let active = true;
-        const restoreSession = async () => {
-            try {
-                const authenticatedUser = await authService.me();
-                if (active) {
-                    setUser(authenticatedUser);
-                }
-            } catch (error) {
-                if (!active) return;
-
-                if (axios.isAxiosError(error) && error.response?.status === 401) {
-                    setUser(null);
-                } else {
-                    console.error("No se pudo recuperar la sesión:", error);
-                }
-            } finally {
-                if (active) {
-                    setIsLoading(false);
-                }
+    const restoreSession = useCallback(async () => {
+        const requestId = ++requestIdRef.current;
+        setIsLoading(true);
+        setSessionError(null);
+        try {
+            const authenticatedUser = await authService.me();
+            if (requestId === requestIdRef.current) {
+                setUser(authenticatedUser);
             }
-        };
+        } catch (error) {
+            if (requestId !== requestIdRef.current) return;
 
-        restoreSession();
+            if (axios.isAxiosError(error) && error.response?.status === 401) {
+                setUser(null);
+                setSessionError(null);
+            } else {
+                console.error("No se pudo recuperar la sesión:", error);
+                setSessionError(
+                    "No fue posible verificar tu sesión. Revisa tu conexión o intenta de nuevo."
+                );
+            }
+        } finally {
+            if (requestId === requestIdRef.current) {
+                setIsLoading(false);
+            }
+        }
+    }, []);
+
+    useEffect(() => {
+        void restoreSession();
 
         return () => {
-            active = false;
+            requestIdRef.current++;
         };
-    }, []);
+    }, [restoreSession]);
 
     const login = async (credentials: LoginCredentials): Promise<void> => {
         const authenticatedUser = await authService.login(credentials);
         setUser(authenticatedUser);
+        setSessionError(null);
     };
 
     const logout = async (): Promise<void> => {
         await authService.logout();
         setUser(null);
+        setSessionError(null);
     };
 
     return (
@@ -59,8 +68,10 @@ export function AuthProvider({ children }: Props) {
                 user,
                 isAuthenticated: user !== null,
                 isLoading,
+                sessionError,
                 login,
                 logout,
+                retrySession: restoreSession,
             }}
         >
             {children}

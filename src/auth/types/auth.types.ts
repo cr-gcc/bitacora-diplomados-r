@@ -19,7 +19,9 @@ export interface AuthContextType {
     user: User | null;
     isAuthenticated: boolean;
     isLoading: boolean;
+    sessionError: string | null;
 
     login: (credentials: LoginCredentials) => Promise<void>;
     logout: () => Promise<void>;
+    retrySession: () => Promise<void>;
 }
