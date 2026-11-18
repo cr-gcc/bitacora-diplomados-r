@@ -20,7 +20,9 @@ export function SchedulingPage() {
         loading,
         saving,
         error,
-        createScheduling
+        createScheduling,
+        linkScheduling,
+        deleteScheduling
     } = useScheduling();
 
     return (
@@ -62,12 +64,16 @@ export function SchedulingPage() {
                                 <AlertTitle className="text-sm">Los registros sin grupo se conservan de forma provisional. Cuando se vincule con un grupo, el registro aparecerá en la bitácora del grupo.</AlertTitle>
                             </Alert>
                             <section className="flex flex-col bg-white w-full rounded-lg px-2 pb-1 pt-0.5">
-                                <SchedulingTable schedulings={schedulings} />
+                                <SchedulingTable
+                                    schedulings={schedulings}
+                                    saving={saving}
+                                    onLink={linkScheduling}
+                                    onDelete={deleteScheduling}
+                                />
                             </section>
                         </>
                     )
                 }
-
             </div>
             <AddSchedulingModal
                 open={openAdd}

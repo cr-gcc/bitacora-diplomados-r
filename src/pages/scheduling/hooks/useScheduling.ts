@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { schedulingService } from "../services/schedulingService";
 import axios from "axios";
-import type { Scheduling, CreateSchedulingPayload } from "../types/scheduling.types";
+import type { Scheduling, CreateSchedulingPayload, LinkSchedulingPayload } from "../types/scheduling.types";
 
 export function useScheduling() {
     const [schedulings, setSchedulings] = useState<Scheduling[]>([]);
@@ -22,7 +22,7 @@ export function useScheduling() {
                 setSchedulings(data);
             }
         } catch (error) {
-            if (!axios.isCancel(error) || controller.signal.aborted) {
+            if (axios.isCancel(error) || controller.signal.aborted) {
                 return;
             }
             setError("No fue posible cargar los registros");
@@ -47,6 +47,32 @@ export function useScheduling() {
         }
     }
 
+    const deleteScheduling = async (
+        id: number,
+        signal?: AbortSignal
+    ): Promise<void> => {
+        setSaving(true);
+        try {
+            await schedulingService.delete(id, signal);
+            await loadSchedulings();
+        } finally {
+            setSaving(false);
+        }
+    }
+
+    const linkScheduling = async (
+        data: LinkSchedulingPayload,
+        signal?: AbortSignal
+    ): Promise<void> => {
+        setSaving(true);
+        try {
+            await schedulingService.linkScheduling(data, signal);
+            await loadSchedulings();
+        } finally {
+            setSaving(false);
+        }
+    }
+
     useEffect(() => {
         void loadSchedulings();
         return () => {
@@ -60,6 +86,8 @@ export function useScheduling() {
         saving,
         error,
         refetch: loadSchedulings,
-        createScheduling
+        createScheduling,
+        linkScheduling,
+        deleteScheduling
     }
 }

@@ -28,5 +28,10 @@ export interface SchedulingResponse {
 
 export type CreateSchedulingPayload = Omit<
     Scheduling,
-    "id" | "diploma" | "module" | "professor"
+    "id" | "diploma_id" | "diploma" | "module" | "professor"
 >;
+
+export interface LinkSchedulingPayload {
+    id: number;
+    group_id: number;
+}

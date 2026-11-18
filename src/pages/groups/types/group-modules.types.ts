@@ -48,6 +48,14 @@ export interface GroupModule {
     review: Review;
 }
 
+export interface GroupModuleBasic {
+    group_id: number;
+    module_id: number;
+    professor_id: number;
+    start_date: string;
+    end_date: string;
+}
+
 // Group with all its modules
 export interface GroupWithModules extends Group {
     modules: GroupModule[];
@@ -96,6 +104,11 @@ export type CheckModulePayload = Omit<Review, "status">;
 // Response for API GET groups
 export interface GroupsResponse {
     data: GroupWithModules[];
+}
+
+// Response for API GET groups basic information
+export interface GroupsBasicResponse {
+    data: Group[];
 }
 
 // Response for API GET diploma with groups

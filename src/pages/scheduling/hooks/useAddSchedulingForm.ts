@@ -5,9 +5,8 @@ type FormErrors = Partial<Record<keyof AddSchedulingForm, string>>;
 
 export function useAddSchedulingForm() {
     const [form, setForm] = useState<AddSchedulingForm>({
-        diploma_id: null,
-        module_id: null,
-        professor_id: null,
+        module_id: null as unknown as number,
+        professor_id: null as unknown as number,
         start_date: "",
         end_date: "",
     });
@@ -43,9 +42,8 @@ export function useAddSchedulingForm() {
 
     const resetForm = () => {
         setForm({
-            diploma_id: null,
-            module_id: null,
-            professor_id: null,
+            module_id: null as unknown as number,
+            professor_id: null as unknown as number,
             start_date: "",
             end_date: "",
         });

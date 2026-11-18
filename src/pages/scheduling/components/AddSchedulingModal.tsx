@@ -29,6 +29,7 @@ interface Props {
 }
 
 export function AddSchedulingModal({ open, onOpenChange, diplomas, modules, professors, saving, onCreate }: Props) {
+    const [diplomaId, setDiplomaId] = useState<number | null>(null);
     const [serverError, setServerError] = useState<string | null>(null);
     const {
         form,
@@ -42,7 +43,7 @@ export function AddSchedulingModal({ open, onOpenChange, diplomas, modules, prof
         value: diploma.id,
         label: diploma.title
     }));
-    const moduleItems = modules.filter((m) => m.diploma_id === form.diploma_id)
+    const moduleItems = modules.filter((m) => m.diploma_id === diplomaId)
         .map((m) => ({
             value: m.id,
             label: `${m.number}. ${m.name}`,
@@ -55,6 +56,7 @@ export function AddSchedulingModal({ open, onOpenChange, diplomas, modules, prof
     const handleClose = (nextOpen: boolean) => {
         if (!nextOpen && saving) return;
         if (!nextOpen) {
+            setDiplomaId(null);
             resetForm();
             setServerError(null);
         }
@@ -68,6 +70,7 @@ export function AddSchedulingModal({ open, onOpenChange, diplomas, modules, prof
         setServerError(null);
         try {
             await onCreate(validatedData);
+            setDiplomaId(null);
             resetForm();
             onOpenChange(false);
         } catch (error) {
@@ -92,9 +95,10 @@ export function AddSchedulingModal({ open, onOpenChange, diplomas, modules, prof
                             <Select
                                 id="diploma"
                                 items={diplomaItems}
-                                value={form.diploma_id}
+                                value={diplomaId}
                                 onValueChange={(value) => {
-                                    updateField('diploma_id', Number(value));
+                                    setDiplomaId(value);
+                                    updateField('module_id', null as unknown as number);
                                 }}
                             >
                                 <SelectTrigger className="text-xs w-full border-gray-300" size="sm">
@@ -106,7 +110,6 @@ export function AddSchedulingModal({ open, onOpenChange, diplomas, modules, prof
                                     ))}
                                 </SelectContent>
                             </Select>
-                            {errors.diploma_id && <p className="text-red-500 text-xs">{errors.diploma_id}</p>}
                         </div>
                         <div className="flex flex-col col-span-2 gap-1 w-full">
                             <Label htmlFor="module" className="text-sm text-gray-500 font-medium">Módulo</Label>
@@ -114,8 +117,12 @@ export function AddSchedulingModal({ open, onOpenChange, diplomas, modules, prof
                                 id="module"
                                 items={moduleItems}
                                 value={form.module_id}
-                                onValueChange={(value) => updateField('module_id', Number(value))}
-                                disabled={!form.diploma_id}
+                                onValueChange={(value) => {
+                                    if (value !== null) {
+                                        updateField('module_id', value);
+                                    }
+                                }}
+                                disabled={!diplomaId}
                             >
                                 <SelectTrigger className="text-xs w-full border-gray-300" size="sm">
                                     <SelectValue placeholder="Seleccione un módulo" />

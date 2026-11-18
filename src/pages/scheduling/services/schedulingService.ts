@@ -25,15 +25,20 @@ export const schedulingService = {
         return response.data.data;
     },
 
-    // Update a scheduling
-    async update(id: number, scheduling: SchedulingTypes.Scheduling): Promise<SchedulingTypes.SchedulingResponse> {
-        const response = await api.put(`/api/v1/schedule-modules/${id}`, scheduling);
-        return response.data;
+    // Link a scheduling to a group module
+    async linkScheduling(
+        data: SchedulingTypes.LinkSchedulingPayload,
+        signal?: AbortSignal) {
+        const response = await api.post(
+            `/api/v1/schedule-modules/${data.id}/link`,
+            data,
+            { signal }
+        );
+        return response.data.data;
     },
 
     // Delete a scheduling
-    async delete(id: number): Promise<SchedulingTypes.SchedulingResponse> {
-        const response = await api.delete(`/api/v1/schedule-modules/${id}`);
-        return response.data;
+    async delete(id: number, signal?: AbortSignal): Promise<void> {
+        await api.delete(`/api/v1/schedule-modules/${id}`, { signal });
     },
 }

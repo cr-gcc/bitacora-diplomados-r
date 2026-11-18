@@ -1,7 +1,6 @@
 import { z } from "zod";
 
 const schedulingFields = {
-    diploma_id: z.number("Diplomado es requerido").min(1, "Diplomado es requerido"),
     module_id: z.number("Módulo es requerido").min(1, "Módulo es requerido"),
     professor_id: z.number("Profesor es requerido").min(1, "Profesor es requerido"),
     start_date: z.string().min(1, "Fecha de inicio es requerida"),
@@ -23,6 +22,4 @@ export const addSchedulingSchema = z
         }
     );
 
-export type AddSchedulingForm = z.infer<
-    typeof addSchedulingSchema
->;
+export type AddSchedulingForm = z.infer<typeof addSchedulingSchema>;

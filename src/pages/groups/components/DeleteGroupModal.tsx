@@ -64,7 +64,7 @@ export function DeleteGroupModal({ open, onOpenChange, theme, code, group_id, sa
                             disabled={saving}
                             className={`text-xs text-white hover:text-white cursor-pointer ${theme.buttonBg} ${theme.buttonHover}`}
                         >
-                            Salir
+                            Cancelar
                         </Button>}
                     />
                 </DialogFooter>

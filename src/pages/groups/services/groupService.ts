@@ -60,4 +60,16 @@ export const groupServices = {
         );
         return response.data;
     },
+
+    //Get groups basic information by diploma id
+    getGroupsBasicByDiplomaId: async (
+        id: number,
+        signal?: AbortSignal
+    ): Promise<GroupModulesTypes.Group[]> => {
+        const response = await api.get<GroupModulesTypes.Group[]>(
+            `/api/v1/groups/diploma/${id}`,
+            { signal }
+        );
+        return response.data;
+    },
 };
