@@ -37,12 +37,10 @@ export function GroupTable({ theme, group, modules, onOpenModal }: Props) {
             </TableHeader>
             <TableBody className="text-xs text-gray-800">
                 {modules?.map((module) => {
-                    const isScheduled = Boolean(
-                        module.professor && module.start_date && module.end_date
-                    );
-                    const isReviewed = Boolean(
-                        module.review?.dates_reviewed && module.review?.exam_uploaded && module.review?.group_with_students
-                    );
+                    const isScheduled = Boolean(module.professor && module.start_date && module.end_date);
+                    const statusMsg = String(module.review.status === "approved" ? "Aprobada" : "Pendiente");
+                    const statusFlag = Boolean(module.review.status === "approved" ? true : false)
+
                     return (
                         <TableRow key={module.id}>
                             <TableCell className="font-medium">{module.number}</TableCell>
@@ -67,12 +65,12 @@ export function GroupTable({ theme, group, modules, onOpenModal }: Props) {
                                     </Badge>
                                     <Badge
                                         variant="outline"
-                                        className={`text-xs border-none ${isReviewed
+                                        className={`text-xs border-none ${statusFlag
                                             ? "bg-sky-100 text-sky-800"
                                             : "bg-amber-100 text-amber-800"
                                             }`}
                                     >
-                                        <span className="font-semibold">Revisión:</span> {isReviewed ? "Programado" : "Pendiente"}
+                                        <span className="font-semibold">Revisión:</span> {statusMsg}
                                     </Badge>
                                 </div>
                             </TableCell>

@@ -16,3 +16,4 @@ export type CreateProfessorPayload = Omit<Professor, "id" | "active">;
 
 export type UpdateProfessorPayload = Partial<Omit<Professor, "id">>;
 
+export type ProfessorBasic = Omit<Professor, "email" | "user" | "rfc" | "active">;

@@ -1,3 +1,5 @@
+import type { ProfessorBasic } from "../../professors/types/professor.types";
+
 export type GroupStatus = "active" | "finished";
 export type ReviewStatus = "pending" | "approved";
 // Group
@@ -5,7 +7,7 @@ export interface Group {
     id: number;
     diploma_id: number;
     code: string;
-    status: GroupStatus | string;
+    status: GroupStatus;
 }
 
 // Modules
@@ -40,11 +42,7 @@ export interface GroupModule {
     regular_students: number;
     repeating_students: number;
     total_students: number;
-    professor: {
-        id: number;
-        name: string;
-        last_name: string;
-    } | null;
+    professor: ProfessorBasic;
     review: Review;
 }
 
