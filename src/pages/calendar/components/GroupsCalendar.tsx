@@ -7,9 +7,11 @@ import { es } from "date-fns/locale"
 
 interface Props {
     events: CalendarEvent[];
+    month: Date;
+    onMonthChange: (month: Date) => void;
 }
 
-export function GroupsCalendar({ events }: Props) {
+export function GroupsCalendar({ events, month, onMonthChange }: Props) {
     const [selectedDate, setSelectedDate] = useState<Date | undefined>()
     const [selectedEvents, setSelectedEvents] = useState<CalendarEvent[]>([])
     const [openModal, setOpenModal] = useState(false)
@@ -49,6 +51,8 @@ export function GroupsCalendar({ events }: Props) {
             <Calendar
                 mode="single"
                 locale={es}
+                month={month}
+                onMonthChange={onMonthChange}
                 selected={selectedDate}
                 onSelect={handleSelect}
                 // 1. Deshabilitar los días que no tengan eventos (no clickeables)

@@ -1,9 +1,11 @@
+import { useState } from "react";
 import { ProgressBar } from "@/components/layouts/components/loading/ProgressBar";
 import { GroupsCalendar } from "@pages/calendar/components/GroupsCalendar";
 import { useCalendar } from "@pages/calendar/hooks/useCalendar";
 
 export function CalendarPage() {
-    const { events, loading, error } = useCalendar();
+    const [currentMonth, setCurrentMonth] = useState<Date>(() => new Date());
+    const { events, loading, error } = useCalendar(currentMonth);
 
     return (
         <div id="calendar" className="flex flex-col gap-y-4 pb-12">
@@ -15,15 +17,17 @@ export function CalendarPage() {
                     Selecciona una fecha para consultar los cursos programados.
                 </p>
             </div>
-            {loading ? (
-                <ProgressBar />
-            ) : error ? (
+            {loading && <ProgressBar />}
+            {error && (
                 <p role="alert" className="text-sm text-red-600">
                     {error}
                 </p>
-            ) : (
-                <GroupsCalendar events={events} />
             )}
+            <GroupsCalendar
+                events={events}
+                month={currentMonth}
+                onMonthChange={setCurrentMonth}
+            />
         </div>
     )
 }
