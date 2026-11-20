@@ -26,13 +26,14 @@ export function AuthProvider({ children }: Props) {
         } catch (error) {
             if (requestId !== requestIdRef.current) return;
 
-            if (axios.isAxiosError(error) && error.response?.status === 401) {
+            const status = axios.isAxiosError(error) ? error.response?.status : undefined;
+            if (status === 401 || status === 403 || status === 419) {
                 setUser(null);
                 setSessionError(null);
             } else {
                 console.error("No se pudo recuperar la sesión:", error);
                 setSessionError(
-                    "No fue posible verificar tu sesión. Revisa tu conexión o intenta de nuevo."
+                    "El servicio no está disponible en este momento. Por favor, intenta iniciar sesión más tarde."
                 );
             }
         } finally {

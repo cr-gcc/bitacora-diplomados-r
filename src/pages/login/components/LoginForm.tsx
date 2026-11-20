@@ -11,9 +11,11 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { useLoginForm } from "@pages/login/hooks/useLoginForm";
+import { useAuth } from "@/auth/hooks/useAuth";
 import { ProgressBar } from '@components/layouts/components/loading/ProgressBar';
 
 export function LoginForm() {
+    const { sessionError } = useAuth();
     const {
         values,
         errors,
@@ -100,7 +102,11 @@ export function LoginForm() {
                     </Button>
                     {loading && <ProgressBar />}
                     {
-                        generalError && <p className="text-red-500 text-xs font-semibold">{generalError}</p>
+                        generalError ? (
+                            <p className="text-red-500 text-xs font-semibold text-center">{generalError}</p>
+                        ) : sessionError ? (
+                            <p role="alert" className="text-red-500 text-xs font-medium text-center">{sessionError}</p>
+                        ) : null
                     }
                 </CardFooter>
             </form>
