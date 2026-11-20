@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/table"
 import type { DiplomaTheme } from "@/config/diplomas/diploma.types";
 import type { Group, GroupModule } from "@/pages/groups/types/group-modules.types";
-import { formatShortDate } from "@/lib/utils";
+import { formatShortDate, truncateText } from "@/lib/utils";
 import type { GroupModalState } from "../types/group-modal.types";
 
 interface Props {
@@ -44,7 +44,7 @@ export function GroupTable({ theme, group, modules, onOpenModal }: Props) {
                     return (
                         <TableRow key={module.id}>
                             <TableCell className="font-medium">{module.number}</TableCell>
-                            <TableCell>{module.name}</TableCell>
+                            <TableCell title={module.name}>{truncateText(module.name)}</TableCell>
                             <TableCell>{formatShortDate(module.start_date)}</TableCell>
                             <TableCell>{formatShortDate(module.end_date)}</TableCell>
                             <TableCell>

@@ -10,7 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { diplomaThemes, defaultDiplomaTheme } from "@/config/diplomas/diplomaThemes";
 import type { GroupsDates } from "@/pages/dashboard/types/dashboard.types";
-import { formatShortDate } from "@/lib/utils";
+import { formatShortDate, truncateText } from "@/lib/utils";
 
 interface Props {
     groupsDates: GroupsDates[];
@@ -43,7 +43,7 @@ export function GroupCalendarTable({ groupsDates }: Props) {
                             <TableCell>{group.diploma}</TableCell>
                             <TableCell>{group.code}</TableCell>
                             <TableCell>{group.number}</TableCell>
-                            <TableCell>{group.name}</TableCell>
+                            <TableCell title={group.name}>{truncateText(group.name)}</TableCell>
                             <TableCell>{group.professor}</TableCell>
                             <TableCell>{formatShortDate(group.start_date)}</TableCell>
                             <TableCell>{formatShortDate(group.end_date)}</TableCell>

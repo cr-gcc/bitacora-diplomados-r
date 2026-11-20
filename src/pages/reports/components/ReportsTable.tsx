@@ -7,7 +7,7 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { diplomaThemes, defaultDiplomaTheme } from "@/config/diplomas/diplomaThemes";
-import { formatShortDate } from "@/lib/utils";
+import { formatShortDate, truncateText } from "@/lib/utils";
 import type { RowData } from "@/pages/reports/types/report.types";
 
 interface Props {
@@ -48,7 +48,7 @@ export function ReportsTable({ rows }: Props) {
                                 <TableCell>{row.diploma}</TableCell>
                                 <TableCell>{row.code}</TableCell>
                                 <TableCell>{row.number}</TableCell>
-                                <TableCell>{row.name}</TableCell>
+                                <TableCell title={row.name}>{truncateText(row.name)}</TableCell>
                                 <TableCell>{row.professor}</TableCell>
                                 <TableCell>{formatShortDate(row.start_date)}</TableCell>
                                 <TableCell>{formatShortDate(row.end_date)}</TableCell>
